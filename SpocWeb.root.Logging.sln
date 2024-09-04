@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35219.272
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpocWeb.root.Logging", "SpocWeb.root.Logging.csproj", "{3797F37D-8379-44E3-A3C8-00D206BEA19C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpocWeb.root.Logging.Tests", "..\Logging.Test\SpocWeb.root.Logging.Tests.csproj", "{F163F006-0AD9-4A76-92E7-784D8B633E21}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3797F37D-8379-44E3-A3C8-00D206BEA19C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3797F37D-8379-44E3-A3C8-00D206BEA19C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3797F37D-8379-44E3-A3C8-00D206BEA19C}.Debug|x86.ActiveCfg = Debug|x86
+		{3797F37D-8379-44E3-A3C8-00D206BEA19C}.Debug|x86.Build.0 = Debug|x86
+		{3797F37D-8379-44E3-A3C8-00D206BEA19C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3797F37D-8379-44E3-A3C8-00D206BEA19C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3797F37D-8379-44E3-A3C8-00D206BEA19C}.Release|x86.ActiveCfg = Release|x86
+		{3797F37D-8379-44E3-A3C8-00D206BEA19C}.Release|x86.Build.0 = Release|x86
+		{F163F006-0AD9-4A76-92E7-784D8B633E21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F163F006-0AD9-4A76-92E7-784D8B633E21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F163F006-0AD9-4A76-92E7-784D8B633E21}.Debug|x86.ActiveCfg = Debug|x86
+		{F163F006-0AD9-4A76-92E7-784D8B633E21}.Debug|x86.Build.0 = Debug|x86
+		{F163F006-0AD9-4A76-92E7-784D8B633E21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F163F006-0AD9-4A76-92E7-784D8B633E21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F163F006-0AD9-4A76-92E7-784D8B633E21}.Release|x86.ActiveCfg = Release|x86
+		{F163F006-0AD9-4A76-92E7-784D8B633E21}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5F1FCD2C-D221-42F9-B92D-26AD0029BB0B}
+	EndGlobalSection
+EndGlobal
