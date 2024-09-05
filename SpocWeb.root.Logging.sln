@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpocWeb.root.Logging", "SpocWeb.root.Logging.csproj", "{3797F37D-8379-44E3-A3C8-00D206BEA19C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpocWeb.root.Logging.Tests", "..\Logging.Test\SpocWeb.root.Logging.Tests.csproj", "{F163F006-0AD9-4A76-92E7-784D8B633E21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpocWeb.root.Logging.Tests", "..\SpocWeb.Logging.Tests\SpocWeb.root.Logging.Tests.csproj", "{F163F006-0AD9-4A76-92E7-784D8B633E21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
