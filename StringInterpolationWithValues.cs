@@ -2,22 +2,28 @@
 
 namespace org.SpocWeb.root.Logging;
 
-/// <summary> Encapsulates a parsed StringInterpolation with <see cref="Values"/> </summary>
+/// <summary> Encapsulates a parsed StringInterpolation with <see cref="values"/> </summary>
 /// <inheritdoc cref="ToString"/>
-public record StringInterpolationWithValues(MessageTemplate Template, object[] Values)
+public record StringInterpolationWithValues(MessageTemplate template, params object?[] values)
 {
+	/// <summary> The parsed Template of the Interpolation </summary>
+    public MessageTemplate Template => template;
 
-    public MessageTemplate Template { get; } = Template;
+	/// <summary> The Values to insert into the Template </summary>
+    public object?[] Values => values;
 
-    public object[] Values { get; } = Values;
+	/// <summary> Optional Exception </summary>
+    public Exception? Exception { get ; set ; }
 
-    private string _toString;
-    /// <summary> Formats the <see cref="Template"/> with the <see cref="Values"/></summary>
-	public override string ToString() => _toString ??= Template.Format(Values);
+    /// <summary> Formats the <see cref="template"/> with the <see cref="values"/></summary>
+	public override string ToString() => _toString ??= template.Format(values);
+	private string? _toString;
 
-
-    private Dictionary<string, object> _dictionary;
-
-
-    public Dictionary<string, object> ToDictionary() => _dictionary ??= ToDictionary();
+	/// <summary> Indexes the <see cref="values"/> with the <see cref="template"/> Placeholders </summary>
+	/// <remarks>
+	/// 0,1,2 for a Format-String, but readable Names for a Serilog string with array.
+	/// The Names could be extracted by reading the Source Code File. 
+	/// </remarks>
+	public Dictionary<string, object?> ToDictionary() => _dictionary ??= template.ToDictionary(values);
+    private Dictionary<string, object?>? _dictionary;
 }
