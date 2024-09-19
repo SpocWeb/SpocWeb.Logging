@@ -30,76 +30,82 @@ public static class Log
 	/// Rather use a <see cref="FormattableString"/> with String Interpolation!
 	/// </remarks>
 	[Obsolete("Rather use String Interpolation!")]
-    public static StringInterpolationWithValues Parse(Exception? x, string stringInterpolation, params object[] args)
+    public static StringInterpolationWithValues Parse(string stringInterpolation, params object[] args)
     {
         if (!_templates.TryGetValue(stringInterpolation, out var template))
         {
             _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
         }
 
-        return new StringInterpolationWithValues(template, "Rather use String Interpolation!", -1, args) { Exception = x };
+        return new StringInterpolationWithValues(template, "Rather use String Interpolation!", -1, args);// { Exception = x };
     }
 
     #region Log Statements
 
     public static StringInterpolationWithValues Error(this ILogger log, FormattableString stringInterpolation
 	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-        => Error(log, Parse(stringInterpolation, path, lineNo), x);
+        => log.Error(stringInterpolation.Parse(path, lineNo), x);
 
-    public static StringInterpolationWithValues Error(this ILogger log, StringInterpolationWithValues parsed, Exception? x = null)
+    public static StringInterpolationWithValues Error(this ILogger log, StringInterpolationWithValues messageWithValues, Exception? x = null)
     {
-        log.LogError(x, parsed.template.Text, parsed.values);
-        return parsed;
+        //log.LogError(x, messageWithValues.template.Text, messageWithValues.values);
+        log.Log(LogLevel.Error, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+        return messageWithValues;
     }
 
     public static StringInterpolationWithValues Critical(this ILogger log, FormattableString stringInterpolation
 	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
         => Critical(log, Parse(stringInterpolation, path, lineNo), x);
 
-    public static StringInterpolationWithValues Critical(this ILogger log, StringInterpolationWithValues parsed, Exception? x = null)
+    public static StringInterpolationWithValues Critical(this ILogger log, StringInterpolationWithValues messageWithValues, Exception? x = null)
     {
-        log.LogCritical(x, parsed.template.Text, parsed.values);
-        return parsed;
+        //log.LogCritical(x, parsed.template.Text, parsed.values);
+        log.Log(LogLevel.Critical, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+        return messageWithValues;
     }
 
     public static StringInterpolationWithValues Debug(this ILogger log, FormattableString stringInterpolation
 	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
         => Debug(log, Parse(stringInterpolation, path, lineNo), x);
 
-    public static StringInterpolationWithValues Debug(this ILogger log, StringInterpolationWithValues parsed, Exception? x = null)
+    public static StringInterpolationWithValues Debug(this ILogger log, StringInterpolationWithValues messageWithValues, Exception? x = null)
     {
-        log.LogDebug(x, parsed.template.Text, parsed.values);
-        return parsed;
+        //log.LogDebug(x, messageWithValues.template.Text, messageWithValues.values);
+        log.Log(LogLevel.Debug, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+        return messageWithValues;
     }
 
     public static StringInterpolationWithValues Information(this ILogger log, FormattableString stringInterpolation
 	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
         => Information(log, Parse(stringInterpolation, path, lineNo), x);
 
-    public static StringInterpolationWithValues Information(this ILogger log, StringInterpolationWithValues parsed, Exception? x = null)
+    public static StringInterpolationWithValues Information(this ILogger log, StringInterpolationWithValues messageWithValues, Exception? x = null)
     {
-        log.LogInformation(x, parsed.template.Text, parsed.values);
-        return parsed;
+        //log.LogInformation(x, messageWithValues.template.Text, messageWithValues.values);
+        log.Log(LogLevel.Information, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+        return messageWithValues;
     }
 
     public static StringInterpolationWithValues Warning(this ILogger log, FormattableString stringInterpolation
 	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
         => Warning(log, Parse(stringInterpolation, path, lineNo), x);
 
-    public static StringInterpolationWithValues Warning(this ILogger log, StringInterpolationWithValues parsed, Exception? x = null)
+    public static StringInterpolationWithValues Warning(this ILogger log, StringInterpolationWithValues messageWithValues, Exception? x = null)
     {
-        log.LogWarning(x, parsed.template.Text, parsed.values);
-        return parsed;
+        //log.LogWarning(x, messageWithValues.template.Text, messageWithValues.values);
+        log.Log(LogLevel.Warning, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+        return messageWithValues;
     }
 
     public static StringInterpolationWithValues Trace(this ILogger log, FormattableString stringInterpolation
 	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
         => Trace(log, Parse(stringInterpolation, path, lineNo), x);
 
-    public static StringInterpolationWithValues Trace(this ILogger log, StringInterpolationWithValues parsed, Exception? x = null)
+    public static StringInterpolationWithValues Trace(this ILogger log, StringInterpolationWithValues messageWithValues, Exception? x = null)
     {
-        log.LogTrace(x, parsed.template.Text, parsed.values);
-        return parsed;
+        //log.LogTrace(x, messageWithValues.template.Text, messageWithValues.values);
+        log.Log(LogLevel.Trace, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+        return messageWithValues;
     }
 
     #endregion Log Statements
@@ -180,7 +186,8 @@ public static class Log
 	/// Alternatively the Log-Evaluation can mix in these Values,
 	/// but only if File and Line-Info can be matched.
 	/// </remarks>
-	public static StringInterpolationWithValues Parse(this FormattableString stringInterpolation, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1) {
+	public static StringInterpolationWithValues Parse(this FormattableString stringInterpolation//, Exception? x = null
+		, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1) {
 	    if (!_templates.TryGetValue(stringInterpolation.Format, out var template)) {
 		    _templates[stringInterpolation.Format] = template = _messageTemplateParser.Parse(stringInterpolation.Format);
 		    if (lineNo > 0 && File.Exists(filePath)) {
