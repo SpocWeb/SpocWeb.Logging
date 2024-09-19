@@ -24,7 +24,12 @@ public static class Log
 
     static readonly Dictionary<string, MessageTemplate> _templates = new();
 
-    /// <summary> Parses and caches the <paramref name="stringInterpolation"/> </summary>
+	/// <summary> Parses and caches the <paramref name="stringInterpolation"/> </summary>
+	/// <remarks>
+	/// This Serilog-like Parsing retains the Expression names, but at the cost of duplicating them.
+	/// Rather use a <see cref="FormattableString"/> with String Interpolation!
+	/// </remarks>
+	[Obsolete("Rather use String Interpolation!")]
     public static StringInterpolationWithValues Parse(Exception? x, string stringInterpolation, params object[] args)
     {
         if (!_templates.TryGetValue(stringInterpolation, out var template))
@@ -32,7 +37,7 @@ public static class Log
             _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
         }
 
-        return new StringInterpolationWithValues(template, args) { Exception = x };
+        return new StringInterpolationWithValues(template, "Rather use String Interpolation!", -1, args) { Exception = x };
     }
 
     #region Log Statements
@@ -175,11 +180,11 @@ public static class Log
 	/// Alternatively the Log-Evaluation can mix in these Values,
 	/// but only if File and Line-Info can be matched.
 	/// </remarks>
-	public static StringInterpolationWithValues Parse(this FormattableString stringInterpolation, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1) {
+	public static StringInterpolationWithValues Parse(this FormattableString stringInterpolation, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1) {
 	    if (!_templates.TryGetValue(stringInterpolation.Format, out var template)) {
 		    _templates[stringInterpolation.Format] = template = _messageTemplateParser.Parse(stringInterpolation.Format);
-		    if (lineNo > 0 && File.Exists(path)) {
-			    var lines = File.ReadLines(path);
+		    if (lineNo > 0 && File.Exists(filePath)) {
+			    var lines = File.ReadLines(filePath);
 			    var line = lines.Skip(lineNo - 1).First();
 			    var tokens = (MessageTemplateToken[]) template.Tokens;
 			    var i = -1;
@@ -195,7 +200,7 @@ public static class Log
 		    }
 	    }
 
-	    return new StringInterpolationWithValues(template, stringInterpolation.GetArguments());
+	    return new StringInterpolationWithValues(template, filePath, lineNo, stringInterpolation.GetArguments());
     }
 
 	/// <summary> Matches a braced Expression in String Interpolation </summary>
@@ -205,114 +210,126 @@ public static class Log
     #region parsing with > 0 Params 
 
     /// <summary> Parses and caches the <paramref name="stringInterpolation"/> </summary>
-    public static StringInterpolationWithValues Parse(string stringInterpolation, object? arg0)
+    public static StringInterpolationWithValues Parse(string stringInterpolation, object? arg0
+	    , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
     {
         if (!_templates.TryGetValue(stringInterpolation, out var template))
         {
             _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
         }
 
-        return new StringInterpolationWithValues(template, arg0);
+        return new StringInterpolationWithValues(template, filePath, lineNo, stringInterpolation, arg0);
     }
 
-    public static StringInterpolationWithValues Parse(string formatString, object? arg0, object? arg1)
+    public static StringInterpolationWithValues Parse(string formatString, object? arg0, object? arg1
+	    , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
     {
         if (!_templates.TryGetValue(formatString, out var template))
         {
             _templates[formatString] = template = _messageTemplateParser.Parse(formatString);
         }
 
-        return new StringInterpolationWithValues(template, arg0, arg1);
+        return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1);
     }
 
     public static StringInterpolationWithValues Parse(string stringInterpolation
-        , object? arg0, object? arg1, object? arg2)
+        , object? arg0, object? arg1, object? arg2
+        , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
     {
         if (!_templates.TryGetValue(stringInterpolation, out var template))
         {
             _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
         }
 
-        return new StringInterpolationWithValues(template, arg0, arg1, arg2);
-    }
-
-    public static StringInterpolationWithValues Parse(string stringInterpolation, object? arg0, object? arg1, object? arg2, object? arg3)
-    {
-        if (!_templates.TryGetValue(stringInterpolation, out var template))
-        {
-            _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
-        }
-
-        return new StringInterpolationWithValues(template, arg0, arg1, arg2, arg3);
+        return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2);
     }
 
     public static StringInterpolationWithValues Parse(string stringInterpolation
-        , object? arg0, object? arg1, object? arg2, object? arg3, object? arg4)
+	    , object? arg0, object? arg1, object? arg2, object? arg3
+	    , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
     {
         if (!_templates.TryGetValue(stringInterpolation, out var template))
         {
             _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
         }
 
-        return new StringInterpolationWithValues(template, arg0, arg1, arg2, arg3, arg4);
+        return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3);
     }
 
     public static StringInterpolationWithValues Parse(string stringInterpolation
-        , object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5)
+        , object? arg0, object? arg1, object? arg2, object? arg3, object? arg4
+        , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
     {
         if (!_templates.TryGetValue(stringInterpolation, out var template))
         {
             _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
         }
 
-        return new StringInterpolationWithValues(template, arg0, arg1, arg2, arg3, arg4, arg5);
+        return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4);
+    }
+
+    public static StringInterpolationWithValues Parse(string stringInterpolation
+        , object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5
+        , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
+    {
+        if (!_templates.TryGetValue(stringInterpolation, out var template))
+        {
+            _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
+        }
+
+        return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5);
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S107:Method has 10 parameters, which is greater than the 7 authorized.", Justification = "Cannot use params[]")]
     public static StringInterpolationWithValues Parse(string stringInterpolation
-        , object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6)
+        , object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6
+        , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
     {
         if (!_templates.TryGetValue(stringInterpolation, out var template))
         {
             _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
         }
 
-        return new StringInterpolationWithValues(template, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+        return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S107:Method has 10 parameters, which is greater than the 7 authorized.", Justification = "Cannot use params[]")]
     public static StringInterpolationWithValues Parse(string stringInterpolation
-        , object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6, object? arg7)
+        , object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6, object? arg7
+        , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
     {
         if (!_templates.TryGetValue(stringInterpolation, out var template))
         {
             _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
         }
 
-        return new StringInterpolationWithValues(template, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+        return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S107:Method has 10 parameters, which is greater than the 7 authorized.", Justification = "Cannot use params[]")]
     public static StringInterpolationWithValues Parse(string stringInterpolation
-        , object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6, object? arg7, object? arg8)
+        , object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6, object? arg7, object? arg8
+        , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
     {
         if (!_templates.TryGetValue(stringInterpolation, out var template))
         {
             _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
         }
 
-        return new StringInterpolationWithValues(template, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+        return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S107:Method has 10 parameters, which is greater than the 7 authorized.", Justification = "Cannot use params[]")]
-    public static StringInterpolationWithValues Parse(string stringInterpolation, object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6, object? arg7, object? arg8, object? arg9)
+    public static StringInterpolationWithValues Parse(string stringInterpolation
+	    , object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6, object? arg7, object? arg8, object? arg9
+	    , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
     {
         if (!_templates.TryGetValue(stringInterpolation, out var template))
         {
             _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
         }
 
-        return new StringInterpolationWithValues(template, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+        return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
     }
 
     #endregion parsing with > 0 Params 

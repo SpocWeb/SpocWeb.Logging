@@ -3,8 +3,12 @@
 namespace org.SpocWeb.root.Logging;
 
 /// <summary> Encapsulates a parsed StringInterpolation with <see cref="values"/> </summary>
+/// <remarks>
+/// The <paramref name="filePath"/> can act as the Log Category, instead of the Class Name.
+/// This further obsoletes the tedious Log Injection. 
+/// </remarks>
 /// <inheritdoc cref="ToString"/>
-public record StringInterpolationWithValues(MessageTemplate template, params object?[] values)
+public record StringInterpolationWithValues(MessageTemplate template, string filePath, int lineNo, params object?[] values)
 {
 	/// <summary> The parsed Template of the Interpolation </summary>
     public MessageTemplate Template => template;
