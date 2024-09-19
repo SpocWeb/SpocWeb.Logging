@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
@@ -7,8 +8,11 @@ using Serilog.Parsing;
 
 namespace org.SpocWeb.root.Logging;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 /// <summary> Extension Methods to use <see cref="StringInterpolationWithValues"/> for Logging </summary>
 /// <remarks>This makes Log-Statements more readable and re-usable for Exceptions and other Messages</remarks>
+[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 public static class Log
 {
 #pragma warning disable CA2254
@@ -33,8 +37,9 @@ public static class Log
 
     #region Log Statements
 
-    public static StringInterpolationWithValues Error(this ILogger log, FormattableString stringInterpolation, Exception? x = null)
-        => Error(log, Parse(stringInterpolation), x);
+    public static StringInterpolationWithValues Error(this ILogger log, FormattableString stringInterpolation
+	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+        => Error(log, Parse(stringInterpolation, path, lineNo), x);
 
     public static StringInterpolationWithValues Error(this ILogger log, StringInterpolationWithValues parsed, Exception? x = null)
     {
@@ -42,8 +47,9 @@ public static class Log
         return parsed;
     }
 
-    public static StringInterpolationWithValues Critical(this ILogger log, FormattableString stringInterpolation, Exception? x = null)
-        => Critical(log, Parse(stringInterpolation), x);
+    public static StringInterpolationWithValues Critical(this ILogger log, FormattableString stringInterpolation
+	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+        => Critical(log, Parse(stringInterpolation, path, lineNo), x);
 
     public static StringInterpolationWithValues Critical(this ILogger log, StringInterpolationWithValues parsed, Exception? x = null)
     {
@@ -51,8 +57,9 @@ public static class Log
         return parsed;
     }
 
-    public static StringInterpolationWithValues Debug(this ILogger log, FormattableString stringInterpolation, Exception? x = null)
-        => Debug(log, Parse(stringInterpolation), x);
+    public static StringInterpolationWithValues Debug(this ILogger log, FormattableString stringInterpolation
+	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+        => Debug(log, Parse(stringInterpolation, path, lineNo), x);
 
     public static StringInterpolationWithValues Debug(this ILogger log, StringInterpolationWithValues parsed, Exception? x = null)
     {
@@ -60,8 +67,9 @@ public static class Log
         return parsed;
     }
 
-    public static StringInterpolationWithValues Information(this ILogger log, FormattableString stringInterpolation, Exception? x = null)
-        => Information(log, Parse(stringInterpolation), x);
+    public static StringInterpolationWithValues Information(this ILogger log, FormattableString stringInterpolation
+	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+        => Information(log, Parse(stringInterpolation, path, lineNo), x);
 
     public static StringInterpolationWithValues Information(this ILogger log, StringInterpolationWithValues parsed, Exception? x = null)
     {
@@ -69,8 +77,9 @@ public static class Log
         return parsed;
     }
 
-    public static StringInterpolationWithValues Warning(this ILogger log, FormattableString stringInterpolation, Exception? x = null)
-        => Warning(log, Parse(stringInterpolation), x);
+    public static StringInterpolationWithValues Warning(this ILogger log, FormattableString stringInterpolation
+	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+        => Warning(log, Parse(stringInterpolation, path, lineNo), x);
 
     public static StringInterpolationWithValues Warning(this ILogger log, StringInterpolationWithValues parsed, Exception? x = null)
     {
@@ -78,8 +87,9 @@ public static class Log
         return parsed;
     }
 
-    public static StringInterpolationWithValues Trace(this ILogger log, FormattableString stringInterpolation, Exception? x = null)
-        => Trace(log, Parse(stringInterpolation), x);
+    public static StringInterpolationWithValues Trace(this ILogger log, FormattableString stringInterpolation
+	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+        => Trace(log, Parse(stringInterpolation, path, lineNo), x);
 
     public static StringInterpolationWithValues Trace(this ILogger log, StringInterpolationWithValues parsed, Exception? x = null)
     {
