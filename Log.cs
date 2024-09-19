@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Runtime.CompilerServices;
+using System.Text;
+using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 using Serilog.Events;
 using Serilog.Parsing;
@@ -101,7 +103,7 @@ public static class Log
             var propertyValue = int.TryParse(propertyToken.PropertyName, out var index)
                 ? properties[index]?.ToString()
                 : properties[++pos]?.ToString();
-            result = result.Replace($"{{{propertyToken.PropertyName}}}", propertyValue);
+            result = result.Replace(propertyToken.ToString(), propertyValue);
         }
 
         return result.ToString();
@@ -150,14 +152,45 @@ public static class Log
     }
 
 
-    /// <summary> Parses and caches the <paramref name="stringInterpolation"/> </summary>
-    public static StringInterpolationWithValues Parse(this FormattableString stringInterpolation) {
+	/// <summary> Parses and caches the <paramref name="stringInterpolation"/> </summary>
+	/// <remarks>
+	/// Tries to read the Expressions from the Log Line.
+	/// This requires all Expressions to be written on the same Log Line
+	/// and the Log Text should not contain `{` or `}` to simplify Parsing.
+	///
+	/// For comfortable Logging, the Log-Statements should be extracted into their own Files,
+	/// similar to the NDoc.xml Files, and deployed to the run-site,
+	/// to improve the Logging Experience.
+	///
+	/// Alternatively the Log-Evaluation can mix in these Values,
+	/// but only if File and Line-Info can be matched.
+	/// </remarks>
+	public static StringInterpolationWithValues Parse(this FormattableString stringInterpolation, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1) {
 	    if (!_templates.TryGetValue(stringInterpolation.Format, out var template)) {
 		    _templates[stringInterpolation.Format] = template = _messageTemplateParser.Parse(stringInterpolation.Format);
+		    if (lineNo > 0 && File.Exists(path)) {
+			    var lines = File.ReadLines(path);
+			    var line = lines.Skip(lineNo - 1).First();
+			    var tokens = (MessageTemplateToken[]) template.Tokens;
+			    var i = -1;
+				foreach (Match match in BracedExpression.Matches(line)) { //.IndexOf("Log.Parse($\"", StringComparison.Ordinal))) {
+					while (++i < tokens.Length) {
+						if (tokens[i] is not PropertyToken property) {
+							continue;
+						} //keep the RawText `{0}` etc. for later Replacements:
+						tokens[i] = new PropertyToken(match.Value.Substring(1, match.Value.Length - 2), property.ToString(), property.Format, property.Alignment, property.Destructuring);
+						break;
+					}
+			    }
+		    }
 	    }
 
 	    return new StringInterpolationWithValues(template, stringInterpolation.GetArguments());
     }
+
+	/// <summary> Matches a braced Expression in String Interpolation </summary>
+	//[GeneratedRegex(@"\{[^""]+?\}", RegexOptions.Compiled, 9)]
+	public static readonly Regex BracedExpression = new (@"\{[^""]+?\}", RegexOptions.Compiled, TimeSpan.FromMilliseconds(99));
 
     #region parsing with > 0 Params 
 
