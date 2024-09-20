@@ -15,6 +15,10 @@ namespace org.SpocWeb.root.Logging;
 [SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 public static class Log
 {
+    /// <summary> Central Log Dispatcher and aggregator </summary>
+    /// <remarks> for lightweight Coding w/o injecting Loggers everywhere. </remarks>
+	public static ILogger Logger { get; set; } //= new Logger();
+
 #pragma warning disable CA2254
     static readonly MessageTemplateParser _messageTemplateParser = new();
 
@@ -41,6 +45,70 @@ public static class Log
     }
 
     #region Log Statements
+
+    public static StringInterpolationWithValues Error(FormattableString stringInterpolation
+        , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+        => Logger.Error(stringInterpolation.Parse(path, lineNo), x);
+
+    public static StringInterpolationWithValues Error(StringInterpolationWithValues messageWithValues, Exception? x = null) {
+        //log.LogError(x, messageWithValues.template.Text, messageWithValues.values);
+        Logger.Log(LogLevel.Error, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+        return messageWithValues;
+    }
+
+    public static StringInterpolationWithValues Critical(FormattableString stringInterpolation
+        , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+        => Critical(Logger, Parse(stringInterpolation, path, lineNo), x);
+
+    public static StringInterpolationWithValues Critical(StringInterpolationWithValues messageWithValues, Exception? x = null) {
+        //log.LogCritical(x, parsed.template.Text, parsed.values);
+        Logger.Log(LogLevel.Critical, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+        return messageWithValues;
+    }
+
+    public static StringInterpolationWithValues Debug(FormattableString stringInterpolation
+        , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+        => Debug(Logger, Parse(stringInterpolation, path, lineNo), x);
+
+    public static StringInterpolationWithValues Debug(StringInterpolationWithValues messageWithValues, Exception? x = null) {
+        //log.LogDebug(x, messageWithValues.template.Text, messageWithValues.values);
+        Logger.Log(LogLevel.Debug, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+        return messageWithValues;
+    }
+
+    public static StringInterpolationWithValues Information(FormattableString stringInterpolation
+        , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+        => Information(Logger, Parse(stringInterpolation, path, lineNo), x);
+
+    public static StringInterpolationWithValues Information(StringInterpolationWithValues messageWithValues, Exception? x = null) {
+        //log.LogInformation(x, messageWithValues.template.Text, messageWithValues.values);
+        Logger.Log(LogLevel.Information, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+        return messageWithValues;
+    }
+
+    public static StringInterpolationWithValues Warning(FormattableString stringInterpolation
+        , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+        => Warning(Logger, Parse(stringInterpolation, path, lineNo), x);
+
+    public static StringInterpolationWithValues Warning(StringInterpolationWithValues messageWithValues, Exception? x = null) {
+        //log.LogWarning(x, messageWithValues.template.Text, messageWithValues.values);
+        Logger.Log(LogLevel.Warning, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+        return messageWithValues;
+    }
+
+    public static StringInterpolationWithValues Trace(FormattableString stringInterpolation
+        , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+        => Trace(Logger, Parse(stringInterpolation, path, lineNo), x);
+
+    public static StringInterpolationWithValues Trace(StringInterpolationWithValues messageWithValues, Exception? x = null) {
+        //log.LogTrace(x, messageWithValues.template.Text, messageWithValues.values);
+        Logger.Log(LogLevel.Trace, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+        return messageWithValues;
+    }
+
+    #endregion Log Statements
+
+    #region Log Extension Statements
 
     public static StringInterpolationWithValues Error(this ILogger log, FormattableString stringInterpolation
 	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
@@ -108,7 +176,7 @@ public static class Log
         return messageWithValues;
     }
 
-    #endregion Log Statements
+    #endregion Log Extension Statements
 
     public static string Format(this MessageTemplate template, params object?[] properties)
     {
