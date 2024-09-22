@@ -23,7 +23,7 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net48;net8.0</TargetFrameworks>
-		<SignAssembly>true</SignAssembly>
+		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>..\..\org.SpocWeb.snk</AssemblyOriginatorKeyFile>
 		<RootNamespace>org.SpocWeb.root.Logging</RootNamespace>
 		<Platforms>AnyCPU;x86</Platforms>
