@@ -22,11 +22,11 @@ public static class Log
 #pragma warning disable CA2254
 	static readonly MessageTemplateParser _messageTemplateParser = new();
 
-    // Function to generate a formatted string
-    // Parse the Serilog message template
-    public static MessageTemplate ParseTemplate(string message, object _) => _messageTemplateParser.Parse(message);
+	// Function to generate a formatted string
+	// Parse the Serilog message template
+	public static MessageTemplate ParseTemplate(string message, object _) => _messageTemplateParser.Parse(message);
 
-    static readonly Dictionary<string, MessageTemplate> _templates = [];
+	static readonly Dictionary<string, MessageTemplate> _templates = [];
 
 	/// <summary> Parses and caches the <paramref name="stringInterpolation"/> </summary>
 	/// <remarks>
@@ -34,211 +34,194 @@ public static class Log
 	/// Rather use a <see cref="FormattableString"/> with String Interpolation!
 	/// </remarks>
 	[Obsolete("Rather use String Interpolation!")]
-    public static StringInterpolationWithValues Parse(string stringInterpolation, params object[] args)
-    {
-        if (!_templates.TryGetValue(stringInterpolation, out var template))
-        {
-            _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
-        }
+	public static StringInterpolationWithValues Parse(string stringInterpolation, params object[] args) {
+		if (!_templates.TryGetValue(stringInterpolation, out var template)) {
+			_templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
+		}
 
-        return new StringInterpolationWithValues(template, "Rather use String Interpolation!", -1, args);// { Exception = x };
-    }
+		return new StringInterpolationWithValues(template, "Rather use String Interpolation!", -1, args);// { Exception = x };
+	}
 
-    #region Log Statements
+	#region Log Statements
 
-    public static StringInterpolationWithValues Error(FormattableString stringInterpolation
-        , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-        => Logger.Error(stringInterpolation.Parse(path, lineNo), x);
+	public static StringInterpolationWithValues Error(FormattableString stringInterpolation
+		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Logger.Error(stringInterpolation.Parse(path, lineNo), x);
 
-    public static StringInterpolationWithValues Error(StringInterpolationWithValues messageWithValues, Exception? x = null) {
-        //log.LogError(x, messageWithValues.template.Text, messageWithValues.values);
-        Logger?.Log(LogLevel.Error, 0, messageWithValues, x, (m, e) => m.ToString() + e);
-        return messageWithValues;
-    }
+	public static StringInterpolationWithValues Error(StringInterpolationWithValues messageWithValues, Exception? x = null) {
+		//log.LogError(x, messageWithValues.template.Text, messageWithValues.values);
+		Logger?.Log(LogLevel.Error, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+		return messageWithValues;
+	}
 
-    public static StringInterpolationWithValues Critical(FormattableString stringInterpolation
-        , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-        => Critical(Logger, Parse(stringInterpolation, path, lineNo), x);
+	public static StringInterpolationWithValues Critical(FormattableString stringInterpolation
+		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Critical(Logger, Parse(stringInterpolation, path, lineNo), x);
 
-    public static StringInterpolationWithValues Critical(StringInterpolationWithValues messageWithValues, Exception? x = null) {
-        //log.LogCritical(x, parsed.template.Text, parsed.values);
-        Logger?.Log(LogLevel.Critical, 0, messageWithValues, x, (m, e) => m.ToString() + e);
-        return messageWithValues;
-    }
+	public static StringInterpolationWithValues Critical(StringInterpolationWithValues messageWithValues, Exception? x = null) {
+		//log.LogCritical(x, parsed.template.Text, parsed.values);
+		Logger?.Log(LogLevel.Critical, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+		return messageWithValues;
+	}
 
-    public static StringInterpolationWithValues Debug(FormattableString stringInterpolation
-        , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-        => Debug(Logger, Parse(stringInterpolation, path, lineNo), x);
+	public static StringInterpolationWithValues Debug(FormattableString stringInterpolation
+		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Debug(Logger, Parse(stringInterpolation, path, lineNo), x);
 
-    public static StringInterpolationWithValues Debug(StringInterpolationWithValues messageWithValues, Exception? x = null) {
-        //log.LogDebug(x, messageWithValues.template.Text, messageWithValues.values);
-        Logger?.Log(LogLevel.Debug, 0, messageWithValues, x, (m, e) => m.ToString() + e);
-        return messageWithValues;
-    }
+	public static StringInterpolationWithValues Debug(StringInterpolationWithValues messageWithValues, Exception? x = null) {
+		//log.LogDebug(x, messageWithValues.template.Text, messageWithValues.values);
+		Logger?.Log(LogLevel.Debug, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+		return messageWithValues;
+	}
 
-    public static StringInterpolationWithValues Information(FormattableString stringInterpolation
-        , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-        => Information(Logger, Parse(stringInterpolation, path, lineNo), x);
+	public static StringInterpolationWithValues Information(FormattableString stringInterpolation
+		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Information(Logger, Parse(stringInterpolation, path, lineNo), x);
 
-    public static StringInterpolationWithValues Information(StringInterpolationWithValues messageWithValues, Exception? x = null) {
-        //log.LogInformation(x, messageWithValues.template.Text, messageWithValues.values);
-        Logger?.Log(LogLevel.Information, 0, messageWithValues, x, (m, e) => m.ToString() + e);
-        return messageWithValues;
-    }
+	public static StringInterpolationWithValues Information(StringInterpolationWithValues messageWithValues, Exception? x = null) {
+		//log.LogInformation(x, messageWithValues.template.Text, messageWithValues.values);
+		Logger?.Log(LogLevel.Information, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+		return messageWithValues;
+	}
 
-    public static StringInterpolationWithValues Warning(FormattableString stringInterpolation
-        , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-        => Warning(Logger, Parse(stringInterpolation, path, lineNo), x);
+	public static StringInterpolationWithValues Warning(FormattableString stringInterpolation
+		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Warning(Logger, Parse(stringInterpolation, path, lineNo), x);
 
-    public static StringInterpolationWithValues Warning(StringInterpolationWithValues messageWithValues, Exception? x = null) {
-        //log.LogWarning(x, messageWithValues.template.Text, messageWithValues.values);
-        Logger?.Log(LogLevel.Warning, 0, messageWithValues, x, (m, e) => m.ToString() + e);
-        return messageWithValues;
-    }
+	public static StringInterpolationWithValues Warning(StringInterpolationWithValues messageWithValues, Exception? x = null) {
+		//log.LogWarning(x, messageWithValues.template.Text, messageWithValues.values);
+		Logger?.Log(LogLevel.Warning, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+		return messageWithValues;
+	}
 
-    public static StringInterpolationWithValues Trace(FormattableString stringInterpolation
-        , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-        => Trace(Logger, Parse(stringInterpolation, path, lineNo), x);
+	public static StringInterpolationWithValues Trace(FormattableString stringInterpolation
+		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Trace(Logger, Parse(stringInterpolation, path, lineNo), x);
 
-    public static StringInterpolationWithValues Trace(StringInterpolationWithValues messageWithValues, Exception? x = null) {
-        //log.LogTrace(x, messageWithValues.template.Text, messageWithValues.values);
-        Logger?.Log(LogLevel.Trace, 0, messageWithValues, x, (m, e) => m.ToString() + e);
-        return messageWithValues;
-    }
+	public static StringInterpolationWithValues Trace(StringInterpolationWithValues messageWithValues, Exception? x = null) {
+		//log.LogTrace(x, messageWithValues.template.Text, messageWithValues.values);
+		Logger?.Log(LogLevel.Trace, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+		return messageWithValues;
+	}
 
-    #endregion Log Statements
+	#endregion Log Statements
 
-    #region Log Extension Statements
+	#region Log Extension Statements
 
-    public static StringInterpolationWithValues Error(this ILogger log, FormattableString stringInterpolation
-	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-        => log.Error(stringInterpolation.Parse(path, lineNo), x);
+	public static StringInterpolationWithValues Error(this ILogger log, FormattableString stringInterpolation
+		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> log.Error(stringInterpolation.Parse(path, lineNo), x);
 
-    public static StringInterpolationWithValues Error(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null)
-    {
-        //log.LogError(x, messageWithValues.template.Text, messageWithValues.values);
-        log?.Log(LogLevel.Error, 0, messageWithValues, x, (m, e) => m.ToString() + e);
-        return messageWithValues;
-    }
+	public static StringInterpolationWithValues Error(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null) {
+		//log.LogError(x, messageWithValues.template.Text, messageWithValues.values);
+		log?.Log(LogLevel.Error, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+		return messageWithValues;
+	}
 
-    public static StringInterpolationWithValues Critical(this ILogger log, FormattableString stringInterpolation
-	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-        => Critical(log, Parse(stringInterpolation, path, lineNo), x);
+	public static StringInterpolationWithValues Critical(this ILogger log, FormattableString stringInterpolation
+		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Critical(log, Parse(stringInterpolation, path, lineNo), x);
 
-    public static StringInterpolationWithValues Critical(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null)
-    {
-        //log.LogCritical(x, parsed.template.Text, parsed.values);
-        log?.Log(LogLevel.Critical, 0, messageWithValues, x, (m, e) => m.ToString() + e);
-        return messageWithValues;
-    }
+	public static StringInterpolationWithValues Critical(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null) {
+		//log.LogCritical(x, parsed.template.Text, parsed.values);
+		log?.Log(LogLevel.Critical, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+		return messageWithValues;
+	}
 
-    public static StringInterpolationWithValues Debug(this ILogger? log, FormattableString stringInterpolation
-	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-        => Debug(log, Parse(stringInterpolation, path, lineNo), x);
+	public static StringInterpolationWithValues Debug(this ILogger? log, FormattableString stringInterpolation
+		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Debug(log, Parse(stringInterpolation, path, lineNo), x);
 
-    public static StringInterpolationWithValues Debug(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null)
-    {
-        //log.LogDebug(x, messageWithValues.template.Text, messageWithValues.values);
-        log?.Log(LogLevel.Debug, 0, messageWithValues, x, (m, e) => m.ToString() + e);
-        return messageWithValues;
-    }
+	public static StringInterpolationWithValues Debug(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null) {
+		//log.LogDebug(x, messageWithValues.template.Text, messageWithValues.values);
+		log?.Log(LogLevel.Debug, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+		return messageWithValues;
+	}
 
-    public static StringInterpolationWithValues Information(this ILogger? log, FormattableString stringInterpolation
-	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-        => Information(log, Parse(stringInterpolation, path, lineNo), x);
+	public static StringInterpolationWithValues Information(this ILogger? log, FormattableString stringInterpolation
+		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Information(log, Parse(stringInterpolation, path, lineNo), x);
 
-    public static StringInterpolationWithValues Information(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null)
-    {
-        //log.LogInformation(x, messageWithValues.template.Text, messageWithValues.values);
-        log?.Log(LogLevel.Information, 0, messageWithValues, x, (m, e) => m.ToString() + e);
-        return messageWithValues;
-    }
+	public static StringInterpolationWithValues Information(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null) {
+		//log.LogInformation(x, messageWithValues.template.Text, messageWithValues.values);
+		log?.Log(LogLevel.Information, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+		return messageWithValues;
+	}
 
-    public static StringInterpolationWithValues Warning(this ILogger? log, FormattableString stringInterpolation
-	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-        => Warning(log, Parse(stringInterpolation, path, lineNo), x);
+	public static StringInterpolationWithValues Warning(this ILogger? log, FormattableString stringInterpolation
+		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Warning(log, Parse(stringInterpolation, path, lineNo), x);
 
-    public static StringInterpolationWithValues Warning(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null)
-    {
-        //log.LogWarning(x, messageWithValues.template.Text, messageWithValues.values);
-        log?.Log(LogLevel.Warning, 0, messageWithValues, x, (m, e) => m.ToString() + e);
-        return messageWithValues;
-    }
+	public static StringInterpolationWithValues Warning(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null) {
+		//log.LogWarning(x, messageWithValues.template.Text, messageWithValues.values);
+		log?.Log(LogLevel.Warning, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+		return messageWithValues;
+	}
 
-    public static StringInterpolationWithValues Trace(this ILogger? log, FormattableString stringInterpolation
-	    , Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-        => Trace(log, Parse(stringInterpolation, path, lineNo), x);
+	public static StringInterpolationWithValues Trace(this ILogger? log, FormattableString stringInterpolation
+		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Trace(log, Parse(stringInterpolation, path, lineNo), x);
 
-    public static StringInterpolationWithValues Trace(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null)
-    {
-        //log.LogTrace(x, messageWithValues.template.Text, messageWithValues.values);
-        log?.Log(LogLevel.Trace, 0, messageWithValues, x, (m, e) => m.ToString() + e);
-        return messageWithValues;
-    }
+	public static StringInterpolationWithValues Trace(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null) {
+		//log.LogTrace(x, messageWithValues.template.Text, messageWithValues.values);
+		log?.Log(LogLevel.Trace, 0, messageWithValues, x, (m, e) => m.ToString() + e);
+		return messageWithValues;
+	}
 
-    #endregion Log Extension Statements
+	#endregion Log Extension Statements
 
-    public static string Format(this MessageTemplate template, params object?[] properties)
-    {
-        var result = new StringBuilder(template.Text);
-        var pos = -1;
-        foreach (var token in template.Tokens)
-        {
-            if (token is not PropertyToken propertyToken)
-            {
-                continue;
-            }
+	public static string Format(this MessageTemplate template, params object?[] properties) {
+		var result = new StringBuilder(template.Text);
+		var pos = -1;
+		foreach (var token in template.Tokens) {
+			if (token is not PropertyToken propertyToken) {
+				continue;
+			}
 
-            var propertyValue = int.TryParse(propertyToken.PropertyName, out var index)
-                ? properties[index]?.ToString()
-                : properties[++pos]?.ToString();
-            result = result.Replace(propertyToken.ToString(), propertyValue);
-        }
+			var propertyValue = int.TryParse(propertyToken.PropertyName, out var index)
+				? properties[index]?.ToString()
+				: properties[++pos]?.ToString();
+			result = result.Replace(propertyToken.ToString(), propertyValue);
+		}
 
-        return result.ToString();
-    }
+		return result.ToString();
+	}
 
-    /// <inheritdoc cref="AddProperties"/>
-    public static Dictionary<string, object?> ToDictionary(this MessageTemplate template, object?[] properties)
-    {
-        var dictionary = new Dictionary<string, object?>();
-        dictionary.AddProperties(template, properties);
-        return dictionary;
-    }
+	/// <inheritdoc cref="AddProperties"/>
+	public static Dictionary<string, object?> ToDictionary(this MessageTemplate template, object?[] properties) {
+		var dictionary = new Dictionary<string, object?>();
+		dictionary.AddProperties(template, properties);
+		return dictionary;
+	}
 
-    /// <summary> Adds the <paramref name="properties"/> to the <paramref name="dictionary"/> </summary>
-    public static IDictionary<string, object?> AddProperties(this IDictionary<string, object?>? dictionary, MessageTemplate template, params object?[] properties)
-    {
-        dictionary ??= new Dictionary<string, object?>();
-        var pos = -1;
-        foreach (var token in template.Tokens)
-        {
-            if (token is not PropertyToken propertyToken)
-            {
-                continue;
-            }
+	/// <summary> Adds the <paramref name="properties"/> to the <paramref name="dictionary"/> </summary>
+	public static IDictionary<string, object?> AddProperties(this IDictionary<string, object?>? dictionary, MessageTemplate template, params object?[] properties) {
+		dictionary ??= new Dictionary<string, object?>();
+		var pos = -1;
+		foreach (var token in template.Tokens) {
+			if (token is not PropertyToken propertyToken) {
+				continue;
+			}
 
-            var propertyValue = int.TryParse(propertyToken.PropertyName, out var index)
-                ? properties[index]?.ToString()
-                : properties[++pos]?.ToString();
-            dictionary[propertyToken.PropertyName] = propertyValue;
-        }
+			var propertyValue = int.TryParse(propertyToken.PropertyName, out var index)
+				? properties[index]?.ToString()
+				: properties[++pos]?.ToString();
+			dictionary[propertyToken.PropertyName] = propertyValue;
+		}
 
-        return dictionary;
-    }
+		return dictionary;
+	}
 
-    public static string Format(this MessageTemplate template, IReadOnlyDictionary<string, object?> properties)
-    {
-        var result = new StringBuilder(template.Text);
-        var tokens = template.Tokens.OfType<PropertyToken>();
-        foreach (var token in tokens)
-        {
-            var propertyValue = properties[token.PropertyName]?.ToString();
-            result = result.Replace($"{{{token.PropertyName}}}", propertyValue);
-        }
+	public static string Format(this MessageTemplate template, IReadOnlyDictionary<string, object?> properties) {
+		var result = new StringBuilder(template.Text);
+		var tokens = template.Tokens.OfType<PropertyToken>();
+		foreach (var token in tokens) {
+			var propertyValue = properties[token.PropertyName]?.ToString();
+			result = result.Replace($"{{{token.PropertyName}}}", propertyValue);
+		}
 
-        return result.ToString();
-    }
+		return result.ToString();
+	}
 
 
 	/// <summary> Parses and caches the <paramref name="stringInterpolation"/> </summary>
@@ -256,13 +239,13 @@ public static class Log
 	/// </remarks>
 	public static StringInterpolationWithValues Parse(this FormattableString stringInterpolation//, Exception? x = null
 		, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1) {
-	    if (!_templates.TryGetValue(stringInterpolation.Format, out var template)) {
-		    _templates[stringInterpolation.Format] = template = _messageTemplateParser.Parse(stringInterpolation.Format);
-		    if (lineNo > 0 && File.Exists(filePath)) {
-			    var lines = File.ReadLines(filePath);
-			    var line = lines.Skip(lineNo - 1).First();
-			    var tokens = (MessageTemplateToken[]) template.Tokens;
-			    var i = -1;
+		if (!_templates.TryGetValue(stringInterpolation.Format, out var template)) {
+			_templates[stringInterpolation.Format] = template = _messageTemplateParser.Parse(stringInterpolation.Format);
+			if (lineNo > 0 && File.Exists(filePath)) {
+				var lines = File.ReadLines(filePath);
+				var line = lines.Skip(lineNo - 1).First();
+				var tokens = (MessageTemplateToken[]) template.Tokens;
+				var i = -1;
 				foreach (Match match in BracedExpression.Matches(line)) { //.IndexOf("Log.Parse($\"", StringComparison.Ordinal))) {
 					while (++i < tokens.Length) {
 						if (tokens[i] is not PropertyToken property) {
@@ -271,142 +254,122 @@ public static class Log
 						tokens[i] = new PropertyToken(match.Value.Substring(1, match.Value.Length - 2), property.ToString(), property.Format, property.Alignment, property.Destructuring);
 						break;
 					}
-			    }
-		    }
-	    }
+				}
+			}
+		}
 
-	    return new StringInterpolationWithValues(template, filePath, lineNo, stringInterpolation.GetArguments());
-    }
+		return new StringInterpolationWithValues(template, filePath, lineNo, stringInterpolation.GetArguments());
+	}
 
 	/// <summary> Matches a braced Expression in String Interpolation </summary>
 	//[GeneratedRegex(@"\{[^""]+?\}", RegexOptions.Compiled, 9)]
-	public static readonly Regex BracedExpression = new (@"\{[^""]+?\}", RegexOptions.Compiled, TimeSpan.FromMilliseconds(99));
+	public static readonly Regex BracedExpression = new(@"\{[^""]+?\}", RegexOptions.Compiled, TimeSpan.FromMilliseconds(99));
 
-    #region parsing with > 0 Params 
+	#region parsing with > 0 Params 
 
-    /// <summary> Parses and caches the <paramref name="stringInterpolation"/> </summary>
-    public static StringInterpolationWithValues Parse(string stringInterpolation, object? arg0
-	    , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
-    {
-        if (!_templates.TryGetValue(stringInterpolation, out var template))
-        {
-            _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
-        }
+	/// <summary> Parses and caches the <paramref name="stringInterpolation"/> </summary>
+	public static StringInterpolationWithValues Parse(string stringInterpolation, object? arg0
+		, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1) {
+		if (!_templates.TryGetValue(stringInterpolation, out var template)) {
+			_templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
+		}
 
-        return new StringInterpolationWithValues(template, filePath, lineNo, stringInterpolation, arg0);
-    }
+		return new StringInterpolationWithValues(template, filePath, lineNo, stringInterpolation, arg0);
+	}
 
-    public static StringInterpolationWithValues Parse(string formatString, object? arg0, object? arg1
-	    , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
-    {
-        if (!_templates.TryGetValue(formatString, out var template))
-        {
-            _templates[formatString] = template = _messageTemplateParser.Parse(formatString);
-        }
+	public static StringInterpolationWithValues Parse(string formatString, object? arg0, object? arg1
+		, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1) {
+		if (!_templates.TryGetValue(formatString, out var template)) {
+			_templates[formatString] = template = _messageTemplateParser.Parse(formatString);
+		}
 
-        return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1);
-    }
+		return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1);
+	}
 
-    public static StringInterpolationWithValues Parse(string stringInterpolation
-        , object? arg0, object? arg1, object? arg2
-        , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
-    {
-        if (!_templates.TryGetValue(stringInterpolation, out var template))
-        {
-            _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
-        }
+	public static StringInterpolationWithValues Parse(string stringInterpolation
+		, object? arg0, object? arg1, object? arg2
+		, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1) {
+		if (!_templates.TryGetValue(stringInterpolation, out var template)) {
+			_templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
+		}
 
-        return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2);
-    }
+		return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2);
+	}
 
-    public static StringInterpolationWithValues Parse(string stringInterpolation
-	    , object? arg0, object? arg1, object? arg2, object? arg3
-	    , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
-    {
-        if (!_templates.TryGetValue(stringInterpolation, out var template))
-        {
-            _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
-        }
+	public static StringInterpolationWithValues Parse(string stringInterpolation
+		, object? arg0, object? arg1, object? arg2, object? arg3
+		, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1) {
+		if (!_templates.TryGetValue(stringInterpolation, out var template)) {
+			_templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
+		}
 
-        return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3);
-    }
+		return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3);
+	}
 
-    public static StringInterpolationWithValues Parse(string stringInterpolation
-        , object? arg0, object? arg1, object? arg2, object? arg3, object? arg4
-        , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
-    {
-        if (!_templates.TryGetValue(stringInterpolation, out var template))
-        {
-            _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
-        }
+	public static StringInterpolationWithValues Parse(string stringInterpolation
+		, object? arg0, object? arg1, object? arg2, object? arg3, object? arg4
+		, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1) {
+		if (!_templates.TryGetValue(stringInterpolation, out var template)) {
+			_templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
+		}
 
-        return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4);
-    }
+		return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4);
+	}
 
-    public static StringInterpolationWithValues Parse(string stringInterpolation
-        , object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5
-        , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
-    {
-        if (!_templates.TryGetValue(stringInterpolation, out var template))
-        {
-            _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
-        }
+	public static StringInterpolationWithValues Parse(string stringInterpolation
+		, object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5
+		, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1) {
+		if (!_templates.TryGetValue(stringInterpolation, out var template)) {
+			_templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
+		}
 
-        return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5);
-    }
+		return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5);
+	}
 
-    [SuppressMessage("Major Code Smell", "S107:Method has 10 parameters, which is greater than the 7 authorized.", Justification = "Cannot use params[]")]
-    public static StringInterpolationWithValues Parse(string stringInterpolation
-        , object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6
-        , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
-    {
-        if (!_templates.TryGetValue(stringInterpolation, out var template))
-        {
-            _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
-        }
+	[SuppressMessage("Major Code Smell", "S107:Method has 10 parameters, which is greater than the 7 authorized.", Justification = "Cannot use params[]")]
+	public static StringInterpolationWithValues Parse(string stringInterpolation
+		, object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6
+		, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1) {
+		if (!_templates.TryGetValue(stringInterpolation, out var template)) {
+			_templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
+		}
 
-        return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
-    }
+		return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+	}
 
-    [SuppressMessage("Major Code Smell", "S107:Method has 10 parameters, which is greater than the 7 authorized.", Justification = "Cannot use params[]")]
-    public static StringInterpolationWithValues Parse(string stringInterpolation
-        , object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6, object? arg7
-        , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
-    {
-        if (!_templates.TryGetValue(stringInterpolation, out var template))
-        {
-            _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
-        }
+	[SuppressMessage("Major Code Smell", "S107:Method has 10 parameters, which is greater than the 7 authorized.", Justification = "Cannot use params[]")]
+	public static StringInterpolationWithValues Parse(string stringInterpolation
+		, object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6, object? arg7
+		, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1) {
+		if (!_templates.TryGetValue(stringInterpolation, out var template)) {
+			_templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
+		}
 
-        return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
-    }
+		return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+	}
 
-    [SuppressMessage("Major Code Smell", "S107:Method has 10 parameters, which is greater than the 7 authorized.", Justification = "Cannot use params[]")]
-    public static StringInterpolationWithValues Parse(string stringInterpolation
-        , object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6, object? arg7, object? arg8
-        , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
-    {
-        if (!_templates.TryGetValue(stringInterpolation, out var template))
-        {
-            _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
-        }
+	[SuppressMessage("Major Code Smell", "S107:Method has 10 parameters, which is greater than the 7 authorized.", Justification = "Cannot use params[]")]
+	public static StringInterpolationWithValues Parse(string stringInterpolation
+		, object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6, object? arg7, object? arg8
+		, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1) {
+		if (!_templates.TryGetValue(stringInterpolation, out var template)) {
+			_templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
+		}
 
-        return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
-    }
+		return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+	}
 
-    [SuppressMessage("Major Code Smell", "S107:Method has 10 parameters, which is greater than the 7 authorized.", Justification = "Cannot use params[]")]
-    public static StringInterpolationWithValues Parse(string stringInterpolation
-	    , object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6, object? arg7, object? arg8, object? arg9
-	    , [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1)
-    {
-        if (!_templates.TryGetValue(stringInterpolation, out var template))
-        {
-            _templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
-        }
+	[SuppressMessage("Major Code Smell", "S107:Method has 10 parameters, which is greater than the 7 authorized.", Justification = "Cannot use params[]")]
+	public static StringInterpolationWithValues Parse(string stringInterpolation
+		, object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6, object? arg7, object? arg8, object? arg9
+		, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1) {
+		if (!_templates.TryGetValue(stringInterpolation, out var template)) {
+			_templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
+		}
 
-        return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
-    }
+		return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+	}
 
-    #endregion parsing with > 0 Params 
+	#endregion parsing with > 0 Params 
 
 }
