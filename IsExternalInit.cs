@@ -3,4 +3,4 @@ namespace System.Runtime.CompilerServices;
 
 /// <summary> Needed for Primary Constructor </summary>
 // ReSharper disable once UnusedMember.Global
-internal static class IsExternalInit { }
+internal static partial class IsExternalInit { }

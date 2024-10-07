@@ -1,4 +1,5 @@
-﻿using LogLevel = Microsoft.Extensions.Logging.LogLevel;
+﻿using System.Runtime.CompilerServices;
+using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 using Serilog.Events;
 
 namespace org.SpocWeb.root.Logging;
@@ -43,8 +44,9 @@ public record StringInterpolationWithValues(MessageTemplate template//, Exceptio
 
 	/// <summary> Indexes the <see cref="values"/> with the <see cref="template"/> Placeholders </summary>
 	/// <remarks>
-	/// 0,1,2 for a Format-String, but readable Names for a Serilog string with array.
-	/// The Names could be extracted by reading the Source Code File. 
+	/// 0,1,2 for a Format-String, but readable Expressions for a Format-string with array.
+	/// The Names are determined using either <see cref="CallerArgumentExpressionAttribute"/>
+	/// or by reading the Source Code File. 
 	/// </remarks>
 	public Dictionary<string, object?> ToDictionary() => _dictionary ??= template.ToDictionary(values);
     private Dictionary<string, object?>? _dictionary;

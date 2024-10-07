@@ -34,7 +34,7 @@ public static class Log
 	/// Rather use a <see cref="FormattableString"/> with String Interpolation!
 	/// </remarks>
 	[Obsolete("Rather use String Interpolation!")]
-	public static StringInterpolationWithValues Parse(string stringInterpolation, params object[] args) {
+	public static StringInterpolationWithValues Parse_(string stringInterpolation, params object[] args) {
 		if (!_templates.TryGetValue(stringInterpolation, out var template)) {
 			_templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
 		}
@@ -45,8 +45,9 @@ public static class Log
 	#region Log Statements
 
 	public static StringInterpolationWithValues Error(FormattableString stringInterpolation
-		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-		=> Logger.Error(stringInterpolation.Parse(path, lineNo), x);
+		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
+		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Logger.Error(stringInterpolation.Parse(expression, path, lineNo), x);
 
 	public static StringInterpolationWithValues Error(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogError(x, messageWithValues.template.Text, messageWithValues.values);
@@ -55,8 +56,9 @@ public static class Log
 	}
 
 	public static StringInterpolationWithValues Critical(FormattableString stringInterpolation
-		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-		=> Critical(Logger, Parse(stringInterpolation, path, lineNo), x);
+		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
+		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Critical(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	public static StringInterpolationWithValues Critical(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogCritical(x, parsed.template.Text, parsed.values);
@@ -65,8 +67,9 @@ public static class Log
 	}
 
 	public static StringInterpolationWithValues Debug(FormattableString stringInterpolation
-		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-		=> Debug(Logger, Parse(stringInterpolation, path, lineNo), x);
+		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
+		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Debug(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	public static StringInterpolationWithValues Debug(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogDebug(x, messageWithValues.template.Text, messageWithValues.values);
@@ -75,8 +78,9 @@ public static class Log
 	}
 
 	public static StringInterpolationWithValues Information(FormattableString stringInterpolation
-		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-		=> Information(Logger, Parse(stringInterpolation, path, lineNo), x);
+		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
+		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Information(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	public static StringInterpolationWithValues Information(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogInformation(x, messageWithValues.template.Text, messageWithValues.values);
@@ -85,8 +89,9 @@ public static class Log
 	}
 
 	public static StringInterpolationWithValues Warning(FormattableString stringInterpolation
-		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-		=> Warning(Logger, Parse(stringInterpolation, path, lineNo), x);
+		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
+		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Warning(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	public static StringInterpolationWithValues Warning(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogWarning(x, messageWithValues.template.Text, messageWithValues.values);
@@ -95,8 +100,9 @@ public static class Log
 	}
 
 	public static StringInterpolationWithValues Trace(FormattableString stringInterpolation
-		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-		=> Trace(Logger, Parse(stringInterpolation, path, lineNo), x);
+		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
+		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Trace(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	public static StringInterpolationWithValues Trace(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogTrace(x, messageWithValues.template.Text, messageWithValues.values);
@@ -109,8 +115,9 @@ public static class Log
 	#region Log Extension Statements
 
 	public static StringInterpolationWithValues Error(this ILogger log, FormattableString stringInterpolation
-		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-		=> log.Error(stringInterpolation.Parse(path, lineNo), x);
+		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
+		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> log.Error(stringInterpolation.Parse(expression, path, lineNo), x);
 
 	public static StringInterpolationWithValues Error(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogError(x, messageWithValues.template.Text, messageWithValues.values);
@@ -119,8 +126,9 @@ public static class Log
 	}
 
 	public static StringInterpolationWithValues Critical(this ILogger log, FormattableString stringInterpolation
-		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-		=> Critical(log, Parse(stringInterpolation, path, lineNo), x);
+		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
+		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Critical(log, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	public static StringInterpolationWithValues Critical(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogCritical(x, parsed.template.Text, parsed.values);
@@ -129,8 +137,9 @@ public static class Log
 	}
 
 	public static StringInterpolationWithValues Debug(this ILogger? log, FormattableString stringInterpolation
-		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-		=> Debug(log, Parse(stringInterpolation, path, lineNo), x);
+		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
+		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Debug(log, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	public static StringInterpolationWithValues Debug(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogDebug(x, messageWithValues.template.Text, messageWithValues.values);
@@ -139,8 +148,9 @@ public static class Log
 	}
 
 	public static StringInterpolationWithValues Information(this ILogger? log, FormattableString stringInterpolation
-		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-		=> Information(log, Parse(stringInterpolation, path, lineNo), x);
+		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
+		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Information(log, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	public static StringInterpolationWithValues Information(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogInformation(x, messageWithValues.template.Text, messageWithValues.values);
@@ -149,8 +159,9 @@ public static class Log
 	}
 
 	public static StringInterpolationWithValues Warning(this ILogger? log, FormattableString stringInterpolation
-		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-		=> Warning(log, Parse(stringInterpolation, path, lineNo), x);
+		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
+		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Warning(log, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	public static StringInterpolationWithValues Warning(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogWarning(x, messageWithValues.template.Text, messageWithValues.values);
@@ -159,8 +170,9 @@ public static class Log
 	}
 
 	public static StringInterpolationWithValues Trace(this ILogger? log, FormattableString stringInterpolation
-		, Exception? x = null, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
-		=> Trace(log, Parse(stringInterpolation, path, lineNo), x);
+		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
+		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
+		=> Trace(log, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	public static StringInterpolationWithValues Trace(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogTrace(x, messageWithValues.template.Text, messageWithValues.values);
@@ -223,7 +235,6 @@ public static class Log
 		return result.ToString();
 	}
 
-
 	/// <summary> Parses and caches the <paramref name="stringInterpolation"/> </summary>
 	/// <remarks>
 	/// Tries to read the Expressions from the Log Line.
@@ -238,12 +249,20 @@ public static class Log
 	/// but only if File and Line-Info can be matched.
 	/// </remarks>
 	public static StringInterpolationWithValues Parse(this FormattableString stringInterpolation//, Exception? x = null
-		, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1) {
+		, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
+		, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1
+		) {
 		if (!_templates.TryGetValue(stringInterpolation.Format, out var template)) {
 			_templates[stringInterpolation.Format] = template = _messageTemplateParser.Parse(stringInterpolation.Format);
-			if (lineNo > 0 && File.Exists(filePath)) {
-				var lines = File.ReadLines(filePath);
-				var line = lines.Skip(lineNo - 1).First();
+			string? line = expression;
+			if (string.IsNullOrEmpty(line)) {
+				if (lineNo > 0 && File.Exists(filePath)) {
+					var lines = File.ReadLines(filePath);
+					line = lines.Skip(lineNo - 1).First();
+				}
+			}
+
+			if (!string.IsNullOrEmpty(line)) {
 				var tokens = (MessageTemplateToken[]) template.Tokens;
 				var i = -1;
 				foreach (Match match in BracedExpression.Matches(line)) { //.IndexOf("Log.Parse($\"", StringComparison.Ordinal))) {
