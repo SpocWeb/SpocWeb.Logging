@@ -103,4 +103,5 @@
 	  <Folder Include="Properties\" />
 	</ItemGroup>
 
+<PropertyGroup><GenerateDocumentationFile>True</GenerateDocumentationFile></PropertyGroup>
 </Project>
