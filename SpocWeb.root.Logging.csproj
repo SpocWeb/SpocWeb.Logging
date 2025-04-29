@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<DefaultItemExcludes>$(DefaultItemExcludes);**\*.vrn;**\*.vrn.zip</DefaultItemExcludes>
 		<EnableDefaultItems>true</EnableDefaultItems>
 		<GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
 		<GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
@@ -23,6 +22,7 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net48;net8.0</TargetFrameworks>
+		<DefaultItemExcludes>$(DefaultItemExcludes);**\*.bak;**\*.vrn;**\*.vrn.zip</DefaultItemExcludes>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>..\..\org.SpocWeb.snk</AssemblyOriginatorKeyFile>
 		<RootNamespace>org.SpocWeb.root.Logging</RootNamespace>
