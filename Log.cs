@@ -45,7 +45,12 @@ public static class Log
 	#region Log Statements
 
 	public static StringInterpolationWithValues Error(FormattableString stringInterpolation
-		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
+		, Exception? x = null,
+#if NET6_0_OR_GREATER
+        [CallerArgumentExpression(nameof(stringInterpolation))]
+#else //NET6_0_OR_GREATER
+#endif //NET6_0_OR_GREATER
+	string? expression = null
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Logger.Error(stringInterpolation.Parse(expression, path, lineNo), x);
 
