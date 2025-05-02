@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using Serilog.Events;
 using Serilog.Parsing;
 
-namespace org.SpocWeb.root.Logging;
+namespace org.SpocWeb.root.logging;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 

@@ -2,7 +2,7 @@
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 using Serilog.Events;
 
-namespace org.SpocWeb.root.Logging;
+namespace org.SpocWeb.root.logging;
 
 /// <summary> Encapsulates a parsed StringInterpolation with <see cref="values"/> </summary>
 /// <remarks>

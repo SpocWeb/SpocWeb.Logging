@@ -1,7 +1,7 @@
 ﻿using Serilog.Core;
 using Serilog.Events;
 
-namespace org.SpocWeb.root.Logging.SeriLog;
+namespace org.SpocWeb.root.logging.SeriLog;
 
 /// <summary> Serilog <see cref="IDestructuringPolicy"/> forms a Chain of Responsibility for serializing Values </summary>
 /// <remarks>

@@ -25,7 +25,7 @@
 		<DefaultItemExcludes>$(DefaultItemExcludes);**\*.bak;**\*.vrn;**\*.vrn.zip</DefaultItemExcludes>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>..\..\org.SpocWeb.snk</AssemblyOriginatorKeyFile>
-		<RootNamespace>org.SpocWeb.root.Logging</RootNamespace>
+		<RootNamespace>org.SpocWeb.root.logging</RootNamespace>
 		<Platforms>AnyCPU;x86</Platforms>
 		<DefineConstants>TRACE;STD20 NUNIT DOTNET4 INPUTS NET_4_5 HAVE_ASYNC HAVE_LINQ HAVE_BIG_INTEGER_NO HAVE_DYNAMIC HAVE_ICLONEABLE HAVE_VARIANT_TYPE_PARAMETERS HAVE_COMPONENT_MODEL HAVE_ICONVERTIBLE HAVE_BINARY_EXCEPTION_SERIALIZATION HAVE_INOTIFY_COLLECTION_CHANGED HAVE_INOTIFY_PROPERTY_CHANGING HAVE_DATE_TIME_OFFSET HAVE_TYPE_DESCRIPTOR HAVE_DB_NULL_TYPE_CODE HAVE_HASH_SET HAVE_NO_FAST_REVERSE HAVE_XML_DOCUMENT HAVE_XLINQ HAS_CUSTOM_DOUBLE_PARSE HAVE_EXPRESSIONS  DOTNET5</DefineConstants>
 		<LangVersion>latest</LangVersion>
@@ -33,7 +33,7 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<OutputType>Exe</OutputType>
-		<StartupObject>org.SpocWeb.root.Logging.Program</StartupObject>
+		<StartupObject>org.SpocWeb.root.logging.Program</StartupObject>
 
 		<Description>Fundamental Interfaces, Delegates, Enums and Base Classes for any Domain</Description>
 		<PackageProjectUrl>http://Spoc-Web.com</PackageProjectUrl>

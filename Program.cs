@@ -1,4 +1,4 @@
-﻿namespace org.SpocWeb.root.Logging;
+﻿namespace org.SpocWeb.root.logging;
 
 class Program
 {
