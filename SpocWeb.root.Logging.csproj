@@ -14,6 +14,20 @@
 		-->
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
+		<PolySharpUsePublicAccessibilityForGeneratedTypes>true</PolySharpUsePublicAccessibilityForGeneratedTypes>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)' != 'net48'">
+		<PolySharpExcludeGeneratedTypes>
+			System.Runtime.CompilerServices.IsExternalInit;
+			System.Runtime.CompilerServices.InterpolatedStringHandlerAttribute;
+			System.Runtime.CompilerServices.InterpolatedStringHandlerArgumentAttribute;
+			System.Runtime.CompilerServices.CallerArgumentExpressionAttribute
+		</PolySharpExcludeGeneratedTypes>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<Content Include="_Resources\**\*" Exclude="**\*.vrn;**\*.vrn.zip">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -96,6 +110,10 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+		<PackageReference Include="PolySharp" Version="1.15.0">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Serilog" Version="4.2.0" />
 	</ItemGroup>
 
