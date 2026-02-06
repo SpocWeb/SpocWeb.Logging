@@ -102,7 +102,7 @@ public static class LogX {
 		, [InterpolatedStringHandlerArgument(nameof(logger))] ref MicrosoftPrefixedHandler stringInterpolation) {
 		var (template, args) = stringInterpolation.GetResult();
 
-		logger.Log(LogLevel.Information, template, args);
+		logger.Log(level, template, args);
 	}
 
 	/// <summary> Log the <paramref name="stringInterpolation"/> to the <paramref name="logger"/>
