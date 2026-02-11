@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Logging;
 
 using System.Runtime.CompilerServices;
 
@@ -16,6 +17,7 @@ public ref struct MicrosoftPrefixedHandler {
 		: this(litLen, fmtCount, "", logger, out isEnabled) { }
 
 	/// <inheritdoc cref="MicrosoftPrefixedHandler"/>
+	[SuppressMessage("ReSharper", "UnusedParameter.Local")]
 	public MicrosoftPrefixedHandler(int litLen, int fmtCount, string prefix, ILogger logger, out bool isEnabled) {
 		_prefix = string.IsNullOrWhiteSpace(prefix) ? "" : prefix + "_";
 		isEnabled = logger.IsEnabled(LogLevel.Information);
@@ -69,13 +71,10 @@ public ref struct MicrosoftPrefixedHandler {
 	public (string Template, object?[] Args) GetResult() => (_template, _values.ToArray());
 }
 
-/// <summary>
-/// 
-/// </summary>
+/// <summary> Makes the compiler pick a different overload of the <see cref="MicrosoftPrefixedHandler.AppendFormatted"/> Method. </summary>
 /// <remarks>
 /// By wrapping the <paramref name="Value"/> in DestructureWrapper (via the Log.Destructure() helper),
 /// you change the type of the argument.
-/// This allows the compiler to pick a different overload of the AppendFormatted method.
 ///
 /// It enables the "@" prefixing
 /// Inside the handler, when the DestructureWrapper overload is hit,
@@ -91,15 +90,8 @@ public static class LogX {
 
 	/// <summary> Log the <paramref name="stringInterpolation"/> to the <paramref name="logger"/> </summary>
 	public static void LogEvent(this ILogger logger
-		, [InterpolatedStringHandlerArgument(nameof(logger))] ref MicrosoftPrefixedHandler stringInterpolation) {
-		var (template, args) = stringInterpolation.GetResult();
-
-		logger.Log(LogLevel.Information, template, args);
-	}
-
-	/// <summary> Log the <paramref name="stringInterpolation"/> to the <paramref name="logger"/> </summary>
-	public static void LogEvent(this ILogger logger, LogLevel level
-		, [InterpolatedStringHandlerArgument(nameof(logger))] ref MicrosoftPrefixedHandler stringInterpolation) {
+		, [InterpolatedStringHandlerArgument(nameof(logger))] ref MicrosoftPrefixedHandler stringInterpolation
+		, LogLevel level = LogLevel.Information) {
 		var (template, args) = stringInterpolation.GetResult();
 
 		logger.Log(level, template, args);
@@ -108,13 +100,14 @@ public static class LogX {
 	/// <summary> Log the <paramref name="stringInterpolation"/> to the <paramref name="logger"/>
 	/// with the <paramref name="context"/> </summary>
 	public static void LogEvent(this ILogger logger, string context
-		, [InterpolatedStringHandlerArgument(nameof(context), nameof(logger))] ref MicrosoftPrefixedHandler stringInterpolation) {
+		, [InterpolatedStringHandlerArgument(nameof(context), nameof(logger))] ref MicrosoftPrefixedHandler stringInterpolation
+		, LogLevel level = LogLevel.Information) {
 		var (template, args) = stringInterpolation.GetResult();
 
-		// We use BeginScope to add the EventName to every log in this call
+		// We use BeginScope to add the context to every log in this call
 		using (logger.BeginScope(new Dictionary<string, object> { [nameof(context)] = context })) {
 			//logger.LogInformation(template, args);
-			logger.Log(LogLevel.Information, template, args);
+			logger.Log(level, template, args);
 		}
 	}
 }
