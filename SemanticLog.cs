@@ -2,15 +2,20 @@
 using Microsoft.Extensions.Logging;
 
 using System.Runtime.CompilerServices;
+using System.Text;
 
-namespace org.SpocWeb.root.logging; 
+namespace org.SpocWeb.root.logging;
 
 /// <summary> Interpolation Handler to capture the Expression in the Interpolation String </summary>
+/// <remarks>assembles the <see cref="Template"/> while the Format String is parsed. </remarks>
 [InterpolatedStringHandler]
 public ref struct MicrosoftPrefixedHandler {
 	private readonly string _prefix;
-	private string _template = "";
-	private readonly List<object?> _values = new();
+
+	/// <summary> The semantic Format String assembled from parsing the Interpolation String </summary>
+	public readonly StringBuilder Template = new StringBuilder();
+	/// <summary> The Values mapped to the Keys parsed from the Interpolation String </summary>
+	public readonly List<KeyValuePair<string, object?>> KeyedValues = new();
 
 	/// <inheritdoc cref="MicrosoftPrefixedHandler"/>
 	public MicrosoftPrefixedHandler(int litLen, int fmtCount, ILogger logger, out bool isEnabled)
@@ -24,13 +29,13 @@ public ref struct MicrosoftPrefixedHandler {
 	}
 
 	/// <summary> Escapes `{` and `}` by doubling. </summary>
-	public void AppendLiteral(string s) => _template += s.Replace("{", "{{").Replace("}", "}}");
+	public void AppendLiteral(string s) => Template.Append(s.Replace("{", "{{").Replace("}", "}}"));
 
 	/// <summary>Generic Formatter for all other Types</summary>
 	public void AppendFormatted<T>(T value, [CallerArgumentExpression("value")] string name = "") {
 		// Microsoft ILogger uses {name} for structured logging
-		_template += $"{{{_prefix}{name}}}";
-		_values.Add(value);
+		Template.Append($"{{{_prefix}{name}}}");
+		KeyedValues.Add(new KeyValuePair<string, object?>(_prefix + name, value));
 	}
 
 	/// <summary> Special Array Formatting for Collections (Arrays, Lists, etc.) </summary>
@@ -38,19 +43,19 @@ public ref struct MicrosoftPrefixedHandler {
 		, [CallerArgumentExpression("values")] string name = "") {
 		// We treat collections similarly to destructured objects 
 		// so they stay as arrays in the JSON output.
-		_template += $"{{{_prefix}{name}}}";
+		Template.Append($"{{{_prefix}{name}}}");
 
 		// To be safe, we convert to an array to "freeze" the collection 
 		// so it doesn't change before the log is written.
-		_values.Add(values?.ToArray());
+        KeyedValues.Add(new KeyValuePair<string, object?>(_prefix + name, values?.ToArray()));
 	}
 
 	/// <summary> allows usage like: $"The price is {price:C2}" </summary>
 	public void AppendFormatted<T>(T value, string? format, [CallerArgumentExpression("value")] string name = "") {
 		// We append the format to the template hole
 		var formatSuffix = string.IsNullOrEmpty(format) ? "" : ":" + format;
-		_template += $"{{{_prefix}{name}{formatSuffix}}}";
-		_values.Add(value);
+		Template.Append($"{{{_prefix}{name}{formatSuffix}}}");
+        KeyedValues.Add(new KeyValuePair<string, object?>(_prefix + name + formatSuffix, value));
 	}
 
 	/// <summary> Specifies the prefix string used for identifying LogX.Destructure operations. </summary>
@@ -61,14 +66,13 @@ public ref struct MicrosoftPrefixedHandler {
 	/// Adds '@' which most providers (Serilog/OTel) will respect!
 	/// </remarks>
 	public void AppendFormatted(DestructureWrapper wrapper, [CallerArgumentExpression("wrapper")] string name = "") {
-		var cleanName = name.Replace(".Destructure()", "").Replace(PREFIX, "").Replace(")", "")
-			.Trim();
-		_template += $"{{@{_prefix}{cleanName}}}";
-		_values.Add(wrapper.Value);
+		var cleanName = name.Replace(".Destructure()", "").Replace(PREFIX, "").Replace(")", "").Trim();
+		Template.Append($"{{@{_prefix}{cleanName}}}");
+        KeyedValues.Add(new KeyValuePair<string, object?>(_prefix + cleanName, wrapper.Value));
 	}
 
 	/// <inheritdoc cref="MicrosoftPrefixedHandler"/>
-	public (string Template, object?[] Args) GetResult() => (_template, _values.ToArray());
+	public (string Template, object?[] Args) GetResult() => (Template.ToString(), KeyedValues.Values().ToArray());
 }
 
 /// <summary> Makes the compiler pick a different overload of the <see cref="MicrosoftPrefixedHandler.AppendFormatted"/> Method. </summary>
@@ -91,24 +95,31 @@ public static class LogX {
 	/// <summary> Log the <paramref name="stringInterpolation"/> to the <paramref name="logger"/> </summary>
 	public static void Log(this ILogger logger
 		, [InterpolatedStringHandlerArgument(nameof(logger))] ref MicrosoftPrefixedHandler stringInterpolation
-		, LogLevel level = LogLevel.Information) {
-		var (template, args) = stringInterpolation.GetResult();
+		, LogLevel level = LogLevel.Information, Exception? x = null) {
 
-		logger.Log(level, template, args);
+		if (logger.IsEnabled(level)) {
+			logger.Log(level, x, stringInterpolation.Template.ToString(), Values(stringInterpolation.KeyedValues).ToArray());
+		}
 	}
 
 	/// <summary> Log the <paramref name="stringInterpolation"/> to the <paramref name="logger"/>
 	/// with the <paramref name="context"/> </summary>
 	public static void Log(this ILogger logger, string context
 		, [InterpolatedStringHandlerArgument(nameof(context), nameof(logger))] ref MicrosoftPrefixedHandler stringInterpolation
-		, LogLevel level = LogLevel.Information) {
-		var (template, args) = stringInterpolation.GetResult();
+		, LogLevel level = LogLevel.Information, Exception? x = null) {
 
 		// We use BeginScope to add the context to every log in this call
-		using (logger.BeginScope(new Dictionary<string, object> { [nameof(context)] = context })) {
+		if (logger.IsEnabled(level)) 
+		using (logger.BeginScope(new Dictionary<string, object?> { [nameof(context)] = context })) {
+			logger.Log(level, x, stringInterpolation.Template.ToString(), stringInterpolation.KeyedValues.Values().ToArray());
 			//logger.LogInformation(template, args);
-			logger.Log(level, template, args);
 		}
 	}
+
+	/// <summary> Returns the values from a sequence of key/value pairs. </summary>
+	public static IEnumerable<V> Values<K, V>(this IEnumerable<KeyValuePair<K, V>> keyedValues) => keyedValues.Select(p => p.Value);
+
+	/// <summary> Returns the keys from a sequence of key/value pairs. </summary>
+	public static IEnumerable<K> Keys<K, V>(this IEnumerable<KeyValuePair<K, V>> keyedValues) => keyedValues.Select(p => p.Key);
 }
 
