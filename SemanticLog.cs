@@ -89,7 +89,7 @@ public static class LogX {
 	public static DestructureWrapper Destructure(this object value) => new(value);
 
 	/// <summary> Log the <paramref name="stringInterpolation"/> to the <paramref name="logger"/> </summary>
-	public static void LogEvent(this ILogger logger
+	public static void Log(this ILogger logger
 		, [InterpolatedStringHandlerArgument(nameof(logger))] ref MicrosoftPrefixedHandler stringInterpolation
 		, LogLevel level = LogLevel.Information) {
 		var (template, args) = stringInterpolation.GetResult();
@@ -99,7 +99,7 @@ public static class LogX {
 
 	/// <summary> Log the <paramref name="stringInterpolation"/> to the <paramref name="logger"/>
 	/// with the <paramref name="context"/> </summary>
-	public static void LogEvent(this ILogger logger, string context
+	public static void Log(this ILogger logger, string context
 		, [InterpolatedStringHandlerArgument(nameof(context), nameof(logger))] ref MicrosoftPrefixedHandler stringInterpolation
 		, LogLevel level = LogLevel.Information) {
 		var (template, args) = stringInterpolation.GetResult();
