@@ -8,8 +8,8 @@ namespace org.SpocWeb.root.logging.SeriLog;
 /// By default, Serilog invokes the <see cref="object.ToString"/> Method on each Object.
 /// To force destructuring, prepend the `@` to the Log-Property Name.
 ///
-/// Developers can use Serilog's [Destructure] attribute.
-/// Marking classes or properties with this attribute allows finer control over how data is broken down into logs.  
+/// Developers can use Serilog's [Destructure] attribute to mark classes or properties
+/// for finer control over how data is broken down into logs.  
 /// 
 /// To register this Policy in the Chain, use this Code:
 /// </remarks>
