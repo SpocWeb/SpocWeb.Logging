@@ -7,27 +7,39 @@ using System.Text;
 namespace org.SpocWeb.root.logging;
 
 /// <summary> Interpolation Handler to capture the Expression in the Interpolation String </summary>
-/// <remarks>assembles the <see cref="Template"/> while the Format String is parsed. </remarks>
+/// <remarks>
+/// Assembles the <see cref="Template"/> while the Format String is parsed.
+/// Its Constructor Parameters after the initial formatLength and formatNumber
+/// match the Arguments after the String-Interpolation.
+/// 
+/// <see cref="FormattableString"/> can also capture the format string and values,
+/// but it cannot...
+/// - capture the names of the arguments
+/// - rewriting for e.g. Serilog destructuring marker @,
+/// - compile-time gating using `out isEnabled` to avoid allocations.
+/// </remarks>
 [InterpolatedStringHandler]
 public ref struct PrefixedStringHandler {
 
 	private readonly string _prefix;
 
 	/// <summary> The semantic Format String assembled from parsing the Interpolation String </summary>
-	public readonly StringBuilder Template = new StringBuilder();
+	public readonly StringBuilder Template;// = new StringBuilder();
 
 	/// <summary> The Values mapped to the Keys parsed from the Interpolation String </summary>
-	public readonly List<KeyValuePair<string, object?>> KeyedValues = new();
+	public readonly List<KeyValuePair<string, object?>> KeyedValues;// = new();
 
 	/// <inheritdoc cref="PrefixedStringHandler"/>
-	public PrefixedStringHandler(int litLen, int fmtCount, ILogger logger, out bool isEnabled)
-		: this(litLen, fmtCount, "", logger, out isEnabled) { }
+	public PrefixedStringHandler(int literalLength, int formatCount, ILogger logger, out bool isEnabled)
+		: this(literalLength, formatCount, "", logger, out isEnabled) { }
 
 	/// <inheritdoc cref="PrefixedStringHandler"/>
 	[SuppressMessage("ReSharper", "UnusedParameter.Local")]
-	public PrefixedStringHandler(int litLen, int fmtCount, string prefix, ILogger logger, out bool isEnabled) {
+	public PrefixedStringHandler(int literalLength, int formatCount, string prefix, ILogger logger, out bool isEnabled) {
 		_prefix = string.IsNullOrWhiteSpace(prefix) ? "" : prefix + "_";
 		isEnabled = logger.IsEnabled(LogLevel.Information);
+		Template = new StringBuilder(literalLength << 1);
+		KeyedValues = new(formatCount + 1);
 	}
 
 	/// <summary> Escapes `{` and `}` by doubling. </summary>
