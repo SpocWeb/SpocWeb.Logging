@@ -21,13 +21,34 @@ namespace org.SpocWeb.root.logging;
 [InterpolatedStringHandler]
 public ref struct PrefixedStringHandler {
 
+	/// <summary> Use Numbers instead of Names to build the Format String </summary>
+	public static bool UseNumbers { get; set; } = false;//true;
+
+    /// <summary> Optional Prefix for any Name </summary>
 	private readonly string _prefix;
 
-	/// <summary> The semantic Format String assembled from parsing the Interpolation String </summary>
+    /// <summary> The numbered Format String assembled from parsing the Interpolation String </summary>
+    /// <remarks> Can be converted into 
+    /// - a semantic Format String by using the <see cref="KeyedValues"/> Keys 
+    /// - a log String by using the <see cref="KeyedValues"/> Values. 
+    /// </remarks>
 	public readonly StringBuilder Template;// = new StringBuilder();
 
 	/// <summary> The Values mapped to the Keys parsed from the Interpolation String </summary>
 	public readonly List<KeyValuePair<string, object?>> KeyedValues;// = new();
+
+    /// <summary> Semantic Format String with {bracedKeys} </summary>
+    /// <remarks>This can still be converted into <see cref="MessageWithValues"/>
+    /// by replacing every "{Key}" in <see cref="KeyedValues"/> with its formatted "Value".
+    /// </remarks>
+    public string MessageWithKeys() => string.Format(Template.ToString(), KeyedValues.Keys().ToArray());
+
+	/// <summary> Semantic Format String with <see cref="KeyedValues"/> Values </summary>
+	public readonly string MessageWithValues() => string.Format(Template.ToString(), KeyedValues.Values().ToArray());
+
+	/// <summary> Semantic Format String with <see cref="KeyedValues"/> Keys </summary>
+	public readonly void WriteMessageWithValues(TextWriter writer)
+        => writer.Write(Template.ToString(), KeyedValues.Values().ToArray());
 
 	/// <inheritdoc cref="PrefixedStringHandler"/>
 	public PrefixedStringHandler(int literalLength, int formatCount, ILogger logger, out bool isEnabled)
@@ -50,30 +71,39 @@ public ref struct PrefixedStringHandler {
 	public void AppendLiteral(string s) => Template.Append(s.Replace("{", "{{").Replace("}", "}}"));
 
 	/// <summary>Generic Formatter for all other Types</summary>
-	public void AppendFormatted<T>(T value, [CallerArgumentExpression("value")] string name = "") {
+	public void AppendFormatted<T>(T value, [CallerArgumentExpression("value")] string argName = "") {
 		// Microsoft ILogger uses {name} for structured logging
-		Template.Append($"{{{_prefix}{name}}}");
-		KeyedValues.Add(new KeyValuePair<string, object?>(_prefix + name, value));
+		var key = _prefix + argName;
+		var name = UseNumbers ? 
+            KeyedValues.Count.ToString() : key;
+		Template.Append($"{{{name}}}");
+		KeyedValues.Add(new KeyValuePair<string, object?>(key, value));
 	}
 
 	/// <summary> Special Array Formatting for Collections (Arrays, Lists, etc.) </summary>
 	public void AppendFormatted<TElement>(IEnumerable<TElement> values
-		, [CallerArgumentExpression("values")] string name = "") {
+		, [CallerArgumentExpression("values")] string argName = "") {
+		var key = _prefix + argName;
+		var name = UseNumbers ? 
+            KeyedValues.Count.ToString() : key;
 		// We treat collections similarly to destructured objects 
 		// so they stay as arrays in the JSON output.
-		Template.Append($"{{{_prefix}{name}}}");
+		Template.Append($"{{{name}}}");
 
 		// To be safe, we convert to an array to "freeze" the collection 
 		// so it doesn't change before the log is written.
-        KeyedValues.Add(new KeyValuePair<string, object?>(_prefix + name, values?.ToArray()));
+		KeyedValues.Add(new KeyValuePair<string, object?>(key, values?.ToArray()));
 	}
 
 	/// <summary> allows usage like: $"The price is {price:C2}" </summary>
-	public void AppendFormatted<T>(T value, string? format, [CallerArgumentExpression("value")] string name = "") {
+    public void AppendFormatted<T>(T value, string? format, [CallerArgumentExpression("value")] string argName = "") {
 		// We append the format to the template hole
 		var formatSuffix = string.IsNullOrEmpty(format) ? "" : ":" + format;
-		Template.Append($"{{{_prefix}{name}{formatSuffix}}}");
-        KeyedValues.Add(new KeyValuePair<string, object?>(_prefix + name + formatSuffix, value));
+		var key = _prefix + argName + formatSuffix;
+		var name = UseNumbers ? 
+            KeyedValues.Count.ToString() : key;
+		Template.Append($"{{{name}}}");
+		KeyedValues.Add(new KeyValuePair<string, object?>(key, value));
 	}
 
 	/// <summary> Specifies the prefix string used for identifying LogX.Destructure operations. </summary>
@@ -83,14 +113,14 @@ public ref struct PrefixedStringHandler {
 	/// <remarks>
 	/// Adds '@' which most providers (Serilog/OTel) will respect!
 	/// </remarks>
-	public void AppendFormatted(DestructureWrapper wrapper, [CallerArgumentExpression("wrapper")] string name = "") {
-		var cleanName = name.Replace(".Destructure()", "").Replace(PREFIX, "").Replace(")", "").Trim();
-		Template.Append($"{{@{_prefix}{cleanName}}}");
-        KeyedValues.Add(new KeyValuePair<string, object?>(_prefix + cleanName, wrapper.Value));
+	public void AppendFormatted(DestructureWrapper wrapper, [CallerArgumentExpression("wrapper")] string argName = "") {
+        var cleanName = argName.Replace(".Destructure()", "").Replace(PREFIX, "").Replace(")", "").Trim();
+		var key = _prefix + cleanName;
+		var name = UseNumbers ? 
+            KeyedValues.Count.ToString() : key;
+        Template.Append($"{{@{name}}}");
+		KeyedValues.Add(new KeyValuePair<string, object?>(key, wrapper.Value));
 	}
-
-	/// <inheritdoc cref="PrefixedStringHandler"/>
-	public (string Template, object?[] Args) GetResult() => (Template.ToString(), KeyedValues.Values().ToArray());
 }
 
 /// <summary> Makes the compiler pick a different overload of the <see cref="PrefixedStringHandler.AppendFormatted"/> Method. </summary>
@@ -123,7 +153,7 @@ public static class LogX {
 	/// instead of all Pairs including the <see cref="KeyOriginalFormat"/> </summary>
 	public static bool ForDeStructure { get; set; } = true;
 
-	/// <summary> Wraps the <paramref name="value"/> into <see cref="DestructureWrapper"/> to trigger writing an `@` to SeriLog </summary>
+	/// <summary> Wraps the <paramref name="value"/> into <see cref="DestructureWrapper"/> to trigger writing an `@` to indicate Destructuring to SeriLog </summary>
 	public static DestructureWrapper Destructure(this object value) => new(value);
 
 	/// <summary> Log the <paramref name="stringInterpolation"/> to the <paramref name="logger"/> </summary>
