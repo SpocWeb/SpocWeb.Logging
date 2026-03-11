@@ -31,13 +31,17 @@ public ref struct PrefixedStringHandler {
 
 	/// <inheritdoc cref="PrefixedStringHandler"/>
 	public PrefixedStringHandler(int literalLength, int formatCount, ILogger logger, out bool isEnabled)
-		: this(literalLength, formatCount, "", logger, out isEnabled) { }
+		: this(literalLength, formatCount, "", logger, LogLevel.Information, out isEnabled) { }
+
+	/// <inheritdoc cref="PrefixedStringHandler"/>
+	public PrefixedStringHandler(int literalLength, int formatCount, string prefix, ILogger logger, out bool isEnabled)
+		: this(literalLength, formatCount, prefix, logger, LogLevel.Information, out isEnabled) { }
 
 	/// <inheritdoc cref="PrefixedStringHandler"/>
 	[SuppressMessage("ReSharper", "UnusedParameter.Local")]
-	public PrefixedStringHandler(int literalLength, int formatCount, string prefix, ILogger logger, out bool isEnabled) {
+	public PrefixedStringHandler(int literalLength, int formatCount, string prefix, ILogger logger, LogLevel level, out bool isEnabled) {
 		_prefix = string.IsNullOrWhiteSpace(prefix) ? "" : prefix + "_";
-		isEnabled = logger.IsEnabled(LogLevel.Information);
+		isEnabled = logger.IsEnabled(level);
 		Template = new StringBuilder(literalLength << 1);
 		KeyedValues = new(formatCount + 1);
 	}
@@ -115,6 +119,10 @@ public static class LogX {
 	/// </remarks>
 	public const string KeyOriginalFormat = "{OriginalFormat}";
 
+	/// <summary> Flag to put only the Values in the <see cref="Serilog.Events.LogEvent"/>,
+	/// instead of all Pairs including the <see cref="KeyOriginalFormat"/> </summary>
+	public static bool ForDeStructure { get; set; } = true;
+
 	/// <summary> Wraps the <paramref name="value"/> into <see cref="DestructureWrapper"/> to trigger writing an `@` to SeriLog </summary>
 	public static DestructureWrapper Destructure(this object value) => new(value);
 
@@ -124,13 +132,30 @@ public static class LogX {
 		, Exception? x = null, LogLevel? optLevel = default, EventId eventId = default) {
 		var level = optLevel ?? (x == null ? LogLevel.Information : LogLevel.Error);
 		if (logger.IsEnabled(level)) {
-			stringInterpolation.KeyedValues.Add(new(KeyOriginalFormat, stringInterpolation.Template.ToString()));
-			//logger.Log(level, eventId, x, stringInterpolation.Template.ToString(), stringInterpolation.KeyedValues.Values().ToArray());
-			logger.Log(level, eventId, stringInterpolation.KeyedValues, x, static (pairs, e) => {
-				return pairs.Last().Value + "";
-				//var original = pairs.FirstOrDefault(kv => kv.Key == KeyOriginalFormat).Value + "";
-				//return original ?? string.Empty;
-			});
+			if (ForDeStructure) {
+				logger.Log(level, eventId, x, stringInterpolation.Template.ToString(), stringInterpolation.KeyedValues.Values().ToArray());
+			} else {
+				stringInterpolation.KeyedValues.Add(new(KeyOriginalFormat, stringInterpolation.Template.ToString()));
+				logger.Log(level, eventId, stringInterpolation.KeyedValues, x, static (pairs, e) => pairs.Last().Value + "");
+			}
+		}
+	}
+
+	/// <summary> Log the <paramref name="stringInterpolation"/> to the <paramref name="logger"/>
+	/// with the <paramref name="context"/> </summary>
+	public static void Logg(this ILogger logger, LogLevel level, string context
+		, [InterpolatedStringHandlerArgument(nameof(context), nameof(logger), nameof(level))] ref PrefixedStringHandler stringInterpolation
+		, Exception? x = null, EventId eventId = default) {
+		if (!logger.IsEnabled(level)) {
+			return;
+		}
+		using (logger.BeginScope(new Dictionary<string, object?> { [nameof(context)] = context })) {
+			if (ForDeStructure) { //DeStructure keeps Value
+				logger.Log(level, eventId, x, stringInterpolation.Template.ToString(), stringInterpolation.KeyedValues.Values().ToArray());
+			} else {  //DeStructure often becomes a String
+				stringInterpolation.KeyedValues.Add(new(KeyOriginalFormat, stringInterpolation.Template.ToString()));
+				logger.Log(level, eventId, stringInterpolation.KeyedValues, x, static (pairs, e) => pairs.Last().Value + "");
+			}                                                                                                                   
 		}
 	}
 
@@ -144,9 +169,12 @@ public static class LogX {
 			return;
 		}
 		using (logger.BeginScope(new Dictionary<string, object?> { [nameof(context)] = context })) {
-			stringInterpolation.KeyedValues.Add(new(KeyOriginalFormat, stringInterpolation.Template.ToString()));
-			logger.Log(level, eventId, x, stringInterpolation.Template.ToString(), stringInterpolation.KeyedValues.Values().ToArray()); //DeStructure keeps Value
-			//logger.Log(level, eventId, stringInterpolation.KeyedValues, x, static (pairs, e) => pairs.Last().Value + ""); //DeStructure becomes a String
+			if (ForDeStructure) { //DeStructure keeps Value
+				logger.Log(level, eventId, x, stringInterpolation.Template.ToString(), stringInterpolation.KeyedValues.Values().ToArray()); //DeStructure keeps Value
+			} else {
+				stringInterpolation.KeyedValues.Add(new(KeyOriginalFormat, stringInterpolation.Template.ToString()));
+				logger.Log(level, eventId, stringInterpolation.KeyedValues, x, static (pairs, e) => pairs.Last().Value + ""); //DeStructure becomes a String
+			}
 		}
 	}
 
