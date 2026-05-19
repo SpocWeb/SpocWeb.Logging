@@ -11,7 +11,15 @@ namespace org.SpocWeb.root.logging;
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
 /// <summary> Extension Methods to use <see cref="StringInterpolationWithValues"/> for Logging </summary>
-/// <remarks>This makes Log-Statements more readable and re-usable for Exceptions and other Messages</remarks>
+/// <remarks>
+/// This makes Log-Statements more readable and re-usable for Exceptions and other Messages
+///
+/// ## Meta
+/// pass: 2
+/// mtime: 2026-03-06T12:13:23Z
+/// digest: afae3f6b5902d3e5547e169262035596db690e64ea00858288dd6d86ca7b3a82
+/// updated: 2026-05-19
+/// </remarks>
 [SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 public static class Log
 {

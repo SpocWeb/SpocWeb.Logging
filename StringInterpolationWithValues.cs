@@ -24,6 +24,12 @@ namespace org.SpocWeb.root.logging;
 /// - <see cref="LogLevel.Debug"/> <br/>
 /// - <see cref="LogLevel.Trace"/> <br/>
 /// 
+///
+/// ## Meta
+/// pass: 2
+/// mtime: 2025-05-02T17:50:18Z
+/// digest: ab10d5f9a9a2bee8442630c682e99e51eae2a70c7cbabda62b8197577a1dac78
+/// updated: 2026-05-19
 /// </remarks>
 /// <inheritdoc cref="ToString"/>
 public record StringInterpolationWithValues(MessageTemplate template//, Exception? exception

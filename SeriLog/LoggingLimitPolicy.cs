@@ -12,6 +12,12 @@ namespace org.SpocWeb.root.logging.SeriLog;
 /// for finer control over how data is broken down into logs.  
 /// 
 /// To register this Policy in the Chain, use this Code:
+///
+/// ## Meta
+/// pass: 2
+/// mtime: 2026-03-06T09:42:35Z
+/// digest: b74a830f176cf637f66813edf9dcea72b6d085643d39dda456cb3cfc43c8bf0f
+/// updated: 2026-05-19
 /// </remarks>
 /// <code lang='cs'>
 /// Log.Logger = new LoggerConfiguration()

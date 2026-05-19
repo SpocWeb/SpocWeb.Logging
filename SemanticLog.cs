@@ -17,6 +17,12 @@ namespace org.SpocWeb.root.logging;
 /// - capture the names of the arguments
 /// - rewriting for e.g. Serilog destructuring marker @,
 /// - compile-time gating using `out isEnabled` to avoid allocations.
+///
+/// ## Meta
+/// pass: 2
+/// mtime: 2026-03-11T07:58:58Z
+/// digest: de2eed1a9afb2c8a854e1053da6599131b07349921066987ca2a94faabcf6369
+/// updated: 2026-05-19
 /// </remarks>
 [InterpolatedStringHandler]
 public ref struct PrefixedStringHandler {
@@ -131,6 +137,12 @@ public ref struct PrefixedStringHandler {
 /// It enables the "@" prefixing
 /// Inside the handler, when the DestructureWrapper overload is hit,
 /// we manually inject the @ symbol into the message template that we are building for the underlying logger.
+///
+/// ## Meta
+/// pass: 2
+/// mtime: 2026-03-11T07:58:58Z
+/// digest: de2eed1a9afb2c8a854e1053da6599131b07349921066987ca2a94faabcf6369
+/// updated: 2026-05-19
 /// </remarks>
 public record struct DestructureWrapper(object Value);
 
@@ -139,6 +151,12 @@ public record struct DestructureWrapper(object Value);
 /// For semantic Logging it is sufficient to provide a Template String with {namedHoles}
 /// and an Array of Value aligned to these Holes.
 /// The Json can later be restored by parsing the {namedHoles}.
+///
+/// ## Meta
+/// pass: 2
+/// mtime: 2026-03-11T07:58:58Z
+/// digest: de2eed1a9afb2c8a854e1053da6599131b07349921066987ca2a94faabcf6369
+/// updated: 2026-05-19
 /// </remarks>
 #pragma warning disable CA2254
 public static class LogX {
