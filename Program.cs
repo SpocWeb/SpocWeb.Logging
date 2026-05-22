@@ -1,4 +1,4 @@
-﻿namespace org.SpocWeb.root.logging;
+namespace org.SpocWeb.root.logging;
 
 /// <summary> Entry point placeholder for the SpocWeb.Logging project. </summary>
 /// <remarks>
@@ -10,6 +10,7 @@
 /// </remarks>
 class Program
 {
+	/// <summary>TODO: LLM</summary>
 	public static void Main() {
 
 	}

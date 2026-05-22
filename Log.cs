@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -28,12 +28,15 @@ public static class Log
 	public static ILogger? Logger { get; set; } //= new Logger();
 
 #pragma warning disable CA2254
+	/// <summary>Gets the _message Template Parser.</summary>
 	static readonly MessageTemplateParser _messageTemplateParser = new();
 
 	// Function to generate a formatted string
 	// Parse the Serilog message template
-	public static MessageTemplate ParseTemplate(string message, object _) => _messageTemplateParser.Parse(message);
+	/// <summary>TODO: LLM</summary>
+ 	public static MessageTemplate ParseTemplate(string message, object _) => _messageTemplateParser.Parse(message);
 
+	/// <summary>Gets the _templates.</summary>
 	static readonly Dictionary<string, MessageTemplate> _templates = [];
 
 	/// <summary> Parses and caches the <paramref name="stringInterpolation"/> </summary>
@@ -52,6 +55,7 @@ public static class Log
 
 	#region Log Statements
 
+	/// <inheritdoc cref="Error(StringInterpolationWithValues, Exception?)"/>
 	public static StringInterpolationWithValues Error(FormattableString stringInterpolation
 		, Exception? x = null,
 #if NET6_0_OR_GREATER
@@ -62,62 +66,73 @@ public static class Log
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Logger.Error(stringInterpolation.Parse(expression, path, lineNo), x);
 
-	public static StringInterpolationWithValues Error(StringInterpolationWithValues messageWithValues, Exception? x = null) {
+	/// <summary>TODO: LLM</summary>
+ 	public static StringInterpolationWithValues Error(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogError(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Error, 0, messageWithValues, x, (m, e) => m.ToString() + e);
 		return messageWithValues;
 	}
 
+	/// <inheritdoc cref="Critical(StringInterpolationWithValues, Exception?)"/>
 	public static StringInterpolationWithValues Critical(FormattableString stringInterpolation
 		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Critical(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
-	public static StringInterpolationWithValues Critical(StringInterpolationWithValues messageWithValues, Exception? x = null) {
+	/// <summary>TODO: LLM</summary>
+ 	public static StringInterpolationWithValues Critical(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogCritical(x, parsed.template.Text, parsed.values);
 		Logger?.Log(LogLevel.Critical, 0, messageWithValues, x, (m, e) => m.ToString() + e);
 		return messageWithValues;
 	}
 
+	/// <inheritdoc cref="Debug(StringInterpolationWithValues, Exception?)"/>
 	public static StringInterpolationWithValues Debug(FormattableString stringInterpolation
 		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Debug(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
-	public static StringInterpolationWithValues Debug(StringInterpolationWithValues messageWithValues, Exception? x = null) {
+	/// <summary>TODO: LLM</summary>
+ 	public static StringInterpolationWithValues Debug(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogDebug(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Debug, 0, messageWithValues, x, (m, e) => m.ToString() + e);
 		return messageWithValues;
 	}
 
+	/// <inheritdoc cref="Information(StringInterpolationWithValues, Exception?)"/>
 	public static StringInterpolationWithValues Information(FormattableString stringInterpolation
 		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Information(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
-	public static StringInterpolationWithValues Information(StringInterpolationWithValues messageWithValues, Exception? x = null) {
+	/// <summary>TODO: LLM</summary>
+ 	public static StringInterpolationWithValues Information(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogInformation(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Information, 0, messageWithValues, x, (m, e) => m.ToString() + e);
 		return messageWithValues;
 	}
 
+	/// <inheritdoc cref="Warning(StringInterpolationWithValues, Exception?)"/>
 	public static StringInterpolationWithValues Warning(FormattableString stringInterpolation
 		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Warning(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
-	public static StringInterpolationWithValues Warning(StringInterpolationWithValues messageWithValues, Exception? x = null) {
+	/// <summary>TODO: LLM</summary>
+ 	public static StringInterpolationWithValues Warning(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogWarning(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Warning, 0, messageWithValues, x, (m, e) => m.ToString() + e);
 		return messageWithValues;
 	}
 
+	/// <inheritdoc cref="Trace(StringInterpolationWithValues, Exception?)"/>
 	public static StringInterpolationWithValues Trace(FormattableString stringInterpolation
 		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Trace(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
-	public static StringInterpolationWithValues Trace(StringInterpolationWithValues messageWithValues, Exception? x = null) {
+	/// <summary>TODO: LLM</summary>
+ 	public static StringInterpolationWithValues Trace(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogTrace(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Trace, 0, messageWithValues, x, (m, e) => m.ToString() + e);
 		return messageWithValues;
@@ -127,66 +142,78 @@ public static class Log
 
 	#region Log Extension Statements
 
+	/// <inheritdoc cref="Error(StringInterpolationWithValues, Exception?)"/>
 	public static StringInterpolationWithValues Error(this ILogger log, FormattableString stringInterpolation
 		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> log.Error(stringInterpolation.Parse(expression, path, lineNo), x);
 
+	/// <inheritdoc cref="Error(StringInterpolationWithValues, Exception?)"/>
 	public static StringInterpolationWithValues Error(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogError(x, messageWithValues.template.Text, messageWithValues.values);
 		log?.Log(LogLevel.Error, 0, messageWithValues, x, (m, e) => m.ToString() + e);
 		return messageWithValues;
 	}
 
+	/// <inheritdoc cref="Critical(StringInterpolationWithValues, Exception?)"/>
 	public static StringInterpolationWithValues Critical(this ILogger log, FormattableString stringInterpolation
 		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Critical(log, stringInterpolation.Parse(expression, path, lineNo), x);
 
+	/// <inheritdoc cref="Critical(StringInterpolationWithValues, Exception?)"/>
 	public static StringInterpolationWithValues Critical(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogCritical(x, parsed.template.Text, parsed.values);
 		log?.Log(LogLevel.Critical, 0, messageWithValues, x, (m, e) => m.ToString() + e);
 		return messageWithValues;
 	}
 
+	/// <inheritdoc cref="Debug(StringInterpolationWithValues, Exception?)"/>
 	public static StringInterpolationWithValues Debug(this ILogger? log, FormattableString stringInterpolation
 		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Debug(log, stringInterpolation.Parse(expression, path, lineNo), x);
 
+	/// <inheritdoc cref="Debug(StringInterpolationWithValues, Exception?)"/>
 	public static StringInterpolationWithValues Debug(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogDebug(x, messageWithValues.template.Text, messageWithValues.values);
 		log?.Log(LogLevel.Debug, 0, messageWithValues, x, (m, e) => m.ToString() + e);
 		return messageWithValues;
 	}
 
+	/// <inheritdoc cref="Information(StringInterpolationWithValues, Exception?)"/>
 	public static StringInterpolationWithValues Information(this ILogger? log, FormattableString stringInterpolation
 		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Information(log, stringInterpolation.Parse(expression, path, lineNo), x);
 
+	/// <inheritdoc cref="Information(StringInterpolationWithValues, Exception?)"/>
 	public static StringInterpolationWithValues Information(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogInformation(x, messageWithValues.template.Text, messageWithValues.values);
 		log?.Log(LogLevel.Information, 0, messageWithValues, x, (m, e) => m.ToString() + e);
 		return messageWithValues;
 	}
 
+	/// <inheritdoc cref="Warning(StringInterpolationWithValues, Exception?)"/>
 	public static StringInterpolationWithValues Warning(this ILogger? log, FormattableString stringInterpolation
 		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Warning(log, stringInterpolation.Parse(expression, path, lineNo), x);
 
+	/// <inheritdoc cref="Warning(StringInterpolationWithValues, Exception?)"/>
 	public static StringInterpolationWithValues Warning(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogWarning(x, messageWithValues.template.Text, messageWithValues.values);
 		log?.Log(LogLevel.Warning, 0, messageWithValues, x, (m, e) => m.ToString() + e);
 		return messageWithValues;
 	}
 
+	/// <inheritdoc cref="Trace(StringInterpolationWithValues, Exception?)"/>
 	public static StringInterpolationWithValues Trace(this ILogger? log, FormattableString stringInterpolation
 		, Exception? x = null, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Trace(log, stringInterpolation.Parse(expression, path, lineNo), x);
 
+	/// <inheritdoc cref="Trace(StringInterpolationWithValues, Exception?)"/>
 	public static StringInterpolationWithValues Trace(this ILogger? log, StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogTrace(x, messageWithValues.template.Text, messageWithValues.values);
 		log?.Log(LogLevel.Trace, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -195,7 +222,8 @@ public static class Log
 
 	#endregion Log Extension Statements
 
-	public static string Format(this MessageTemplate template, params object?[] properties) {
+	/// <summary>TODO: LLM</summary>
+ 	public static string Format(this MessageTemplate template, params object?[] properties) {
 		var result = new StringBuilder(template.Text);
 		var pos = -1;
 		foreach (var token in template.Tokens) {
@@ -237,6 +265,7 @@ public static class Log
 		return dictionary;
 	}
 
+	/// <inheritdoc cref="Format(MessageTemplate, object?[])"/>
 	public static string Format(this MessageTemplate template, IReadOnlyDictionary<string, object?> properties) {
 		var result = new StringBuilder(template.Text);
 		var tokens = template.Tokens.OfType<PropertyToken>();
@@ -309,6 +338,7 @@ public static class Log
 		return new StringInterpolationWithValues(template, filePath, lineNo, stringInterpolation, arg0);
 	}
 
+	/// <inheritdoc cref="Parse(FormattableString, string?, string, int)"/>
 	public static StringInterpolationWithValues Parse(string formatString, object? arg0, object? arg1
 		, [CallerLineNumber] int lineNo = -1, [CallerFilePath] string filePath = "") {
 		if (!_templates.TryGetValue(formatString, out var template)) {
@@ -318,6 +348,7 @@ public static class Log
 		return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1);
 	}
 
+	/// <inheritdoc cref="Parse(FormattableString, string?, string, int)"/>
 	public static StringInterpolationWithValues Parse(string stringInterpolation
 		, object? arg0, object? arg1, object? arg2
 		, [CallerLineNumber] int lineNo = -1, [CallerFilePath] string filePath = "") {
@@ -328,6 +359,7 @@ public static class Log
 		return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2);
 	}
 
+	/// <inheritdoc cref="Parse(FormattableString, string?, string, int)"/>
 	public static StringInterpolationWithValues Parse(string stringInterpolation
 		, object? arg0, object? arg1, object? arg2, object? arg3
 		, [CallerLineNumber] int lineNo = -1, [CallerFilePath] string filePath = "") {
@@ -338,6 +370,7 @@ public static class Log
 		return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3);
 	}
 
+	/// <inheritdoc cref="Parse(FormattableString, string?, string, int)"/>
 	public static StringInterpolationWithValues Parse(string stringInterpolation
 		, object? arg0, object? arg1, object? arg2, object? arg3, object? arg4
 		, [CallerLineNumber] int lineNo = -1, [CallerFilePath] string filePath = "") {
@@ -348,6 +381,7 @@ public static class Log
 		return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4);
 	}
 
+	/// <inheritdoc cref="Parse(FormattableString, string?, string, int)"/>
 	public static StringInterpolationWithValues Parse(string stringInterpolation
 		, object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5
 		, [CallerLineNumber] int lineNo = -1, [CallerFilePath] string filePath = "") {
@@ -358,6 +392,7 @@ public static class Log
 		return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5);
 	}
 
+	/// <inheritdoc cref="Parse(FormattableString, string?, string, int)"/>
 	[SuppressMessage("Major Code Smell", "S107:Method has 10 parameters, which is greater than the 7 authorized.", Justification = "Cannot use params[]")]
 	public static StringInterpolationWithValues Parse(string stringInterpolation
 		, object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6
@@ -369,6 +404,7 @@ public static class Log
 		return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
 	}
 
+	/// <inheritdoc cref="Parse(FormattableString, string?, string, int)"/>
 	[SuppressMessage("Major Code Smell", "S107:Method has 10 parameters, which is greater than the 7 authorized.", Justification = "Cannot use params[]")]
 	public static StringInterpolationWithValues Parse(string stringInterpolation
 		, object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6, object? arg7
@@ -380,6 +416,7 @@ public static class Log
 		return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 	}
 
+	/// <inheritdoc cref="Parse(FormattableString, string?, string, int)"/>
 	[SuppressMessage("Major Code Smell", "S107:Method has 10 parameters, which is greater than the 7 authorized.", Justification = "Cannot use params[]")]
 	public static StringInterpolationWithValues Parse(string stringInterpolation
 		, object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6, object? arg7, object? arg8
@@ -391,6 +428,7 @@ public static class Log
 		return new StringInterpolationWithValues(template, filePath, lineNo, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
 	}
 
+	/// <inheritdoc cref="Parse(FormattableString, string?, string, int)"/>
 	[SuppressMessage("Major Code Smell", "S107:Method has 10 parameters, which is greater than the 7 authorized.", Justification = "Cannot use params[]")]
 	public static StringInterpolationWithValues Parse(string stringInterpolation
 		, object? arg0, object? arg1, object? arg2, object? arg3, object? arg4, object? arg5, object? arg6, object? arg7, object? arg8, object? arg9
