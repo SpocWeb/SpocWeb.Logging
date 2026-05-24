@@ -24,7 +24,6 @@ namespace org.SpocWeb.root.logging;
 /// - <see cref="LogLevel.Debug"/> <br/>
 /// - <see cref="LogLevel.Trace"/> <br/>
 /// 
-///
 /// ## Meta
 /// pass: 2
 /// mtime: 2025-05-02T17:50:18Z
