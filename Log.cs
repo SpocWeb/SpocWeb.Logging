@@ -10,9 +10,9 @@ namespace org.SpocWeb.root.logging;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
-/// <summary> Extension Methods to use <see cref="StringInterpolationWithValues"/> for Logging </summary>
+/// <summary> Extension Methods to use <see cref="StringInterpolationWithValues"/> for Logging. </summary>
 /// <remarks>
-/// This makes Log-Statements more readable and re-usable for Exceptions and other Messages
+/// This makes Log-Statements more readable and re-usable for Exceptions and other Messages.
 ///
 /// ## Meta
 /// pass: 2
@@ -20,6 +20,9 @@ namespace org.SpocWeb.root.logging;
 /// digest: afae3f6b5902d3e5547e169262035596db690e64ea00858288dd6d86ca7b3a82
 /// updated: 2026-05-19
 /// </remarks>
+/// <seealso cref="StringInterpolationWithValues">StringInterpolationWithValues: parsed message template paired with its argument values.</seealso>
+/// <seealso cref="LogX">LogX: semantic interpolation-handler-based logging extension methods.</seealso>
+/// <seealso cref="PrefixedStringHandler">PrefixedStringHandler: interpolated string handler that captures argument names and values at call-site.</seealso>
 [SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 public static class Log
 {
@@ -33,7 +36,7 @@ public static class Log
 
 	// Function to generate a formatted string
 	// Parse the Serilog message template
-	/// <summary>TODO: LLM</summary>
+	/// <summary>Parses <paramref name="message"/> into a <see cref="MessageTemplate"/>, ignoring the second argument.</summary>
  	public static MessageTemplate ParseTemplate(string message, object _) => _messageTemplateParser.Parse(message);
 
 	/// <summary>Gets the _templates.</summary>
@@ -66,7 +69,7 @@ public static class Log
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Logger.Error(stringInterpolation.Parse(expression, path, lineNo), x);
 
-	/// <summary>TODO: LLM</summary>
+	/// <summary>Dispatches <paramref name="messageWithValues"/> at <see cref="LogLevel.Error"/> level via <see cref="Logger"/>.</summary>
  	public static StringInterpolationWithValues Error(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogError(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Error, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -79,7 +82,7 @@ public static class Log
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Critical(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
-	/// <summary>TODO: LLM</summary>
+	/// <summary>Dispatches <paramref name="messageWithValues"/> at <see cref="LogLevel.Critical"/> level via <see cref="Logger"/>.</summary>
  	public static StringInterpolationWithValues Critical(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogCritical(x, parsed.template.Text, parsed.values);
 		Logger?.Log(LogLevel.Critical, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -92,7 +95,7 @@ public static class Log
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Debug(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
-	/// <summary>TODO: LLM</summary>
+	/// <summary>Dispatches <paramref name="messageWithValues"/> at <see cref="LogLevel.Debug"/> level via <see cref="Logger"/>.</summary>
  	public static StringInterpolationWithValues Debug(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogDebug(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Debug, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -105,7 +108,7 @@ public static class Log
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Information(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
-	/// <summary>TODO: LLM</summary>
+	/// <summary>Dispatches <paramref name="messageWithValues"/> at <see cref="LogLevel.Information"/> level via <see cref="Logger"/>.</summary>
  	public static StringInterpolationWithValues Information(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogInformation(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Information, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -118,7 +121,7 @@ public static class Log
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Warning(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
-	/// <summary>TODO: LLM</summary>
+	/// <summary>Dispatches <paramref name="messageWithValues"/> at <see cref="LogLevel.Warning"/> level via <see cref="Logger"/>.</summary>
  	public static StringInterpolationWithValues Warning(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogWarning(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Warning, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -131,7 +134,7 @@ public static class Log
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Trace(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
-	/// <summary>TODO: LLM</summary>
+	/// <summary>Dispatches <paramref name="messageWithValues"/> at <see cref="LogLevel.Trace"/> level via <see cref="Logger"/>.</summary>
  	public static StringInterpolationWithValues Trace(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogTrace(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Trace, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -222,7 +225,7 @@ public static class Log
 
 	#endregion Log Extension Statements
 
-	/// <summary>TODO: LLM</summary>
+	/// <summary>Formats <paramref name="template"/> by substituting each placeholder with the corresponding entry from <paramref name="properties"/>.</summary>
  	public static string Format(this MessageTemplate template, params object?[] properties) {
 		var result = new StringBuilder(template.Text);
 		var pos = -1;
