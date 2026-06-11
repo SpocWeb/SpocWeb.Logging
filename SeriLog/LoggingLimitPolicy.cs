@@ -1,4 +1,4 @@
-﻿using Serilog.Core;
+using Serilog.Core;
 using Serilog.Events;
 
 namespace org.SpocWeb.root.logging.SeriLog;
@@ -24,6 +24,13 @@ namespace org.SpocWeb.root.logging.SeriLog;
 ///		.Destructure.With{ExcludePropertiesPolicy}()
 ///		.CreateLogger();
 /// </code>
+/// <example>
+/// <code language="yaml">
+/// pass: 2
+/// mtime: 2026-05-19T14:25:05Z
+/// digest: 5afdd2e10f6c9a25f6685ea0af707157a09e273b39f5899275e27c060c8ef73f
+/// </code>
+/// </example>
 public class LoggingLimitPolicy : IDestructuringPolicy
 {
 	/// <summary> Limit String Length to reduce Log Size </summary>

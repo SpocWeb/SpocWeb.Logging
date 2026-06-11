@@ -1,4 +1,4 @@
-﻿using System.Runtime.CompilerServices;
+using System.Runtime.CompilerServices;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 using Serilog.Events;
 
@@ -31,6 +31,13 @@ namespace org.SpocWeb.root.logging;
 /// updated: 2026-05-19
 /// </remarks>
 /// <inheritdoc cref="ToString"/>
+/// <example>
+/// <code language="yaml">
+/// pass: 2
+/// mtime: 2026-05-24T16:47:18Z
+/// digest: 11eb3dd0720f3c59206440050317d00db09a2a43ca7f287c9412d09053d209b9
+/// </code>
+/// </example>
 public record StringInterpolationWithValues(MessageTemplate template//, Exception? exception
 	, string filePath, int lineNo, params object?[] values)
 {

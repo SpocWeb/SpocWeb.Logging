@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 
 using System.Runtime.CompilerServices;
@@ -24,6 +24,13 @@ namespace org.SpocWeb.root.logging;
 /// digest: de2eed1a9afb2c8a854e1053da6599131b07349921066987ca2a94faabcf6369
 /// updated: 2026-05-19
 /// </remarks>
+/// <example>
+/// <code language="yaml">
+/// pass: 2
+/// mtime: 2026-05-19T14:25:47Z
+/// digest: edb317fd6897187b61d4e0159cd1d664ea1690dd7a7fc2eb08788f9f746d5cd5
+/// </code>
+/// </example>
 [InterpolatedStringHandler]
 public ref struct PrefixedStringHandler {
 
@@ -144,6 +151,13 @@ public ref struct PrefixedStringHandler {
 /// digest: de2eed1a9afb2c8a854e1053da6599131b07349921066987ca2a94faabcf6369
 /// updated: 2026-05-19
 /// </remarks>
+/// <example>
+/// <code language="yaml">
+/// pass: 2
+/// mtime: 2026-05-19T14:25:47Z
+/// digest: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+/// </code>
+/// </example>
 public record struct DestructureWrapper(object Value);
 
 /// <summary> Extension Methods to log semantically with String Interpolation. </summary>

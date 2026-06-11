@@ -23,6 +23,13 @@ namespace org.SpocWeb.root.logging;
 /// <seealso cref="StringInterpolationWithValues">StringInterpolationWithValues: parsed message template paired with its argument values.</seealso>
 /// <seealso cref="LogX">LogX: semantic interpolation-handler-based logging extension methods.</seealso>
 /// <seealso cref="PrefixedStringHandler">PrefixedStringHandler: interpolated string handler that captures argument names and values at call-site.</seealso>
+/// <example>
+/// <code language="yaml">
+/// pass: 2
+/// mtime: 2026-06-01T21:44:07Z
+/// digest: 6057a5f6267fac2c8bb19fd096a5f717c61697110f525f648c9f1a3b4c49f058
+/// </code>
+/// </example>
 [SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 public static class Log
 {

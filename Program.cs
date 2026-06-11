@@ -10,6 +10,13 @@ namespace org.SpocWeb.root.logging;
 /// </remarks>
 /// <seealso cref="Log">Log: central static logging dispatcher used throughout the project.</seealso>
 /// <seealso cref="LogX">LogX: semantic interpolation-based logging extensions.</seealso>
+/// <example>
+/// <code language="yaml">
+/// pass: 2
+/// mtime: 2026-06-01T21:44:15Z
+/// digest: 8b4e2159ade04ce1383da2aa2e0f47c259eebbe4f7a5d9546c89356042e5e6f4
+/// </code>
+/// </example>
 class Program
 {
 	/// <summary>Application entry point; intentionally empty for a library project.</summary>

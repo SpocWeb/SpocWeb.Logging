@@ -10,6 +10,14 @@ namespace org.SpocWeb.root.logging;
 /// digest: e7a003742c58af98acdca4f9428a9f0bc6558f0323f808fa56cee8cc2ff4dbe9
 /// updated: 2026-05-19
 /// </remarks>
+/// <example>
+/// <code language="yaml">
+/// pass: 2
+/// mtime: 2026-05-22T17:59:52Z
+/// digest: 8fa3ce9c5ac67a2a7f19a49f24faf0b24e15269dc4c02c71ef143344d41511b8
+/// stale: true
+/// </code>
+/// </example>
 public readonly struct Int<T> : IComparable<Int<T>>, IEquatable<Int<T>> {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 	/// <summary>Gets the value.</summary>
@@ -45,9 +53,9 @@ public readonly struct Int<T> : IComparable<Int<T>>, IEquatable<Int<T>> {
 	/// <summary>Determines whether <paramref name="a"/> is greater than or equal to <paramref name="b"/>.</summary>
 	public static bool operator >=(Int<T> a, Int<T> b) => a.Value >= b.Value;
 
-	/// <summary>TODO: LLM</summary>
+	/// <inheritdoc />
  	public int CompareTo(Int<T> other) => Value.CompareTo(other.Value);
-	/// <summary>TODO: LLM</summary>
+	/// <inheritdoc />
  	public bool Equals(Int<T> other) => Value == other.Value;
 	/// <inheritdoc cref="Equals(Int<T>)"/>
 	public override bool Equals(object? obj) => obj is Int<T> other && Equals(other);
