@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 using Serilog.Events;
 using Serilog.Parsing;
+using org.SpocWeb.root.Attributes;
 
 namespace org.SpocWeb.root.logging;
 
@@ -31,6 +32,7 @@ namespace org.SpocWeb.root.logging;
 /// </code>
 /// </example>
 [SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
+[Replaces("../../../../NET/_root/IoC/UnitTests/ContainerTests.CUT.cs")]
 public static class Log
 {
 	/// <summary> Central Log Dispatcher and aggregator </summary>

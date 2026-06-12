@@ -1,3 +1,4 @@
+using org.SpocWeb.root.Attributes;
 namespace org.SpocWeb.root.logging;
 
 /// <summary> Generically typed <see cref="Int32"/> </summary>
@@ -18,6 +19,7 @@ namespace org.SpocWeb.root.logging;
 /// stale: true
 /// </code>
 /// </example>
+[Replaces("../../../../NET/_root/Abstracts/Int.cs")]
 public readonly struct Int<T> : IComparable<Int<T>>, IEquatable<Int<T>> {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 	/// <summary>Gets the value.</summary>
