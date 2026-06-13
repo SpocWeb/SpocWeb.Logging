@@ -15,7 +15,7 @@ namespace org.SpocWeb.root.logging;
 /// <code language="yaml">
 /// pass: 2
 /// mtime: 2026-05-22T17:59:52Z
-/// digest: 8fa3ce9c5ac67a2a7f19a49f24faf0b24e15269dc4c02c71ef143344d41511b8
+/// digest: 0a4ac7c3a97e22765b8ee28ee4baa9c8a3dac777bcfb9574fda918bf9657883c
 /// stale: true
 /// </code>
 /// </example>
