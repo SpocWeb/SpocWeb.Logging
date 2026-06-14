@@ -16,7 +16,6 @@ namespace org.SpocWeb.root.logging;
 /// pass: 2
 /// mtime: 2026-05-22T17:59:52Z
 /// digest: 0a4ac7c3a97e22765b8ee28ee4baa9c8a3dac777bcfb9574fda918bf9657883c
-/// stale: true
 /// </code>
 /// </example>
 [Replaces("../../../../NET/_root/Abstracts/Int.cs")]

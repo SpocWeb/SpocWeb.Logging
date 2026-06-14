@@ -1,21 +1,34 @@
+---
+digest:
+  local-classes:
+    DestructureWrapper:
+      mtime: "2026-06-11T12:18:53Z"
+      digest: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    Int:
+      mtime: "2026-06-14T00:58:56Z"
+      digest: "0a4ac7c3a97e22765b8ee28ee4baa9c8a3dac777bcfb9574fda918bf9657883c"
+    IsExternalInit:
+      mtime: "2026-05-19T14:24:41Z"
+      digest: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    Log:
+      mtime: "2026-06-11T19:12:48Z"
+      digest: "6057a5f6267fac2c8bb19fd096a5f717c61697110f525f648c9f1a3b4c49f058"
+    LogX:
+      mtime: "2026-06-11T12:18:53Z"
+      digest: "390c7304721fa0c125175bc6a7b15ad5cbe02c1ea2a2a2dfccefd2ccd9c5bc43"
+    PrefixedStringHandler:
+      mtime: "2026-06-11T12:18:53Z"
+      digest: "edb317fd6897187b61d4e0159cd1d664ea1690dd7a7fc2eb08788f9f746d5cd5"
+    Program:
+      mtime: "2026-06-14T06:07:55Z"
+      digest: "8b4e2159ade04ce1383da2aa2e0f47c259eebbe4f7a5d9546c89356042e5e6f4"
+    StringInterpolationWithValues:
+      mtime: "2026-06-11T12:18:53Z"
+      digest: "11eb3dd0720f3c59206440050317d00db09a2a43ca7f287c9412d09053d209b9"
+  folders: {}
+---
 # SpocWeb.Logging
 
-<!-- digest-map
-local-classes:
-  DestructureWrapper: mtime=2026-03-11T07:58:58Z digest=de2eed1a9afb2c8a854e1053da6599131b07349921066987ca2a94faabcf6369
-  ExcludeFromLoggingAttribute: mtime=2025-05-02T17:50:18Z digest=a0abcb7a602f933d81f71ef7fcb71b7e0559850e350427f6839c82827a93ffe8
-  Int: mtime=2026-03-06T12:14:31Z digest=e7a003742c58af98acdca4f9428a9f0bc6558f0323f808fa56cee8cc2ff4dbe9
-  IsExternalInit: mtime=2024-10-07T13:17:24Z digest=1c92ff0e1cf64aef6c485bdffc89ea343bbd6bbe9cefd939e21ababdd082d938
-  Log: mtime=2026-03-06T12:13:23Z digest=afae3f6b5902d3e5547e169262035596db690e64ea00858288dd6d86ca7b3a82
-  LoggingLimitPolicy: mtime=2026-03-06T09:42:35Z digest=b74a830f176cf637f66813edf9dcea72b6d085643d39dda456cb3cfc43c8bf0f
-  LogX: mtime=2026-03-11T07:58:58Z digest=de2eed1a9afb2c8a854e1053da6599131b07349921066987ca2a94faabcf6369
-  PrefixedStringHandler: mtime=2026-03-11T07:58:58Z digest=de2eed1a9afb2c8a854e1053da6599131b07349921066987ca2a94faabcf6369
-  Program: mtime=2025-05-02T17:50:18Z digest=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-  StringInterpolationWithValues: mtime=2025-05-02T17:50:18Z digest=ab10d5f9a9a2bee8442630c682e99e51eae2a70c7cbabda62b8197577a1dac78
-folders:
-folder_digest: aecf509e95598af9df6d0f3cf8206c279636bd967083533aa63f830c442122c4
-folder_mtime: 2026-03-11T07:58:58Z
--->
 
 SpocWeb.Logging is a minimal, injection-free logging utility
 that bridges C# string interpolation with structured logging
@@ -142,3 +155,22 @@ See [Int.cs](Int.cs).
 - [InterpolatedStringHandler pattern (C# 10)](https://learn.microsoft.com/dotnet/csharp/advanced-topics/performance/interpolated-string-handler)
 - [CallerArgumentExpression attribute](https://learn.microsoft.com/dotnet/csharp/language-reference/attributes/caller-information#callerargumentexpression-attribute)
 - SpocWeb.Proxies — dynamic logging proxy interceptor (sibling project)
+
+## Classes
+
+| Class | Responsibility |
+|---|---|
+| [Int](Int.cs) | Generically typed Int32 |
+| [IsExternalInit](IsExternalInit.cs) | Needed for Primary Constructor |
+| [Log](Log.cs) | Extension Methods to use StringInterpolationWithValues for Logging. |
+| [Program](Program.cs) | Entry point placeholder for the SpocWeb. |
+| [PrefixedStringHandler](SemanticLog.cs) | Interpolation Handler to capture the Expression in the Interpolation String |
+| [DestructureWrapper](SemanticLog.cs) | Makes the compiler pick a different overload of the AppendFormatted Method. |
+| [LogX](SemanticLog.cs) | Extension Methods to log semantically with String Interpolation. |
+| [StringInterpolationWithValues](StringInterpolationWithValues.cs) | Encapsulates a parsed StringInterpolation with values |
+
+## Subsystems
+
+| Folder | Domain Role |
+|---|---|
+| [`SeriLog/`](SeriLog/ReadMe.md) | Serilog-specific extensions for `SpocWeb.Logging`: a destructuring policy that truncates oversized strings and arrays, and an attribute that suppresses logging of sensitive or irrelevant properties. |

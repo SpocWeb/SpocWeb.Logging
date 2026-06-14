@@ -1,3 +1,4 @@
+using org.SpocWeb.root.Attributes;
 namespace org.SpocWeb.root.logging;
 
 /// <summary> Entry point placeholder for the SpocWeb.Logging project. </summary>
@@ -17,6 +18,8 @@ namespace org.SpocWeb.root.logging;
 /// digest: 8b4e2159ade04ce1383da2aa2e0f47c259eebbe4f7a5d9546c89356042e5e6f4
 /// </code>
 /// </example>
+[ReplacedBy("../SpocWeb.wpfGdi/Program.cs")]
+[Replaces("../../../../NET/_root/linq/MathParser.Test/Program.cs")]
 class Program
 {
 	/// <summary>Application entry point; intentionally empty for a library project.</summary>
