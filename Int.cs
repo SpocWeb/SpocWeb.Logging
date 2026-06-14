@@ -1,4 +1,3 @@
-using org.SpocWeb.root.Attributes;
 namespace org.SpocWeb.root.logging;
 
 /// <summary> Generically typed <see cref="Int32"/> </summary>
@@ -18,16 +17,16 @@ namespace org.SpocWeb.root.logging;
 /// digest: 0a4ac7c3a97e22765b8ee28ee4baa9c8a3dac777bcfb9574fda918bf9657883c
 /// </code>
 /// </example>
-[Replaces("../../../../NET/_root/Abstracts/Int.cs")]
+//[org.SpocWeb.root.Attributes.Replaces("../../../../NET/_root/Abstracts/Int.cs")]
 public readonly struct Int<T> : IComparable<Int<T>>, IEquatable<Int<T>> {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 	/// <summary>Gets the value.</summary>
 	public int Value { get; }
 
-	/// <summary>Initializes a new instance of <see cref="Int"/> with the specified <paramref name="value"/>.</summary>
+	/// <summary>Initializes a new instance of <see cref="Int32"/> with the specified <paramref name="value"/>.</summary>
 	public Int(int value) => Value = value;
 
-	/// <summary>Implicitly converts <paramref name="value"/> to <see cref="Int<T>"/>.</summary>
+	/// <summary>Implicitly converts <paramref name="value"/> to <see cref="Int{T}"/>.</summary>
 	public static implicit operator Int<T>(int value) => new Int<T>(value);
 	/// <summary>Implicitly converts <paramref name="value"/> to <see cref="int"/>.</summary>
 	public static implicit operator int(Int<T> value) => value.Value;
@@ -58,7 +57,7 @@ public readonly struct Int<T> : IComparable<Int<T>>, IEquatable<Int<T>> {
  	public int CompareTo(Int<T> other) => Value.CompareTo(other.Value);
 	/// <inheritdoc />
  	public bool Equals(Int<T> other) => Value == other.Value;
-	/// <inheritdoc cref="Equals(Int<T>)"/>
+	/// <inheritdoc cref="Equals(Int{T})"/>
 	public override bool Equals(object? obj) => obj is Int<T> other && Equals(other);
 	/// <inheritdoc />
 	public override int GetHashCode() => Value.GetHashCode();

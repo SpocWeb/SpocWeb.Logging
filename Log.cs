@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 using Serilog.Events;
 using Serilog.Parsing;
-using org.SpocWeb.root.Attributes;
 
 namespace org.SpocWeb.root.logging;
 
@@ -32,7 +31,6 @@ namespace org.SpocWeb.root.logging;
 /// </code>
 /// </example>
 [SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
-[Replaces("../../../../NET/_root/IoC/UnitTests/ContainerTests.CUT.cs")]
 public static class Log
 {
 	/// <summary> Central Log Dispatcher and aggregator </summary>
@@ -78,7 +76,7 @@ public static class Log
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Logger.Error(stringInterpolation.Parse(expression, path, lineNo), x);
 
-	/// <summary>Dispatches <paramref name="messageWithValues"/> at <see cref="LogLevel.Error"/> level via <see cref="Logger"/>.</summary>
+	/// <summary>Dispatches <paramref name="messageWithValues"/> at see cref="LogLevel.Error"/> level via <see cref="Logger"/>.</summary>
  	public static StringInterpolationWithValues Error(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogError(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Error, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -91,7 +89,7 @@ public static class Log
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Critical(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
-	/// <summary>Dispatches <paramref name="messageWithValues"/> at <see cref="LogLevel.Critical"/> level via <see cref="Logger"/>.</summary>
+	/// <summary>Dispatches <paramref name="messageWithValues"/> at see cref="LogLevel.Critical"/> level via <see cref="Logger"/>.</summary>
  	public static StringInterpolationWithValues Critical(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogCritical(x, parsed.template.Text, parsed.values);
 		Logger?.Log(LogLevel.Critical, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -104,7 +102,7 @@ public static class Log
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Debug(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
-	/// <summary>Dispatches <paramref name="messageWithValues"/> at <see cref="LogLevel.Debug"/> level via <see cref="Logger"/>.</summary>
+	/// <summary>Dispatches <paramref name="messageWithValues"/> at see cref="LogLevel.Debug"/> level via <see cref="Logger"/>.</summary>
  	public static StringInterpolationWithValues Debug(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogDebug(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Debug, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -117,7 +115,7 @@ public static class Log
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Information(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
-	/// <summary>Dispatches <paramref name="messageWithValues"/> at <see cref="LogLevel.Information"/> level via <see cref="Logger"/>.</summary>
+	/// <summary>Dispatches <paramref name="messageWithValues"/> at see cref="LogLevel.Information"/> level via <see cref="Logger"/>.</summary>
  	public static StringInterpolationWithValues Information(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogInformation(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Information, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -130,7 +128,7 @@ public static class Log
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Warning(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
-	/// <summary>Dispatches <paramref name="messageWithValues"/> at <see cref="LogLevel.Warning"/> level via <see cref="Logger"/>.</summary>
+	/// <summary>Dispatches <paramref name="messageWithValues"/> at see cref="LogLevel.Warning"/> level via <see cref="Logger"/>.</summary>
  	public static StringInterpolationWithValues Warning(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogWarning(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Warning, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -143,7 +141,7 @@ public static class Log
 		, [CallerFilePath] string path = "", [CallerLineNumber] int lineNo = -1)
 		=> Trace(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
-	/// <summary>Dispatches <paramref name="messageWithValues"/> at <see cref="LogLevel.Trace"/> level via <see cref="Logger"/>.</summary>
+	/// <summary>Dispatches <paramref name="messageWithValues"/> at see cref="LogLevel.Trace"/> level via <see cref="Logger"/>.</summary>
  	public static StringInterpolationWithValues Trace(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogTrace(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Trace, 0, messageWithValues, x, (m, e) => m.ToString() + e);
