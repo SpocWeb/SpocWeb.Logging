@@ -47,17 +47,32 @@ with their parameters and return values.
 ```mermaid
 flowchart TD
     subgraph Core["Core (root)"]
-        Log["[Log](Log.cs)\nStatic dispatcher and\nFormattableString extensions"]
-        SIVW["[StringInterpolationWithValues](StringInterpolationWithValues.cs)\nParsed template + argument array"]
-        LogX["[LogX](SemanticLog.cs)\nInterpolation-handler logging\nextensions on ILogger"]
-        PSH["[PrefixedStringHandler](SemanticLog.cs)\nCaptures argument names\nand values at call-site"]
-        DW["[DestructureWrapper](SemanticLog.cs)\nMarker struct to trigger\n@ destructuring in Serilog"]
-        Int["[Int&lt;T&gt;](Int.cs)\nGeneric typed integer\nvalue struct"]
+        Log["[Log](Log.cs)
+    Static dispatcher and
+    FormattableString extensions"]
+        SIVW["[StringInterpolationWithValues](StringInterpolationWithValues.cs)
+    Parsed template + argument array"]
+        LogX["[LogX](SemanticLog.cs)
+    Interpolation-handler logging
+    extensions on ILogger"]
+        PSH["[PrefixedStringHandler](SemanticLog.cs)
+    Captures argument names
+    and values at call-site"]
+        DW["[DestructureWrapper](SemanticLog.cs)
+    Marker struct to trigger
+    @ destructuring in Serilog"]
+        Int["[Int&lt;T&gt;](Int.cs)
+    Generic typed integer
+    value struct"]
     end
 
     subgraph SeriLog["SeriLog subfolder"]
-        LLP["[LoggingLimitPolicy](SeriLog/LoggingLimitPolicy.cs)\nSerilog IDestructuringPolicy;\ntruncates strings and arrays"]
-        EFLA["[ExcludeFromLoggingAttribute](SeriLog/ExcludeFromLoggingAttribute.cs)\nAttribute to suppress\nlogging of a property or type"]
+        LLP["[LoggingLimitPolicy](SeriLog/LoggingLimitPolicy.cs)
+    Serilog IDestructuringPolicy;
+    truncates strings and arrays"]
+        EFLA["[ExcludeFromLoggingAttribute](SeriLog/ExcludeFromLoggingAttribute.cs)
+    Attribute to suppress
+    logging of a property or type"]
     end
 
     Log -->|"parses FormattableString into"| SIVW
