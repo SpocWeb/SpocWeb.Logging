@@ -42,6 +42,15 @@ which provides a dynamic logging proxy interceptor
 pluggable via Dependency Injection to log all calls
 with their parameters and return values.
 
+## Dependencies
+
+### NuGet Packages
+
+- `coverlet.collector`
+- `Microsoft.Extensions.Logging.Abstractions`
+- `PolySharp`
+- `Serilog`
+
 ## Architecture
 
 ```mermaid
