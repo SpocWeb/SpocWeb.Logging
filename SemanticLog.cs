@@ -63,15 +63,15 @@ public ref struct PrefixedStringHandler {
 	public readonly void WriteMessageWithValues(TextWriter writer)
         => writer.Write(Template.ToString(), KeyedValues.Values().ToArray());
 
-	/// <inheritdoc cref="PrefixedStringHandler"/>
+	/// <summary>Initializes a new instance of <see cref="PrefixedStringHandler"/> with the specified <paramref name="literalLength"/>, <paramref name="formatCount"/>, <paramref name="logger"/> and <paramref name="isEnabled"/>.</summary>
 	public PrefixedStringHandler(int literalLength, int formatCount, ILogger logger, out bool isEnabled)
 		: this(literalLength, formatCount, "", logger, LogLevel.Information, out isEnabled) { }
 
-	/// <inheritdoc cref="PrefixedStringHandler"/>
+	/// <summary>Initializes a new instance of <see cref="PrefixedStringHandler"/> with the specified <paramref name="literalLength"/>, <paramref name="formatCount"/>, <paramref name="prefix"/>, <paramref name="logger"/> and <paramref name="isEnabled"/>.</summary>
 	public PrefixedStringHandler(int literalLength, int formatCount, string prefix, ILogger logger, out bool isEnabled)
 		: this(literalLength, formatCount, prefix, logger, LogLevel.Information, out isEnabled) { }
 
-	/// <inheritdoc cref="PrefixedStringHandler"/>
+	/// <summary>Initializes a new instance of <see cref="PrefixedStringHandler"/> with the specified <paramref name="literalLength"/>, <paramref name="formatCount"/>, <paramref name="prefix"/>, <paramref name="logger"/>, <paramref name="level"/> and <paramref name="isEnabled"/>.</summary>
 	[SuppressMessage("ReSharper", "UnusedParameter.Local")]
 	public PrefixedStringHandler(int literalLength, int formatCount, string prefix, ILogger logger, LogLevel level, out bool isEnabled) {
 		_prefix = string.IsNullOrWhiteSpace(prefix) ? "" : prefix + "_";

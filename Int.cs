@@ -53,9 +53,9 @@ public readonly struct Int<T> : IComparable<Int<T>>, IEquatable<Int<T>> {
 	/// <summary>Determines whether <paramref name="a"/> is greater than or equal to <paramref name="b"/>.</summary>
 	public static bool operator >=(Int<T> a, Int<T> b) => a.Value >= b.Value;
 
-	/// <inheritdoc />
+	/// <summary>TODO: LLM</summary>
  	public int CompareTo(Int<T> other) => Value.CompareTo(other.Value);
-	/// <inheritdoc />
+	/// <summary>TODO: LLM</summary>
  	public bool Equals(Int<T> other) => Value == other.Value;
 	/// <inheritdoc cref="Equals(Int{T})"/>
 	public override bool Equals(object? obj) => obj is Int<T> other && Equals(other);
