@@ -1,4 +1,5 @@
-﻿// ReSharper disable once CheckNamespace
+﻿using org.SpocWeb.root.Attributes;
+// ReSharper disable once CheckNamespace
 namespace System.Runtime.CompilerServices;
 
 /// <summary> Needed for Primary Constructor </summary>
@@ -10,4 +11,5 @@ namespace System.Runtime.CompilerServices;
 /// updated: 2026-05-19
 /// </remarks>
 // ReSharper disable once UnusedMember.Global
+[ReplacedBy("../SpocWeb.Proxies/Properties/Range.cs")]
 internal static partial class IsExternalInit { }
