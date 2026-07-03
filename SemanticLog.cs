@@ -29,7 +29,6 @@ namespace org.SpocWeb.root.logging;
 /// pass: 2
 /// mtime: 2026-05-19T14:25:47Z
 /// digest: 7558c9ff6992954151f3e840e9e119ea88ea9c3b73153a11d0ae29adae2934cd
-/// stale: true
 /// </code>
 /// </example>
 [InterpolatedStringHandler]
