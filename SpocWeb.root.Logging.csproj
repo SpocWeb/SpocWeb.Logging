@@ -85,6 +85,7 @@
     <Compile Remove="Networks\XSetIpAddress.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SpocWeb.Proxies\Attributes\ReplacedByAttribute.cs" Link="_Links\ReplacedByAttribute.cs" />
     <Compile Include="..\SpocWeb.Proxies\Properties\Range.cs" Link="Range.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -101,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="_Links\" />
   </ItemGroup>
   <PropertyGroup>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
