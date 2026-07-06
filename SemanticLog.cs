@@ -172,6 +172,13 @@ public record struct DestructureWrapper(object Value);
 /// digest: de2eed1a9afb2c8a854e1053da6599131b07349921066987ca2a94faabcf6369
 /// updated: 2026-05-19
 /// </remarks>
+/// <example>
+/// <code language="yaml">
+/// pass: 2
+/// mtime: 2026-07-03T09:06:44Z
+/// digest: 390c7304721fa0c125175bc6a7b15ad5cbe02c1ea2a2a2dfccefd2ccd9c5bc43
+/// </code>
+/// </example>
 #pragma warning disable CA2254
 public static class LogX {
 

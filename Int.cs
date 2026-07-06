@@ -14,7 +14,8 @@ namespace org.SpocWeb.root.logging;
 /// <code language="yaml">
 /// pass: 2
 /// mtime: 2026-05-22T17:59:52Z
-/// digest: 0a4ac7c3a97e22765b8ee28ee4baa9c8a3dac777bcfb9574fda918bf9657883c
+/// digest: c9f2521a4bededb4ba26a5ab9d7a347c72f386904363ceb4a438dd5e58f958de
+/// stale: true
 /// </code>
 /// </example>
 //[org.SpocWeb.root.Attributes.Replaces("../../../../NET/_root/Abstracts/Int.cs")]
@@ -53,9 +54,9 @@ public readonly struct Int<T> : IComparable<Int<T>>, IEquatable<Int<T>> {
 	/// <summary>Determines whether <paramref name="a"/> is greater than or equal to <paramref name="b"/>.</summary>
 	public static bool operator >=(Int<T> a, Int<T> b) => a.Value >= b.Value;
 
-	/// <summary>TODO: LLM</summary>
+	/// <summary>Compares this instance to <paramref name="other"/> by <see cref="Value"/>.</summary>
  	public int CompareTo(Int<T> other) => Value.CompareTo(other.Value);
-	/// <summary>TODO: LLM</summary>
+	/// <summary>Returns `true` when <see cref="Value"/> equals <paramref name="other"/>'s.</summary>
  	public bool Equals(Int<T> other) => Value == other.Value;
 	/// <inheritdoc cref="Equals(Int{T})"/>
 	public override bool Equals(object? obj) => obj is Int<T> other && Equals(other);
