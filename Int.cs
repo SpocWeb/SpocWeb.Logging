@@ -1,6 +1,6 @@
 namespace org.SpocWeb.root.logging;
 
-/// <summary> Generically typed <see cref="Int32"/> </summary>
+/// <summary> Generically typed <see cref="Int32"/>. </summary>
 /// <remarks>
 /// Simple way to create distinctly typed integer Values
 ///
@@ -14,8 +14,7 @@ namespace org.SpocWeb.root.logging;
 /// <code language="yaml">
 /// pass: 2
 /// mtime: 2026-05-22T17:59:52Z
-/// digest: c9f2521a4bededb4ba26a5ab9d7a347c72f386904363ceb4a438dd5e58f958de
-/// stale: true
+/// digest: d13ad519922aaf7d4f69afa6992c98ef31297f521db5df6bd32124b4fdccf629
 /// </code>
 /// </example>
 //[org.SpocWeb.root.Attributes.Replaces("../../../../NET/_root/Abstracts/Int.cs")]
