@@ -2,23 +2,20 @@
 digest:
   local-classes:
     DestructureWrapper:
-      mtime: "2026-06-11T12:18:53Z"
+      mtime: "2026-07-06T18:33:31Z"
       digest: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     Int:
-      mtime: "2026-06-14T21:40:21Z"
-      digest: "473daa8e0def9c908e3ba60c9432ae9de06386b79c26a5420cab6f4bdf677609"
-    IsExternalInit:
-      mtime: "2026-05-19T14:24:41Z"
-      digest: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      mtime: "2026-07-07T05:44:50Z"
+      digest: "d13ad519922aaf7d4f69afa6992c98ef31297f521db5df6bd32124b4fdccf629"
     Log:
       mtime: "2026-06-14T22:28:26Z"
       digest: "3bd805619d58732d455144e378b27b17978fb71f6ee04ce4eb68527a9e7ae624"
     LogX:
-      mtime: "2026-06-11T12:18:53Z"
+      mtime: "2026-07-06T18:33:31Z"
       digest: "390c7304721fa0c125175bc6a7b15ad5cbe02c1ea2a2a2dfccefd2ccd9c5bc43"
     PrefixedStringHandler:
-      mtime: "2026-06-11T12:18:53Z"
-      digest: "edb317fd6897187b61d4e0159cd1d664ea1690dd7a7fc2eb08788f9f746d5cd5"
+      mtime: "2026-07-06T18:33:31Z"
+      digest: "7558c9ff6992954151f3e840e9e119ea88ea9c3b73153a11d0ae29adae2934cd"
     Program:
       mtime: "2026-06-14T21:39:14Z"
       digest: "8b4e2159ade04ce1383da2aa2e0f47c259eebbe4f7a5d9546c89356042e5e6f4"
@@ -184,8 +181,7 @@ See [Int.cs](Int.cs).
 
 | Class | Responsibility |
 |---|---|
-| [Int](Int.cs) | Generically typed Int32 |
-| [IsExternalInit](IsExternalInit.cs) | Needed for Primary Constructor |
+| [Int](Int.cs) | Generically typed Int32. |
 | [Log](Log.cs) | Extension Methods to use StringInterpolationWithValues for Logging. |
 | [Program](Program.cs) | Entry point placeholder for the SpocWeb. |
 | [PrefixedStringHandler](SemanticLog.cs) | Interpolation Handler to capture the Expression in the Interpolation String |
