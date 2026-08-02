@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SpocWeb.Proxies\Attributes\ReplacedByAttribute.cs" Link="_Links\ReplacedByAttribute.cs" />
+    <Compile Include="..\SpocWeb.Proxies\Attributes\ReplacedByAttribute.public.cs" Link="_Links\ReplacedByAttribute.public.cs" />
     <Compile Include="..\SpocWeb.Proxies\Properties\Range.cs" Link="Range.cs" />
   </ItemGroup>
   <ItemGroup>
