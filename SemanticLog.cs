@@ -28,7 +28,7 @@ namespace org.SpocWeb.root.logging;
 /// <code language="yaml">
 /// pass: 2
 /// mtime: 2026-05-19T14:25:47Z
-/// digest: 7558c9ff6992954151f3e840e9e119ea88ea9c3b73153a11d0ae29adae2934cd
+/// digest: 5fa0340681151093ecf9e5d0827c3d518d55b500273ee3a449eeef5a61f0cb3b
 /// </code>
 /// </example>
 [InterpolatedStringHandler]

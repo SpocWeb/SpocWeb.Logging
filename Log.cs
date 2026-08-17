@@ -27,7 +27,7 @@ namespace org.SpocWeb.root.logging;
 /// <code language="yaml">
 /// pass: 2
 /// mtime: 2026-06-01T21:44:07Z
-/// digest: 3bd805619d58732d455144e378b27b17978fb71f6ee04ce4eb68527a9e7ae624
+/// digest: 801899ca26ba34e0994f6a41cde675802c9dd06f5469a1ad3f3661185f8e125b
 /// </code>
 /// </example>
 [SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
