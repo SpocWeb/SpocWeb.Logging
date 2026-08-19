@@ -1,3 +1,4 @@
+using org.SpocWeb.root.Attributes;
 namespace org.SpocWeb.root.logging;
 
 /// <summary> Generically typed <see cref="Int32"/>. </summary>
@@ -10,14 +11,8 @@ namespace org.SpocWeb.root.logging;
 /// digest: e7a003742c58af98acdca4f9428a9f0bc6558f0323f808fa56cee8cc2ff4dbe9
 /// updated: 2026-05-19
 /// </remarks>
-/// <example>
-/// <code language="yaml">
-/// pass: 2
-/// mtime: 2026-05-22T17:59:52Z
-/// digest: d13ad519922aaf7d4f69afa6992c98ef31297f521db5df6bd32124b4fdccf629
-/// </code>
-/// </example>
 //[org.SpocWeb.root.Attributes.Replaces("../../../../NET/_root/Abstracts/Int.cs")]
+[DocState(Pass = 2, MTime = "2026-08-02T05:49:10Z", Digest = "d13ad519922aaf7d4f69afa6992c98ef31297f521db5df6bd32124b4fdccf629", Stale = false, Path = "Int.cs", Since = "2026-08-18")]
 public readonly struct Int<T> : IComparable<Int<T>>, IEquatable<Int<T>> {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 	/// <summary>Gets the value.</summary>

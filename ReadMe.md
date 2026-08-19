@@ -2,25 +2,25 @@
 digest:
   local-classes:
     DestructureWrapper:
-      mtime: "2026-07-06T18:33:31Z"
+      mtime: "2026-08-18T17:17:16Z"
       digest: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     Int:
-      mtime: "2026-07-07T05:44:50Z"
+      mtime: "2026-08-18T17:17:16Z"
       digest: "d13ad519922aaf7d4f69afa6992c98ef31297f521db5df6bd32124b4fdccf629"
     Log:
-      mtime: "2026-06-14T22:28:26Z"
-      digest: "3bd805619d58732d455144e378b27b17978fb71f6ee04ce4eb68527a9e7ae624"
+      mtime: "2026-08-18T17:17:16Z"
+      digest: "801899ca26ba34e0994f6a41cde675802c9dd06f5469a1ad3f3661185f8e125b"
     LogX:
-      mtime: "2026-07-06T18:33:31Z"
+      mtime: "2026-08-18T17:17:16Z"
       digest: "390c7304721fa0c125175bc6a7b15ad5cbe02c1ea2a2a2dfccefd2ccd9c5bc43"
     PrefixedStringHandler:
-      mtime: "2026-07-06T18:33:31Z"
-      digest: "7558c9ff6992954151f3e840e9e119ea88ea9c3b73153a11d0ae29adae2934cd"
+      mtime: "2026-08-18T17:17:16Z"
+      digest: "5fa0340681151093ecf9e5d0827c3d518d55b500273ee3a449eeef5a61f0cb3b"
     Program:
-      mtime: "2026-06-14T21:39:14Z"
+      mtime: "2026-08-18T17:17:16Z"
       digest: "8b4e2159ade04ce1383da2aa2e0f47c259eebbe4f7a5d9546c89356042e5e6f4"
     StringInterpolationWithValues:
-      mtime: "2026-06-11T12:18:53Z"
+      mtime: "2026-08-18T17:17:16Z"
       digest: "11eb3dd0720f3c59206440050317d00db09a2a43ca7f287c9412d09053d209b9"
   folders: {}
 ---
@@ -183,7 +183,7 @@ See [Int.cs](Int.cs).
 |---|---|
 | [Int](Int.cs) | Generically typed Int32. |
 | [Log](Log.cs) | Extension Methods to use StringInterpolationWithValues for Logging. |
-| [Program](Program.cs) | Entry point placeholder for the SpocWeb. |
+| [Program](Program.cs) | Entry point placeholder for the SpocWeb.Logging project. |
 | [PrefixedStringHandler](SemanticLog.cs) | Interpolation Handler to capture the Expression in the Interpolation String |
 | [DestructureWrapper](SemanticLog.cs) | Makes the compiler pick a different overload of the AppendFormatted Method. |
 | [LogX](SemanticLog.cs) | Extension Methods to log semantically with String Interpolation. |

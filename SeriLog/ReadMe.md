@@ -2,10 +2,10 @@
 digest:
   local-classes:
     ExcludeFromLoggingAttribute:
-      mtime: "2026-06-11T12:19:05Z"
+      mtime: "2026-08-18T17:17:16Z"
       digest: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     LoggingLimitPolicy:
-      mtime: "2026-06-11T12:19:05Z"
+      mtime: "2026-08-18T17:17:16Z"
       digest: "5afdd2e10f6c9a25f6685ea0af707157a09e273b39f5899275e27c060c8ef73f"
   folders: {}
 ---
