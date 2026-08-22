@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 using Serilog.Events;
-using org.SpocWeb.root.Attributes;
+using System.ComponentModel;
 
 namespace org.SpocWeb.root.logging;
 
@@ -32,20 +32,29 @@ namespace org.SpocWeb.root.logging;
 /// updated: 2026-05-19
 /// </remarks>
 /// <inheritdoc cref="ToString"/>
-[DocState(Pass = 2, MTime = "2026-08-02T05:49:10Z", Digest = "11eb3dd0720f3c59206440050317d00db09a2a43ca7f287c9412d09053d209b9", Stale = false, Path = "StringInterpolationWithValues.cs", Since = "2026-08-18")]
+/// <example>
+/// <code language="yaml">
+/// pass: 2
+/// mtime: 2026-08-22T17:15:51Z
+/// digest: 11eb3dd0720f3c59206440050317d00db09a2a43ca7f287c9412d09053d209b9
+/// </code>
+/// </example>
 public record StringInterpolationWithValues(MessageTemplate template//, Exception? exception
 	, string filePath, int lineNo, params object?[] values)
 {
 	/// <summary> The parsed Template of the Interpolation </summary>
+    [System.ComponentModel.Description("The parsed Template of the Interpolation")]
     public MessageTemplate Template => template;
 
 	/// <summary> The Values to insert into the Template </summary>
+    [System.ComponentModel.Description("The Values to insert into the Template")]
     public object?[] Values => values;
 
 	///// <summary> Optional Exception </summary>
 	//public Exception? Exception => exception;
 
     /// <summary> Formats the <see cref="template"/> with the <see cref="values"/></summary>
+	[System.ComponentModel.Description("Formats the template with the values")]
 	public override string ToString() => _toString ??= template.Format(values);// + exception;
 	private string? _toString;
 
@@ -55,6 +64,7 @@ public record StringInterpolationWithValues(MessageTemplate template//, Exceptio
 	/// The Names are determined using either <see cref="CallerArgumentExpressionAttribute"/>
 	/// or by reading the Source Code File. 
 	/// </remarks>
+	[System.ComponentModel.Description("Indexes the values with the template Placeholders")]
 	public Dictionary<string, object?> ToDictionary() => _dictionary ??= template.ToDictionary(values);
     private Dictionary<string, object?>? _dictionary;
 }

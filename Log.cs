@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 using Serilog.Events;
 using Serilog.Parsing;
-using org.SpocWeb.root.Attributes;
+using System.ComponentModel;
 
 namespace org.SpocWeb.root.logging;
 
@@ -24,12 +24,19 @@ namespace org.SpocWeb.root.logging;
 /// <seealso cref="StringInterpolationWithValues">StringInterpolationWithValues: parsed message template paired with its argument values.</seealso>
 /// <seealso cref="LogX">LogX: semantic interpolation-handler-based logging extension methods.</seealso>
 /// <seealso cref="PrefixedStringHandler">PrefixedStringHandler: interpolated string handler that captures argument names and values at call-site.</seealso>
-[DocState(Pass = 2, MTime = "2026-08-16T22:10:45Z", Digest = "801899ca26ba34e0994f6a41cde675802c9dd06f5469a1ad3f3661185f8e125b", Stale = false, Path = "Log.cs", Since = "2026-08-18")]
+/// <example>
+/// <code language="yaml">
+/// pass: 2
+/// mtime: 2026-08-22T17:15:51Z
+/// digest: 801899ca26ba34e0994f6a41cde675802c9dd06f5469a1ad3f3661185f8e125b
+/// </code>
+/// </example>
 [SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 public static class Log
 {
 	/// <summary> Central Log Dispatcher and aggregator </summary>
 	/// <remarks> for lightweight Coding w/o injecting Loggers everywhere. </remarks>
+	[System.ComponentModel.Description("Central Log Dispatcher and aggregator")]
 	public static ILogger? Logger { get; set; } //= new Logger();
 
 #pragma warning disable CA2254
@@ -39,6 +46,7 @@ public static class Log
 	// Function to generate a formatted string
 	// Parse the Serilog message template
 	/// <summary>Parses <paramref name="message"/> into a <see cref="MessageTemplate"/>, ignoring the second argument.</summary>
+ 	[System.ComponentModel.Description("Parses message into a MessageTemplate, ignoring the second argument.")]
  	public static MessageTemplate ParseTemplate(string message, object _) => _messageTemplateParser.Parse(message);
 
 	/// <summary>Gets the _templates.</summary>
@@ -49,6 +57,7 @@ public static class Log
 	/// This Serilog-like Parsing retains the Expression names, but at the cost of duplicating them.
 	/// Rather use a <see cref="FormattableString"/> with String Interpolation!
 	/// </remarks>
+	[System.ComponentModel.Description("Parses and caches the stringInterpolation")]
 	[Obsolete("Rather use String Interpolation like in " + nameof(LogX))]
 	public static StringInterpolationWithValues Parse_(string stringInterpolation, params object[] args) {
 		if (!_templates.TryGetValue(stringInterpolation, out var template)) {
@@ -72,6 +81,7 @@ public static class Log
 		=> Logger.Error(stringInterpolation.Parse(expression, path, lineNo), x);
 
 	/// <summary>Dispatches <paramref name="messageWithValues"/> at see cref="LogLevel.Error"/> level via <see cref="Logger"/>.</summary>
+ 	[System.ComponentModel.Description("Dispatches messageWithValues at see cref=\"LogLevel.Error\"/> level via Logger.")]
  	public static StringInterpolationWithValues Error(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogError(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Error, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -85,6 +95,7 @@ public static class Log
 		=> Critical(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	/// <summary>Dispatches <paramref name="messageWithValues"/> at see cref="LogLevel.Critical"/> level via <see cref="Logger"/>.</summary>
+ 	[System.ComponentModel.Description("Dispatches messageWithValues at see cref=\"LogLevel.Critical\"/> level via Logger.")]
  	public static StringInterpolationWithValues Critical(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogCritical(x, parsed.template.Text, parsed.values);
 		Logger?.Log(LogLevel.Critical, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -98,6 +109,7 @@ public static class Log
 		=> Debug(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	/// <summary>Dispatches <paramref name="messageWithValues"/> at see cref="LogLevel.Debug"/> level via <see cref="Logger"/>.</summary>
+ 	[System.ComponentModel.Description("Dispatches messageWithValues at see cref=\"LogLevel.Debug\"/> level via Logger.")]
  	public static StringInterpolationWithValues Debug(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogDebug(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Debug, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -111,6 +123,7 @@ public static class Log
 		=> Information(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	/// <summary>Dispatches <paramref name="messageWithValues"/> at see cref="LogLevel.Information"/> level via <see cref="Logger"/>.</summary>
+ 	[System.ComponentModel.Description("Dispatches messageWithValues at see cref=\"LogLevel.Information\"/> level via Logger.")]
  	public static StringInterpolationWithValues Information(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogInformation(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Information, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -124,6 +137,7 @@ public static class Log
 		=> Warning(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	/// <summary>Dispatches <paramref name="messageWithValues"/> at see cref="LogLevel.Warning"/> level via <see cref="Logger"/>.</summary>
+ 	[System.ComponentModel.Description("Dispatches messageWithValues at see cref=\"LogLevel.Warning\"/> level via Logger.")]
  	public static StringInterpolationWithValues Warning(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogWarning(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Warning, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -137,6 +151,7 @@ public static class Log
 		=> Trace(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	/// <summary>Dispatches <paramref name="messageWithValues"/> at see cref="LogLevel.Trace"/> level via <see cref="Logger"/>.</summary>
+ 	[System.ComponentModel.Description("Dispatches messageWithValues at see cref=\"LogLevel.Trace\"/> level via Logger.")]
  	public static StringInterpolationWithValues Trace(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogTrace(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Trace, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -228,6 +243,7 @@ public static class Log
 	#endregion Log Extension Statements
 
 	/// <summary>Formats <paramref name="template"/> by substituting each placeholder with the corresponding entry from <paramref name="properties"/>.</summary>
+ 	[System.ComponentModel.Description("Formats template by substituting each placeholder with the corresponding entry from properties.")]
  	public static string Format(this MessageTemplate template, params object?[] properties) {
 		var result = new StringBuilder(template.Text);
 		var pos = -1;
@@ -253,6 +269,7 @@ public static class Log
 	}
 
 	/// <summary> Adds the <paramref name="properties"/> to the <paramref name="dictionary"/> </summary>
+	[System.ComponentModel.Description("Adds the properties to the dictionary")]
 	public static IDictionary<string, object?> AddProperties(this IDictionary<string, object?>? dictionary, MessageTemplate template, params object?[] properties) {
 		dictionary ??= new Dictionary<string, object?>();
 		var pos = -1;
@@ -295,6 +312,7 @@ public static class Log
 	/// Alternatively the Log-Evaluation can mix in these Values,
 	/// but only if File and Line-Info can be matched.
 	/// </remarks>
+	[System.ComponentModel.Description("Parses and caches the stringInterpolation")]
 	public static StringInterpolationWithValues Parse(this FormattableString stringInterpolation//, Exception? x = null
 		, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
 		, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1
@@ -334,6 +352,7 @@ public static class Log
 	#region parsing with > 0 Params 
 
 	/// <summary> Parses and caches the <paramref name="stringInterpolation"/> </summary>
+	[System.ComponentModel.Description("Parses and caches the stringInterpolation")]
 	public static StringInterpolationWithValues Parse(string stringInterpolation, object? arg0
 		, [CallerLineNumber] int lineNo = -1, [CallerFilePath] string filePath = "") {
 		if (!_templates.TryGetValue(stringInterpolation, out var template)) {

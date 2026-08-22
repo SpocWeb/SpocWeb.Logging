@@ -1,4 +1,4 @@
-using org.SpocWeb.root.Attributes;
+using System.ComponentModel;
 namespace org.SpocWeb.root.logging;
 
 /// <summary> Entry point placeholder for the SpocWeb.Logging project. </summary>
@@ -11,10 +11,17 @@ namespace org.SpocWeb.root.logging;
 /// </remarks>
 /// <seealso cref="Log">Log: central static logging dispatcher used throughout the project.</seealso>
 /// <seealso cref="LogX">LogX: semantic interpolation-based logging extensions.</seealso>
-[DocState(Pass = 2, MTime = "2026-08-02T05:49:10Z", Digest = "8b4e2159ade04ce1383da2aa2e0f47c259eebbe4f7a5d9546c89356042e5e6f4", Stale = false, Path = "Program.cs", Since = "2026-08-18")]
+/// <example>
+/// <code language="yaml">
+/// pass: 2
+/// mtime: 2026-08-22T17:15:51Z
+/// digest: 8b4e2159ade04ce1383da2aa2e0f47c259eebbe4f7a5d9546c89356042e5e6f4
+/// </code>
+/// </example>
 class Program
 {
 	/// <summary>Application entry point; intentionally empty for a library project.</summary>
+	[System.ComponentModel.Description("Application entry point; intentionally empty for a library project.")]
 	public static void Main() {
 
 	}

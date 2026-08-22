@@ -1,6 +1,6 @@
 using Serilog.Core;
 using Serilog.Events;
-using org.SpocWeb.root.Attributes;
+using System.ComponentModel;
 
 namespace org.SpocWeb.root.logging.SeriLog;
 
@@ -20,27 +20,38 @@ namespace org.SpocWeb.root.logging.SeriLog;
 /// digest: b74a830f176cf637f66813edf9dcea72b6d085643d39dda456cb3cfc43c8bf0f
 /// updated: 2026-05-19
 /// </remarks>
+/// <example>
+/// <code language="yaml">
+/// pass: 2
+/// mtime: 2026-08-22T17:15:51Z
+/// digest: 5afdd2e10f6c9a25f6685ea0af707157a09e273b39f5899275e27c060c8ef73f
+/// </code>
+/// </example>
 /// <code lang='cs'>
 /// Log.Logger = new LoggerConfiguration()
 ///		.Destructure.With{ExcludePropertiesPolicy}()
 ///		.CreateLogger();
 /// </code>
-[DocState(Pass = 2, MTime = "2026-08-02T05:49:10Z", Digest = "5afdd2e10f6c9a25f6685ea0af707157a09e273b39f5899275e27c060c8ef73f", Stale = false, Path = "SeriLog/LoggingLimitPolicy.cs", Since = "2026-08-18")]
 public class LoggingLimitPolicy : IDestructuringPolicy
 {
 	/// <summary> Limit String Length to reduce Log Size </summary>
+	[System.ComponentModel.Description("Limit String Length to reduce Log Size")]
 	public static int MaxLengthOfString { get; set; } = 100;
 
 	/// <summary> Limit Array Length to reduce Log Size </summary>
+	[System.ComponentModel.Description("Limit Array Length to reduce Log Size")]
 	public static int MaxLengthOfArray { get; set; } = 10;
 
 	/// <summary> Names of ignored Properties </summary>
+	[System.ComponentModel.Description("Names of ignored Properties")]
 	public static HashSet<string> IgnoredProperties { get; } = new(new[] { "PassWord" }, StringComparer.OrdinalIgnoreCase);
 
 	/// <summary> ignored Object Types </summary>
+	[System.ComponentModel.Description("ignored Object Types")]
 	public static HashSet<Type> IgnoredTypes { get; } = new ();
 
 	/// <summary> Filters Log Values </summary>
+	[System.ComponentModel.Description("Filters Log Values")]
 	public bool TryDestructure(object? value, ILogEventPropertyValueFactory propertyValueFactory, out LogEventPropertyValue result) {
 		if (value == null) {
 			result = null!;

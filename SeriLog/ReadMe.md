@@ -1,4 +1,8 @@
 ---
+concepts: []
+facets: {}
+tags: []
+description: "Serilog-specific extensions for `SpocWeb.Logging`: a destructuring policy that truncates oversized strings and arrays, and an attribute that suppresses logging of sensitive or irrelevant properties."
 digest:
   local-classes:
     ExcludeFromLoggingAttribute:

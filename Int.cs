@@ -1,4 +1,4 @@
-using org.SpocWeb.root.Attributes;
+using System.ComponentModel;
 namespace org.SpocWeb.root.logging;
 
 /// <summary> Generically typed <see cref="Int32"/>. </summary>
@@ -11,14 +11,22 @@ namespace org.SpocWeb.root.logging;
 /// digest: e7a003742c58af98acdca4f9428a9f0bc6558f0323f808fa56cee8cc2ff4dbe9
 /// updated: 2026-05-19
 /// </remarks>
+/// <example>
+/// <code language="yaml">
+/// pass: 2
+/// mtime: 2026-08-22T17:15:51Z
+/// digest: d13ad519922aaf7d4f69afa6992c98ef31297f521db5df6bd32124b4fdccf629
+/// </code>
+/// </example>
 //[org.SpocWeb.root.Attributes.Replaces("../../../../NET/_root/Abstracts/Int.cs")]
-[DocState(Pass = 2, MTime = "2026-08-02T05:49:10Z", Digest = "d13ad519922aaf7d4f69afa6992c98ef31297f521db5df6bd32124b4fdccf629", Stale = false, Path = "Int.cs", Since = "2026-08-18")]
 public readonly struct Int<T> : IComparable<Int<T>>, IEquatable<Int<T>> {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 	/// <summary>Gets the value.</summary>
+	[System.ComponentModel.Description("Gets the value.")]
 	public int Value { get; }
 
 	/// <summary>Initializes a new instance of <see cref="Int32"/> with the specified <paramref name="value"/>.</summary>
+	[System.ComponentModel.Description("Initializes a new instance of Int32 with the specified value.")]
 	public Int(int value) => Value = value;
 
 	/// <summary>Implicitly converts <paramref name="value"/> to <see cref="Int{T}"/>.</summary>
@@ -49,8 +57,10 @@ public readonly struct Int<T> : IComparable<Int<T>>, IEquatable<Int<T>> {
 	public static bool operator >=(Int<T> a, Int<T> b) => a.Value >= b.Value;
 
 	/// <summary>Compares this instance to <paramref name="other"/> by <see cref="Value"/>.</summary>
+ 	[System.ComponentModel.Description("Compares this instance to other by Value.")]
  	public int CompareTo(Int<T> other) => Value.CompareTo(other.Value);
 	/// <summary>Returns `true` when <see cref="Value"/> equals <paramref name="other"/>'s.</summary>
+ 	[System.ComponentModel.Description("Returns `true` when Value equals other's.")]
  	public bool Equals(Int<T> other) => Value == other.Value;
 	/// <inheritdoc cref="Equals(Int{T})"/>
 	public override bool Equals(object? obj) => obj is Int<T> other && Equals(other);

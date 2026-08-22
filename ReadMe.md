@@ -1,4 +1,8 @@
 ---
+concepts: []
+facets: {}
+tags: []
+description: "SpocWeb.Logging is a minimal, injection-free logging utility that bridges C# string interpolation with structured logging via `Microsoft.Extensions.Logging` and Serilog."
 digest:
   local-classes:
     DestructureWrapper:

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 using System.Runtime.CompilerServices;
 using System.Text;
-using org.SpocWeb.root.Attributes;
+using System.ComponentModel;
 
 namespace org.SpocWeb.root.logging;
 
@@ -25,11 +25,18 @@ namespace org.SpocWeb.root.logging;
 /// digest: de2eed1a9afb2c8a854e1053da6599131b07349921066987ca2a94faabcf6369
 /// updated: 2026-05-19
 /// </remarks>
-[DocState(Pass = 2, MTime = "2026-08-16T22:10:45Z", Digest = "5fa0340681151093ecf9e5d0827c3d518d55b500273ee3a449eeef5a61f0cb3b", Stale = false, Path = "SemanticLog.cs", Since = "2026-08-18")]
+/// <example>
+/// <code language="yaml">
+/// pass: 2
+/// mtime: 2026-08-22T17:15:51Z
+/// digest: 5fa0340681151093ecf9e5d0827c3d518d55b500273ee3a449eeef5a61f0cb3b
+/// </code>
+/// </example>
 [InterpolatedStringHandler]
 public ref struct PrefixedStringHandler {
 
 	/// <summary> Use Numbers instead of Names to build the Format String </summary>
+	[System.ComponentModel.Description("Use Numbers instead of Names to build the Format String")]
 	public static bool UseNumbers { get; set; } = false;//true;
 
     /// <summary> Optional Prefix for any Name </summary>
@@ -49,24 +56,30 @@ public ref struct PrefixedStringHandler {
     /// <remarks>This can still be converted into <see cref="MessageWithValues"/>
     /// by replacing every "{Key}" in <see cref="KeyedValues"/> with its formatted "Value".
     /// </remarks>
+    [System.ComponentModel.Description("Semantic Format String with {bracedKeys}")]
     public string MessageWithKeys() => string.Format(Template.ToString(), KeyedValues.Keys().ToArray());
 
 	/// <summary> Semantic Format String with <see cref="KeyedValues"/> Values </summary>
+	[System.ComponentModel.Description("Semantic Format String with KeyedValues Values")]
 	public readonly string MessageWithValues() => string.Format(Template.ToString(), KeyedValues.Values().ToArray());
 
 	/// <summary> Semantic Format String with <see cref="KeyedValues"/> Keys </summary>
+	[System.ComponentModel.Description("Semantic Format String with KeyedValues Keys")]
 	public readonly void WriteMessageWithValues(TextWriter writer)
         => writer.Write(Template.ToString(), KeyedValues.Values().ToArray());
 
 	/// <summary>Initializes a new instance of <see cref="PrefixedStringHandler"/> with the specified <paramref name="literalLength"/>, <paramref name="formatCount"/>, <paramref name="logger"/> and <paramref name="isEnabled"/>.</summary>
+	[System.ComponentModel.Description("Initializes a new instance of PrefixedStringHandler with the specified literalLength, formatCount, logger and isEnabled.")]
 	public PrefixedStringHandler(int literalLength, int formatCount, ILogger logger, out bool isEnabled)
 		: this(literalLength, formatCount, "", logger, LogLevel.Information, out isEnabled) { }
 
 	/// <summary>Initializes a new instance of <see cref="PrefixedStringHandler"/> with the specified <paramref name="literalLength"/>, <paramref name="formatCount"/>, <paramref name="prefix"/>, <paramref name="logger"/> and <paramref name="isEnabled"/>.</summary>
+	[System.ComponentModel.Description("Initializes a new instance of PrefixedStringHandler with the specified literalLength, formatCount, prefix, logger and isEnabled.")]
 	public PrefixedStringHandler(int literalLength, int formatCount, string prefix, ILogger logger, out bool isEnabled)
 		: this(literalLength, formatCount, prefix, logger, LogLevel.Information, out isEnabled) { }
 
 	/// <summary>Initializes a new instance of <see cref="PrefixedStringHandler"/> with the specified <paramref name="literalLength"/>, <paramref name="formatCount"/>, <paramref name="prefix"/>, <paramref name="logger"/>, <paramref name="level"/> and <paramref name="isEnabled"/>.</summary>
+	[System.ComponentModel.Description("Initializes a new instance of PrefixedStringHandler with the specified literalLength, formatCount, prefix, logger, level and isEnabled.")]
 	[SuppressMessage("ReSharper", "UnusedParameter.Local")]
 	public PrefixedStringHandler(int literalLength, int formatCount, string prefix, ILogger logger, LogLevel level, out bool isEnabled) {
 		_prefix = string.IsNullOrWhiteSpace(prefix) ? "" : prefix + "_";
@@ -76,9 +89,11 @@ public ref struct PrefixedStringHandler {
 	}
 
 	/// <summary> Escapes `{` and `}` by doubling. </summary>
+	[System.ComponentModel.Description("Escapes `{` and `}` by doubling.")]
 	public void AppendLiteral(string s) => Template.Append(s.Replace("{", "{{").Replace("}", "}}"));
 
 	/// <summary>Generic Formatter for all other Types</summary>
+	[System.ComponentModel.Description("Generic Formatter for all other Types")]
 	public void AppendFormatted<T>(T value, [CallerArgumentExpression("value")] string argName = "") {
 		// Microsoft ILogger uses {name} for structured logging
 		var key = _prefix + argName;
@@ -89,6 +104,7 @@ public ref struct PrefixedStringHandler {
 	}
 
 	/// <summary> Special Array Formatting for Collections (Arrays, Lists, etc.) </summary>
+	[System.ComponentModel.Description("Special Array Formatting for Collections (Arrays, Lists, etc.)")]
 	public void AppendFormatted<TElement>(IEnumerable<TElement> values
 		, [CallerArgumentExpression("values")] string argName = "") {
 		var key = _prefix + argName;
@@ -104,6 +120,7 @@ public ref struct PrefixedStringHandler {
 	}
 
 	/// <summary> allows usage like: $"The price is {price:C2}" </summary>
+    [System.ComponentModel.Description("allows usage like: $\"The price is {price:C2}\"")]
     public void AppendFormatted<T>(T value, string? format, [CallerArgumentExpression("value")] string argName = "") {
 		// We append the format to the template hole
 		var formatSuffix = string.IsNullOrEmpty(format) ? "" : ":" + format;
@@ -121,6 +138,7 @@ public ref struct PrefixedStringHandler {
 	/// <remarks>
 	/// Adds '@' which most providers (Serilog/OTel) will respect!
 	/// </remarks>
+	[System.ComponentModel.Description("Custom Formatting for DestructureWrapper.")]
 	public void AppendFormatted(DestructureWrapper wrapper, [CallerArgumentExpression("wrapper")] string argName = "") {
         var cleanName = argName.Replace(".Destructure()", "").Replace(PREFIX, "").Replace(")", "").Trim();
 		var key = _prefix + cleanName;
@@ -146,7 +164,13 @@ public ref struct PrefixedStringHandler {
 /// digest: de2eed1a9afb2c8a854e1053da6599131b07349921066987ca2a94faabcf6369
 /// updated: 2026-05-19
 /// </remarks>
-[DocState(Pass = 2, MTime = "2026-08-16T22:10:45Z", Digest = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", Stale = false, Path = "SemanticLog.cs", Since = "2026-08-18")]
+/// <example>
+/// <code language="yaml">
+/// pass: 2
+/// mtime: 2026-08-22T17:15:51Z
+/// digest: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+/// </code>
+/// </example>
 public record struct DestructureWrapper(object Value);
 
 /// <summary> Extension Methods to log semantically with String Interpolation. </summary>
@@ -161,8 +185,14 @@ public record struct DestructureWrapper(object Value);
 /// digest: de2eed1a9afb2c8a854e1053da6599131b07349921066987ca2a94faabcf6369
 /// updated: 2026-05-19
 /// </remarks>
+/// <example>
+/// <code language="yaml">
+/// pass: 2
+/// mtime: 2026-08-22T17:15:51Z
+/// digest: 390c7304721fa0c125175bc6a7b15ad5cbe02c1ea2a2a2dfccefd2ccd9c5bc43
+/// </code>
+/// </example>
 #pragma warning disable CA2254
-[DocState(Pass = 2, MTime = "2026-08-16T22:10:45Z", Digest = "390c7304721fa0c125175bc6a7b15ad5cbe02c1ea2a2a2dfccefd2ccd9c5bc43", Stale = false, Path = "SemanticLog.cs", Since = "2026-08-18")]
 public static class LogX {
 
 	/// <summary> Represents the key used to store the original format of a message. </summary>
@@ -173,12 +203,15 @@ public static class LogX {
 
 	/// <summary> Flag to put only the Values in the <see cref="Serilog.Events.LogEvent"/>,
 	/// instead of all Pairs including the <see cref="KeyOriginalFormat"/> </summary>
+	[System.ComponentModel.Description("Flag to put only the Values in the LogEvent, instead of all Pairs including the KeyOriginalFormat")]
 	public static bool ForDeStructure { get; set; } = true;
 
 	/// <summary> Wraps the <paramref name="value"/> into <see cref="DestructureWrapper"/> to trigger writing an `@` to indicate Destructuring to SeriLog </summary>
+	[System.ComponentModel.Description("Wraps the value into DestructureWrapper to trigger writing an `@` to indicate Destructuring to SeriLog")]
 	public static DestructureWrapper Destructure(this object value) => new(value);
 
 	/// <summary> Log the <paramref name="stringInterpolation"/> to the <paramref name="logger"/> </summary>
+	[System.ComponentModel.Description("Log the stringInterpolation to the logger")]
 	public static void Logg(this ILogger logger
 		, [InterpolatedStringHandlerArgument(nameof(logger))] ref PrefixedStringHandler stringInterpolation
 		, Exception? x = null, LogLevel? optLevel = default, EventId eventId = default) {
@@ -195,6 +228,7 @@ public static class LogX {
 
 	/// <summary> Log the <paramref name="stringInterpolation"/> to the <paramref name="logger"/>
 	/// with the <paramref name="context"/> </summary>
+	[System.ComponentModel.Description("Log the stringInterpolation to the logger with the context")]
 	public static void Logg(this ILogger logger, LogLevel level, string context
 		, [InterpolatedStringHandlerArgument(nameof(context), nameof(logger), nameof(level))] ref PrefixedStringHandler stringInterpolation
 		, Exception? x = null, EventId eventId = default) {
@@ -213,6 +247,7 @@ public static class LogX {
 
 	/// <summary> Log the <paramref name="stringInterpolation"/> to the <paramref name="logger"/>
 	/// with the <paramref name="context"/> </summary>
+	[System.ComponentModel.Description("Log the stringInterpolation to the logger with the context")]
 	public static void Logg(this ILogger logger, string context
 		, [InterpolatedStringHandlerArgument(nameof(context), nameof(logger))] ref PrefixedStringHandler stringInterpolation
 		, Exception? x = null, LogLevel? optLevel = null, EventId eventId = default) {
@@ -232,12 +267,15 @@ public static class LogX {
 
 	/// <summary> Returns the values from a sequence of key/value pairs. </summary>
 	/// <remarks>The same is possible for IReadOnlyList using ReadOnlyListFilter{t} with Delegate. </remarks>
+	[System.ComponentModel.Description("Returns the values from a sequence of key/value pairs.")]
 	public static IEnumerable<V> Values<K, V>(this IEnumerable<KeyValuePair<K, V>> keyedValues) => keyedValues.Select(p => p.Value);
 
 	/// <summary> Returns the keys from a sequence of key/value pairs. </summary>
+	[System.ComponentModel.Description("Returns the keys from a sequence of key/value pairs.")]
 	public static IEnumerable<K> Keys<K, V>(this IEnumerable<KeyValuePair<K, V>> keyedValues) => keyedValues.Select(p => p.Key);
 
 	/// <summary> Returns the keys from a sequence of key/value pairs. </summary>
+	[System.ComponentModel.Description("Returns the keys from a sequence of key/value pairs.")]
 	public static IList<KeyValuePair<K, V>> Add<K, V>(this IList<KeyValuePair<K, V>> keyedValues
 		, K key, V value) {
 		keyedValues.Add(new(key, value));
