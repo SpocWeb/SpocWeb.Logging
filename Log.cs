@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Serilog.Events;
 using Serilog.Parsing;
 using System.ComponentModel;
+using org.SpocWeb.root.Attributes;
 
 namespace org.SpocWeb.root.logging;
 
@@ -24,13 +25,7 @@ namespace org.SpocWeb.root.logging;
 /// <seealso cref="StringInterpolationWithValues">StringInterpolationWithValues: parsed message template paired with its argument values.</seealso>
 /// <seealso cref="LogX">LogX: semantic interpolation-handler-based logging extension methods.</seealso>
 /// <seealso cref="PrefixedStringHandler">PrefixedStringHandler: interpolated string handler that captures argument names and values at call-site.</seealso>
-/// <example>
-/// <code language="yaml">
-/// pass: 2
-/// mtime: 2026-08-22T17:15:51Z
-/// digest: 801899ca26ba34e0994f6a41cde675802c9dd06f5469a1ad3f3661185f8e125b
-/// </code>
-/// </example>
+[DocState(Pass = 2, MTime = "2026-08-22T17:32:41Z", Digest = "801899ca26ba34e0994f6a41cde675802c9dd06f5469a1ad3f3661185f8e125b", Stale = false, Path = "Log.cs", Since = "2026-08-23")]
 [SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 public static class Log
 {

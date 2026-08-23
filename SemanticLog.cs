@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.ComponentModel;
+using org.SpocWeb.root.Attributes;
 
 namespace org.SpocWeb.root.logging;
 
@@ -25,13 +26,7 @@ namespace org.SpocWeb.root.logging;
 /// digest: de2eed1a9afb2c8a854e1053da6599131b07349921066987ca2a94faabcf6369
 /// updated: 2026-05-19
 /// </remarks>
-/// <example>
-/// <code language="yaml">
-/// pass: 2
-/// mtime: 2026-08-22T17:15:51Z
-/// digest: 5fa0340681151093ecf9e5d0827c3d518d55b500273ee3a449eeef5a61f0cb3b
-/// </code>
-/// </example>
+[DocState(Pass = 2, MTime = "2026-08-22T17:32:41Z", Digest = "5fa0340681151093ecf9e5d0827c3d518d55b500273ee3a449eeef5a61f0cb3b", Stale = false, Path = "SemanticLog.cs", Since = "2026-08-23")]
 [InterpolatedStringHandler]
 public ref struct PrefixedStringHandler {
 
@@ -164,13 +159,7 @@ public ref struct PrefixedStringHandler {
 /// digest: de2eed1a9afb2c8a854e1053da6599131b07349921066987ca2a94faabcf6369
 /// updated: 2026-05-19
 /// </remarks>
-/// <example>
-/// <code language="yaml">
-/// pass: 2
-/// mtime: 2026-08-22T17:15:51Z
-/// digest: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-/// </code>
-/// </example>
+[DocState(Pass = 2, MTime = "2026-08-22T17:32:41Z", Digest = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", Stale = false, Path = "SemanticLog.cs", Since = "2026-08-23")]
 public record struct DestructureWrapper(object Value);
 
 /// <summary> Extension Methods to log semantically with String Interpolation. </summary>
@@ -185,14 +174,8 @@ public record struct DestructureWrapper(object Value);
 /// digest: de2eed1a9afb2c8a854e1053da6599131b07349921066987ca2a94faabcf6369
 /// updated: 2026-05-19
 /// </remarks>
-/// <example>
-/// <code language="yaml">
-/// pass: 2
-/// mtime: 2026-08-22T17:15:51Z
-/// digest: 390c7304721fa0c125175bc6a7b15ad5cbe02c1ea2a2a2dfccefd2ccd9c5bc43
-/// </code>
-/// </example>
 #pragma warning disable CA2254
+[DocState(Pass = 2, MTime = "2026-08-22T17:32:41Z", Digest = "390c7304721fa0c125175bc6a7b15ad5cbe02c1ea2a2a2dfccefd2ccd9c5bc43", Stale = false, Path = "SemanticLog.cs", Since = "2026-08-23")]
 public static class LogX {
 
 	/// <summary> Represents the key used to store the original format of a message. </summary>

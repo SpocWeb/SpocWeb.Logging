@@ -2,6 +2,7 @@ using System.Runtime.CompilerServices;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 using Serilog.Events;
 using System.ComponentModel;
+using org.SpocWeb.root.Attributes;
 
 namespace org.SpocWeb.root.logging;
 
@@ -32,13 +33,7 @@ namespace org.SpocWeb.root.logging;
 /// updated: 2026-05-19
 /// </remarks>
 /// <inheritdoc cref="ToString"/>
-/// <example>
-/// <code language="yaml">
-/// pass: 2
-/// mtime: 2026-08-22T17:15:51Z
-/// digest: 11eb3dd0720f3c59206440050317d00db09a2a43ca7f287c9412d09053d209b9
-/// </code>
-/// </example>
+[DocState(Pass = 2, MTime = "2026-08-22T17:32:41Z", Digest = "11eb3dd0720f3c59206440050317d00db09a2a43ca7f287c9412d09053d209b9", Stale = false, Path = "StringInterpolationWithValues.cs", Since = "2026-08-23")]
 public record StringInterpolationWithValues(MessageTemplate template//, Exception? exception
 	, string filePath, int lineNo, params object?[] values)
 {
