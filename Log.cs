@@ -25,13 +25,20 @@ namespace org.SpocWeb.root.logging;
 /// <seealso cref="StringInterpolationWithValues">StringInterpolationWithValues: parsed message template paired with its argument values.</seealso>
 /// <seealso cref="LogX">LogX: semantic interpolation-handler-based logging extension methods.</seealso>
 /// <seealso cref="PrefixedStringHandler">PrefixedStringHandler: interpolated string handler that captures argument names and values at call-site.</seealso>
-[DocState(Pass = 2, MTime = "2026-08-22T17:32:41Z", Digest = "801899ca26ba34e0994f6a41cde675802c9dd06f5469a1ad3f3661185f8e125b", Stale = false, Path = "Log.cs", Since = "2026-08-23")]
+[Facets(Layer = "infrastructure", Status = "active", Complexity = 3)]
+[Tags("code/logging_dispatcher", "code/message_template_parsing")]
+[System.ComponentModel.Description("Extension Methods to use StringInterpolationWithValues for Logging.")]
+[DocState(Pass = 2, MTime = "2026-08-26T05:15:28Z", Digest = "801899ca26ba34e0994f6a41cde675802c9dd06f5469a1ad3f3661185f8e125b", Stale = false, Path = "Log.cs", Since = "2026-08-23")]
 [SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
+[Concept("structured_logging_bridge")]
 public static class Log
 {
 	/// <summary> Central Log Dispatcher and aggregator </summary>
 	/// <remarks> for lightweight Coding w/o injecting Loggers everywhere. </remarks>
+	[Facets(Layer = "infrastructure", Status = "active", Complexity = 1)]
+	[Tags("code/logging_dispatcher")]
 	[System.ComponentModel.Description("Central Log Dispatcher and aggregator")]
+	[Concept("global_logger_accessor")]
 	public static ILogger? Logger { get; set; } //= new Logger();
 
 #pragma warning disable CA2254
@@ -41,7 +48,10 @@ public static class Log
 	// Function to generate a formatted string
 	// Parse the Serilog message template
 	/// <summary>Parses <paramref name="message"/> into a <see cref="MessageTemplate"/>, ignoring the second argument.</summary>
+ 	[Facets(Layer = "infrastructure", Status = "active", Complexity = 1)]
+ 	[Tags("code/message_template_parsing")]
  	[System.ComponentModel.Description("Parses message into a MessageTemplate, ignoring the second argument.")]
+ 	[Concept("template_parsing")]
  	public static MessageTemplate ParseTemplate(string message, object _) => _messageTemplateParser.Parse(message);
 
 	/// <summary>Gets the _templates.</summary>
@@ -52,8 +62,11 @@ public static class Log
 	/// This Serilog-like Parsing retains the Expression names, but at the cost of duplicating them.
 	/// Rather use a <see cref="FormattableString"/> with String Interpolation!
 	/// </remarks>
+	[Facets(Layer = "infrastructure", Status = "deprecated", Complexity = 2)]
+	[Tags("code/message_template_parsing")]
 	[System.ComponentModel.Description("Parses and caches the stringInterpolation")]
 	[Obsolete("Rather use String Interpolation like in " + nameof(LogX))]
+	[Concept("template_parsing")]
 	public static StringInterpolationWithValues Parse_(string stringInterpolation, params object[] args) {
 		if (!_templates.TryGetValue(stringInterpolation, out var template)) {
 			_templates[stringInterpolation] = template = _messageTemplateParser.Parse(stringInterpolation);
@@ -76,7 +89,10 @@ public static class Log
 		=> Logger.Error(stringInterpolation.Parse(expression, path, lineNo), x);
 
 	/// <summary>Dispatches <paramref name="messageWithValues"/> at see cref="LogLevel.Error"/> level via <see cref="Logger"/>.</summary>
+ 	[Facets(Layer = "infrastructure", Status = "active", Complexity = 1)]
+ 	[Tags("code/logging_dispatcher")]
  	[System.ComponentModel.Description("Dispatches messageWithValues at see cref=\"LogLevel.Error\"/> level via Logger.")]
+ 	[Concept("log_level_dispatch")]
  	public static StringInterpolationWithValues Error(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogError(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Error, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -90,7 +106,10 @@ public static class Log
 		=> Critical(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	/// <summary>Dispatches <paramref name="messageWithValues"/> at see cref="LogLevel.Critical"/> level via <see cref="Logger"/>.</summary>
+ 	[Facets(Layer = "infrastructure", Status = "active", Complexity = 1)]
+ 	[Tags("code/logging_dispatcher")]
  	[System.ComponentModel.Description("Dispatches messageWithValues at see cref=\"LogLevel.Critical\"/> level via Logger.")]
+ 	[Concept("log_level_dispatch")]
  	public static StringInterpolationWithValues Critical(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogCritical(x, parsed.template.Text, parsed.values);
 		Logger?.Log(LogLevel.Critical, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -104,7 +123,10 @@ public static class Log
 		=> Debug(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	/// <summary>Dispatches <paramref name="messageWithValues"/> at see cref="LogLevel.Debug"/> level via <see cref="Logger"/>.</summary>
+ 	[Facets(Layer = "infrastructure", Status = "active", Complexity = 1)]
+ 	[Tags("code/logging_dispatcher")]
  	[System.ComponentModel.Description("Dispatches messageWithValues at see cref=\"LogLevel.Debug\"/> level via Logger.")]
+ 	[Concept("log_level_dispatch")]
  	public static StringInterpolationWithValues Debug(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogDebug(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Debug, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -118,7 +140,10 @@ public static class Log
 		=> Information(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	/// <summary>Dispatches <paramref name="messageWithValues"/> at see cref="LogLevel.Information"/> level via <see cref="Logger"/>.</summary>
+ 	[Facets(Layer = "infrastructure", Status = "active", Complexity = 1)]
+ 	[Tags("code/logging_dispatcher")]
  	[System.ComponentModel.Description("Dispatches messageWithValues at see cref=\"LogLevel.Information\"/> level via Logger.")]
+ 	[Concept("log_level_dispatch")]
  	public static StringInterpolationWithValues Information(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogInformation(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Information, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -132,7 +157,10 @@ public static class Log
 		=> Warning(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	/// <summary>Dispatches <paramref name="messageWithValues"/> at see cref="LogLevel.Warning"/> level via <see cref="Logger"/>.</summary>
+ 	[Facets(Layer = "infrastructure", Status = "active", Complexity = 1)]
+ 	[Tags("code/logging_dispatcher")]
  	[System.ComponentModel.Description("Dispatches messageWithValues at see cref=\"LogLevel.Warning\"/> level via Logger.")]
+ 	[Concept("log_level_dispatch")]
  	public static StringInterpolationWithValues Warning(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogWarning(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Warning, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -146,7 +174,10 @@ public static class Log
 		=> Trace(Logger, stringInterpolation.Parse(expression, path, lineNo), x);
 
 	/// <summary>Dispatches <paramref name="messageWithValues"/> at see cref="LogLevel.Trace"/> level via <see cref="Logger"/>.</summary>
+ 	[Facets(Layer = "infrastructure", Status = "active", Complexity = 1)]
+ 	[Tags("code/logging_dispatcher")]
  	[System.ComponentModel.Description("Dispatches messageWithValues at see cref=\"LogLevel.Trace\"/> level via Logger.")]
+ 	[Concept("log_level_dispatch")]
  	public static StringInterpolationWithValues Trace(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogTrace(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Trace, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -238,7 +269,10 @@ public static class Log
 	#endregion Log Extension Statements
 
 	/// <summary>Formats <paramref name="template"/> by substituting each placeholder with the corresponding entry from <paramref name="properties"/>.</summary>
+ 	[Facets(Layer = "infrastructure", Status = "active", Complexity = 2)]
+ 	[Tags("code/message_template_parsing")]
  	[System.ComponentModel.Description("Formats template by substituting each placeholder with the corresponding entry from properties.")]
+ 	[Concept("template_formatting")]
  	public static string Format(this MessageTemplate template, params object?[] properties) {
 		var result = new StringBuilder(template.Text);
 		var pos = -1;
@@ -264,7 +298,10 @@ public static class Log
 	}
 
 	/// <summary> Adds the <paramref name="properties"/> to the <paramref name="dictionary"/> </summary>
+	[Facets(Layer = "infrastructure", Status = "active", Complexity = 2)]
+	[Tags("code/message_template_parsing")]
 	[System.ComponentModel.Description("Adds the properties to the dictionary")]
+	[Concept("template_formatting")]
 	public static IDictionary<string, object?> AddProperties(this IDictionary<string, object?>? dictionary, MessageTemplate template, params object?[] properties) {
 		dictionary ??= new Dictionary<string, object?>();
 		var pos = -1;
@@ -307,7 +344,10 @@ public static class Log
 	/// Alternatively the Log-Evaluation can mix in these Values,
 	/// but only if File and Line-Info can be matched.
 	/// </remarks>
+	[Facets(Layer = "infrastructure", Status = "active", Complexity = 4)]
+	[Tags("code/message_template_parsing")]
 	[System.ComponentModel.Description("Parses and caches the stringInterpolation")]
+	[Concept("template_parsing")]
 	public static StringInterpolationWithValues Parse(this FormattableString stringInterpolation//, Exception? x = null
 		, [CallerArgumentExpression(nameof(stringInterpolation))] string? expression = null
 		, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNo = -1
@@ -347,7 +387,10 @@ public static class Log
 	#region parsing with > 0 Params 
 
 	/// <summary> Parses and caches the <paramref name="stringInterpolation"/> </summary>
+	[Facets(Layer = "infrastructure", Status = "active", Complexity = 2)]
+	[Tags("code/message_template_parsing")]
 	[System.ComponentModel.Description("Parses and caches the stringInterpolation")]
+	[Concept("template_parsing")]
 	public static StringInterpolationWithValues Parse(string stringInterpolation, object? arg0
 		, [CallerLineNumber] int lineNo = -1, [CallerFilePath] string filePath = "") {
 		if (!_templates.TryGetValue(stringInterpolation, out var template)) {

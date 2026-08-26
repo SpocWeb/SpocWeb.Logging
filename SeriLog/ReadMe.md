@@ -1,7 +1,13 @@
 ---
-concepts: []
-facets: {}
-tags: []
+concepts:
+  - serilog_extensions
+facets:
+  layer: infrastructure
+  status: active
+  complexity: 2
+tags:
+  - code/log_destructuring
+  - code/logging_exclusion_attribute
 description: "Serilog-specific extensions for `SpocWeb.Logging`: a destructuring policy that truncates oversized strings and arrays, and an attribute that suppresses logging of sensitive or irrelevant properties."
 digest:
   local-classes:

@@ -12,11 +12,18 @@ namespace org.SpocWeb.root.logging;
 /// </remarks>
 /// <seealso cref="Log">Log: central static logging dispatcher used throughout the project.</seealso>
 /// <seealso cref="LogX">LogX: semantic interpolation-based logging extensions.</seealso>
-[DocState(Pass = 2, MTime = "2026-08-22T17:32:41Z", Digest = "8b4e2159ade04ce1383da2aa2e0f47c259eebbe4f7a5d9546c89356042e5e6f4", Stale = false, Path = "Program.cs", Since = "2026-08-23")]
+[Facets(Layer = "presentation", Status = "partial", Complexity = 1)]
+[Tags("code/entry_point")]
+[System.ComponentModel.Description("Entry point placeholder for the SpocWeb.Logging project.")]
+[DocState(Pass = 2, MTime = "2026-08-26T05:15:28Z", Digest = "8b4e2159ade04ce1383da2aa2e0f47c259eebbe4f7a5d9546c89356042e5e6f4", Stale = false, Path = "Program.cs", Since = "2026-08-23")]
+[Concept("library_placeholder")]
 class Program
 {
 	/// <summary>Application entry point; intentionally empty for a library project.</summary>
+	[Facets(Layer = "presentation", Status = "partial", Complexity = 1)]
+	[Tags("code/entry_point")]
 	[System.ComponentModel.Description("Application entry point; intentionally empty for a library project.")]
+	[Concept("library_placeholder")]
 	public static void Main() {
 
 	}

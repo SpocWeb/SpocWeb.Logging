@@ -1,7 +1,13 @@
 ---
-concepts: []
-facets: {}
-tags: []
+concepts:
+  - structured_logging_bridge
+facets:
+  layer: infrastructure
+  status: active
+  complexity: 3
+tags:
+  - code/cross_cutting_infrastructure
+  - code/message_template_parsing
 description: "SpocWeb.Logging is a minimal, injection-free logging utility that bridges C# string interpolation with structured logging via `Microsoft.Extensions.Logging` and Serilog."
 digest:
   local-classes:

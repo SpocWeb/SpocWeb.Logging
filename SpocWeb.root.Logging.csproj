@@ -81,6 +81,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|x86'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
+  <PropertyGroup>
+    <WarningsNotAsErrors>CS0436</WarningsNotAsErrors>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Networks\XSetIpAddress.cs" />
   </ItemGroup>
@@ -88,6 +91,10 @@
     <Compile Include="..\SpocWeb.Proxies\Attributes\ReplacedByAttribute.cs" Link="_Links\ReplacedByAttribute.cs" />
     <Compile Include="..\SpocWeb.Proxies\Attributes\ReplacedByAttribute.public.cs" Link="_Links\ReplacedByAttribute.public.cs" />
     <Compile Include="..\SpocWeb.Proxies\Properties\Range.cs" Link="Range.cs" />
+    <Compile Include="..\SpocWeb.Proxies\Attributes\TagsAttribute.cs" Link="_Links\TagsAttribute.cs" />
+    <Compile Include="..\SpocWeb.Proxies\Attributes\ConceptAttribute.cs" Link="_Links\ConceptAttribute.cs" />
+    <Compile Include="..\SpocWeb.Proxies\Attributes\DocStateAttribute.cs" Link="_Links\DocStateAttribute.cs" />
+    <Compile Include="..\SpocWeb.Proxies\Attributes\FacetsAttribute.cs" Link="_Links\FacetsAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="coverlet.collector">

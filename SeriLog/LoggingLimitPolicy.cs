@@ -26,27 +26,46 @@ namespace org.SpocWeb.root.logging.SeriLog;
 ///		.Destructure.With{ExcludePropertiesPolicy}()
 ///		.CreateLogger();
 /// </code>
-[DocState(Pass = 2, MTime = "2026-08-22T17:32:52Z", Digest = "5afdd2e10f6c9a25f6685ea0af707157a09e273b39f5899275e27c060c8ef73f", Stale = false, Path = "SeriLog/LoggingLimitPolicy.cs", Since = "2026-08-23")]
+[Facets(Layer = "infrastructure", Status = "active", Complexity = 3)]
+[Tags("code/log_destructuring")]
+[System.ComponentModel.Description("Serilog IDestructuringPolicy forms a Chain of Responsibility for serializing Values")]
+[DocState(Pass = 2, MTime = "2026-08-26T05:15:29Z", Digest = "5afdd2e10f6c9a25f6685ea0af707157a09e273b39f5899275e27c060c8ef73f", Stale = false, Path = "SeriLog/LoggingLimitPolicy.cs", Since = "2026-08-23")]
+[Concept("destructuring_policy")]
 public class LoggingLimitPolicy : IDestructuringPolicy
 {
 	/// <summary> Limit String Length to reduce Log Size </summary>
+	[Facets(Layer = "infrastructure", Status = "active", Complexity = 3)]
+	[Tags("code/log_destructuring")]
 	[System.ComponentModel.Description("Limit String Length to reduce Log Size")]
+	[Concept("destructuring_policy")]
 	public static int MaxLengthOfString { get; set; } = 100;
 
 	/// <summary> Limit Array Length to reduce Log Size </summary>
+	[Facets(Layer = "infrastructure", Status = "active", Complexity = 3)]
+	[Tags("code/log_destructuring")]
 	[System.ComponentModel.Description("Limit Array Length to reduce Log Size")]
+	[Concept("destructuring_policy")]
 	public static int MaxLengthOfArray { get; set; } = 10;
 
 	/// <summary> Names of ignored Properties </summary>
+	[Facets(Layer = "infrastructure", Status = "active", Complexity = 3)]
+	[Tags("code/log_destructuring")]
 	[System.ComponentModel.Description("Names of ignored Properties")]
+	[Concept("destructuring_policy")]
 	public static HashSet<string> IgnoredProperties { get; } = new(new[] { "PassWord" }, StringComparer.OrdinalIgnoreCase);
 
 	/// <summary> ignored Object Types </summary>
+	[Facets(Layer = "infrastructure", Status = "active", Complexity = 3)]
+	[Tags("code/log_destructuring")]
 	[System.ComponentModel.Description("ignored Object Types")]
+	[Concept("destructuring_policy")]
 	public static HashSet<Type> IgnoredTypes { get; } = new ();
 
 	/// <summary> Filters Log Values </summary>
+	[Facets(Layer = "infrastructure", Status = "active", Complexity = 3)]
+	[Tags("code/log_destructuring")]
 	[System.ComponentModel.Description("Filters Log Values")]
+	[Concept("destructuring_policy")]
 	public bool TryDestructure(object? value, ILogEventPropertyValueFactory propertyValueFactory, out LogEventPropertyValue result) {
 		if (value == null) {
 			result = null!;

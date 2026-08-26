@@ -10,6 +10,10 @@ namespace org.SpocWeb.root.logging.SeriLog;
 /// digest: a0abcb7a602f933d81f71ef7fcb71b7e0559850e350427f6839c82827a93ffe8
 /// updated: 2026-05-19
 /// </remarks>
-[DocState(Pass = 2, MTime = "2026-08-22T17:32:52Z", Digest = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", Stale = false, Path = "SeriLog/ExcludeFromLoggingAttribute.cs", Since = "2026-08-23")]
+[Facets(Layer = "infrastructure", Status = "active", Complexity = 1)]
+[Tags("code/logging_exclusion_attribute")]
+[System.ComponentModel.Description("Flag to suppress logging this Property or Class")]
+[DocState(Pass = 2, MTime = "2026-08-26T05:15:29Z", Digest = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", Stale = false, Path = "SeriLog/ExcludeFromLoggingAttribute.cs", Since = "2026-08-23")]
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Struct | AttributeTargets.Class)]
+[Concept("property_suppression_marker")]
 public class ExcludeFromLoggingAttribute : Attribute;

@@ -33,23 +33,36 @@ namespace org.SpocWeb.root.logging;
 /// updated: 2026-05-19
 /// </remarks>
 /// <inheritdoc cref="ToString"/>
-[DocState(Pass = 2, MTime = "2026-08-22T17:32:41Z", Digest = "11eb3dd0720f3c59206440050317d00db09a2a43ca7f287c9412d09053d209b9", Stale = false, Path = "StringInterpolationWithValues.cs", Since = "2026-08-23")]
+[Facets(Layer = "domain", Status = "active", Complexity = 2)]
+[Tags("code/message_template_parsing", "code/value_object")]
+[System.ComponentModel.Description("Encapsulates a parsed StringInterpolation with values")]
+[DocState(Pass = 2, MTime = "2026-08-26T05:15:29Z", Digest = "11eb3dd0720f3c59206440050317d00db09a2a43ca7f287c9412d09053d209b9", Stale = false, Path = "StringInterpolationWithValues.cs", Since = "2026-08-23")]
+[Concept("parsed_template_values")]
 public record StringInterpolationWithValues(MessageTemplate template//, Exception? exception
 	, string filePath, int lineNo, params object?[] values)
 {
 	/// <summary> The parsed Template of the Interpolation </summary>
+    [Facets(Layer = "domain", Status = "active", Complexity = 2)]
+    [Tags("code/message_template_parsing", "code/value_object")]
     [System.ComponentModel.Description("The parsed Template of the Interpolation")]
+    [Concept("parsed_template_values")]
     public MessageTemplate Template => template;
 
 	/// <summary> The Values to insert into the Template </summary>
+    [Facets(Layer = "domain", Status = "active", Complexity = 2)]
+    [Tags("code/message_template_parsing", "code/value_object")]
     [System.ComponentModel.Description("The Values to insert into the Template")]
+    [Concept("parsed_template_values")]
     public object?[] Values => values;
 
 	///// <summary> Optional Exception </summary>
 	//public Exception? Exception => exception;
 
     /// <summary> Formats the <see cref="template"/> with the <see cref="values"/></summary>
+	[Facets(Layer = "domain", Status = "active", Complexity = 2)]
+	[Tags("code/message_template_parsing", "code/value_object")]
 	[System.ComponentModel.Description("Formats the template with the values")]
+	[Concept("parsed_template_values")]
 	public override string ToString() => _toString ??= template.Format(values);// + exception;
 	private string? _toString;
 
@@ -59,7 +72,10 @@ public record StringInterpolationWithValues(MessageTemplate template//, Exceptio
 	/// The Names are determined using either <see cref="CallerArgumentExpressionAttribute"/>
 	/// or by reading the Source Code File. 
 	/// </remarks>
+	[Facets(Layer = "domain", Status = "active", Complexity = 2)]
+	[Tags("code/message_template_parsing", "code/value_object")]
 	[System.ComponentModel.Description("Indexes the values with the template Placeholders")]
+	[Concept("parsed_template_values")]
 	public Dictionary<string, object?> ToDictionary() => _dictionary ??= template.ToDictionary(values);
     private Dictionary<string, object?>? _dictionary;
 }
