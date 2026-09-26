@@ -92,7 +92,7 @@ public static class Log
  	[Facets(Layer = "infrastructure", Status = "active", Complexity = 1)]
  	[Tags("code/logging_dispatcher")]
  	[System.ComponentModel.Description("Dispatches messageWithValues at see cref=\"LogLevel.Error\"/> level via Logger.")]
- 	[Concept("log_level_dispatch")]
+ 	[Concept("Technology\\IT\\Software\\Logging.md")]
  	public static StringInterpolationWithValues Error(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogError(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Error, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -109,7 +109,7 @@ public static class Log
  	[Facets(Layer = "infrastructure", Status = "active", Complexity = 1)]
  	[Tags("code/logging_dispatcher")]
  	[System.ComponentModel.Description("Dispatches messageWithValues at see cref=\"LogLevel.Critical\"/> level via Logger.")]
- 	[Concept("log_level_dispatch")]
+ 	[Concept("Technology\\IT\\Software\\Logging.md")]
  	public static StringInterpolationWithValues Critical(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogCritical(x, parsed.template.Text, parsed.values);
 		Logger?.Log(LogLevel.Critical, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -126,7 +126,7 @@ public static class Log
  	[Facets(Layer = "infrastructure", Status = "active", Complexity = 1)]
  	[Tags("code/logging_dispatcher")]
  	[System.ComponentModel.Description("Dispatches messageWithValues at see cref=\"LogLevel.Debug\"/> level via Logger.")]
- 	[Concept("log_level_dispatch")]
+ 	[Concept("Technology\\IT\\Software\\Logging.md")]
  	public static StringInterpolationWithValues Debug(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogDebug(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Debug, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -143,7 +143,7 @@ public static class Log
  	[Facets(Layer = "infrastructure", Status = "active", Complexity = 1)]
  	[Tags("code/logging_dispatcher")]
  	[System.ComponentModel.Description("Dispatches messageWithValues at see cref=\"LogLevel.Information\"/> level via Logger.")]
- 	[Concept("log_level_dispatch")]
+ 	[Concept("Technology\\IT\\Software\\Logging.md")]
  	public static StringInterpolationWithValues Information(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogInformation(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Information, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -160,7 +160,7 @@ public static class Log
  	[Facets(Layer = "infrastructure", Status = "active", Complexity = 1)]
  	[Tags("code/logging_dispatcher")]
  	[System.ComponentModel.Description("Dispatches messageWithValues at see cref=\"LogLevel.Warning\"/> level via Logger.")]
- 	[Concept("log_level_dispatch")]
+ 	[Concept("Technology\\IT\\Software\\Logging.md")]
  	public static StringInterpolationWithValues Warning(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogWarning(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Warning, 0, messageWithValues, x, (m, e) => m.ToString() + e);
@@ -177,7 +177,7 @@ public static class Log
  	[Facets(Layer = "infrastructure", Status = "active", Complexity = 1)]
  	[Tags("code/logging_dispatcher")]
  	[System.ComponentModel.Description("Dispatches messageWithValues at see cref=\"LogLevel.Trace\"/> level via Logger.")]
- 	[Concept("log_level_dispatch")]
+ 	[Concept("Technology\\IT\\Software\\Logging.md")]
  	public static StringInterpolationWithValues Trace(StringInterpolationWithValues messageWithValues, Exception? x = null) {
 		//log.LogTrace(x, messageWithValues.template.Text, messageWithValues.values);
 		Logger?.Log(LogLevel.Trace, 0, messageWithValues, x, (m, e) => m.ToString() + e);
