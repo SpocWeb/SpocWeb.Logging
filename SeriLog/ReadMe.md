@@ -1,10 +1,9 @@
 ---
+facet-complexity: 2
+facet-status: active
+facet-layer: infrastructure
 concepts:
   - serilog_extensions
-facets:
-  layer: infrastructure
-  status: active
-  complexity: 2
 tags:
   - code/log_destructuring
   - code/logging_exclusion_attribute

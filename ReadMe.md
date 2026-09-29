@@ -1,14 +1,13 @@
 ---
+facet-complexity: 3
+facet-status: active
+facet-layer: infrastructure
 concepts:
   - structured_logging_bridge
-facets:
-  layer: infrastructure
-  status: active
-  complexity: 3
 tags:
   - code/cross_cutting_infrastructure
   - code/message_template_parsing
-description: "SpocWeb.Logging is a minimal, injection-free logging utility that bridges C# string interpolation with structured logging via `Microsoft.Extensions.Logging` and Serilog."
+description: "SpocWeb.Logging is a minimal, injection-free logging utility that bridges C# string interpolation with structured logging via `Microsoft.Extensions.Logging` and Serilog. It eliminates the need to inject `ILogger` everywhere by exposing a single static `Log.Logger` dispatcher, while preserving semantic property names using `CallerArgumentExpression` and `CallerFilePath`. The library can optionally be combined with the SpocWeb.Proxies project, which provides a dynamic logging proxy interceptor pluggable via Dependency Injection to log all calls with their parameters and return values."
 digest:
   local-classes:
     DestructureWrapper:

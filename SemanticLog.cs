@@ -29,7 +29,7 @@ namespace org.SpocWeb.root.logging;
 [Facets(Layer = "infrastructure", Status = "active", Complexity = 4)]
 [Tags("code/interpolated_string_handler")]
 [System.ComponentModel.Description("Interpolation Handler to capture the Expression in the Interpolation String")]
-[DocState(Pass = 2, MTime = "2026-08-26T05:15:28Z", Digest = "5fa0340681151093ecf9e5d0827c3d518d55b500273ee3a449eeef5a61f0cb3b", Stale = false, Path = "SemanticLog.cs", Since = "2026-08-23")]
+[DocState(Pass = 2, MTime = "2026-09-28T23:37:28Z", Digest = "5fa0340681151093ecf9e5d0827c3d518d55b500273ee3a449eeef5a61f0cb3b", Stale = false, Path = "SemanticLog.cs", Since = "2026-08-23")]
 [InterpolatedStringHandler]
 [Concept("compile_time_string_interpolation")]
 public ref struct PrefixedStringHandler {
@@ -202,7 +202,7 @@ public ref struct PrefixedStringHandler {
 [Facets(Layer = "infrastructure", Status = "active", Complexity = 1)]
 [Tags("code/log_destructuring")]
 [System.ComponentModel.Description("Makes the compiler pick a different overload of the AppendFormatted Method.")]
-[DocState(Pass = 2, MTime = "2026-08-26T05:15:28Z", Digest = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", Stale = false, Path = "SemanticLog.cs", Since = "2026-08-23")]
+[DocState(Pass = 2, MTime = "2026-09-28T23:37:28Z", Digest = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", Stale = false, Path = "SemanticLog.cs", Since = "2026-08-23")]
 [Concept("serilog_destructuring_marker")]
 public record struct DestructureWrapper(object Value);
 
@@ -222,7 +222,7 @@ public record struct DestructureWrapper(object Value);
 [Facets(Layer = "infrastructure", Status = "active", Complexity = 3)]
 [Tags("code/interpolated_string_handler", "code/log_destructuring")]
 [System.ComponentModel.Description("Extension Methods to log semantically with String Interpolation.")]
-[DocState(Pass = 2, MTime = "2026-08-26T05:15:28Z", Digest = "390c7304721fa0c125175bc6a7b15ad5cbe02c1ea2a2a2dfccefd2ccd9c5bc43", Stale = false, Path = "SemanticLog.cs", Since = "2026-08-23")]
+[DocState(Pass = 2, MTime = "2026-09-28T23:37:28Z", Digest = "390c7304721fa0c125175bc6a7b15ad5cbe02c1ea2a2a2dfccefd2ccd9c5bc43", Stale = false, Path = "SemanticLog.cs", Since = "2026-08-23")]
 [Concept("semantic_logging_extensions")]
 public static class LogX {
 

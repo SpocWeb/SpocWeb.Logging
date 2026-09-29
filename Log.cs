@@ -28,7 +28,7 @@ namespace org.SpocWeb.root.logging;
 [Facets(Layer = "infrastructure", Status = "active", Complexity = 3)]
 [Tags("code/logging_dispatcher", "code/message_template_parsing")]
 [System.ComponentModel.Description("Extension Methods to use StringInterpolationWithValues for Logging.")]
-[DocState(Pass = 2, MTime = "2026-08-26T05:15:28Z", Digest = "801899ca26ba34e0994f6a41cde675802c9dd06f5469a1ad3f3661185f8e125b", Stale = false, Path = "Log.cs", Since = "2026-08-23")]
+[DocState(Pass = 2, MTime = "2026-09-28T23:37:27Z", Digest = "801899ca26ba34e0994f6a41cde675802c9dd06f5469a1ad3f3661185f8e125b", Stale = false, Path = "Log.cs", Since = "2026-08-23")]
 [SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 [Concept("structured_logging_bridge")]
 public static class Log
