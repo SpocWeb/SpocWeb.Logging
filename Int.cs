@@ -16,7 +16,7 @@ namespace org.SpocWeb.root.logging;
 [Facets(Layer = "domain", Status = "active", Complexity = 1)]
 [Tags("code/type_safe_wrapper")]
 [System.ComponentModel.Description("Generically typed Int32.")]
-[DocState(Pass = 2, MTime = "2026-09-28T23:37:27Z", Digest = "d13ad519922aaf7d4f69afa6992c98ef31297f521db5df6bd32124b4fdccf629", Stale = false, Path = "Int.cs", Since = "2026-08-23")]
+[DocState(Pass = 2, MTime = "2026-09-29T01:14:59Z", Digest = "d13ad519922aaf7d4f69afa6992c98ef31297f521db5df6bd32124b4fdccf629", Stale = false, Path = "Int.cs", Since = "2026-08-23")]
 [Concept("typed_integer_wrapper")]
 public readonly struct Int<T> : IComparable<Int<T>>, IEquatable<Int<T>> {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member

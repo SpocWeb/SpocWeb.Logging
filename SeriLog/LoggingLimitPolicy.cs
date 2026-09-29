@@ -29,7 +29,7 @@ namespace org.SpocWeb.root.logging.SeriLog;
 [Facets(Layer = "infrastructure", Status = "active", Complexity = 3)]
 [Tags("code/log_destructuring")]
 [System.ComponentModel.Description("Serilog IDestructuringPolicy forms a Chain of Responsibility for serializing Values")]
-[DocState(Pass = 2, MTime = "2026-09-28T23:37:29Z", Digest = "5afdd2e10f6c9a25f6685ea0af707157a09e273b39f5899275e27c060c8ef73f", Stale = false, Path = "SeriLog/LoggingLimitPolicy.cs", Since = "2026-08-23")]
+[DocState(Pass = 2, MTime = "2026-09-29T01:15:00Z", Digest = "5afdd2e10f6c9a25f6685ea0af707157a09e273b39f5899275e27c060c8ef73f", Stale = false, Path = "SeriLog/LoggingLimitPolicy.cs", Since = "2026-08-23")]
 [Concept("destructuring_policy")]
 public class LoggingLimitPolicy : IDestructuringPolicy
 {

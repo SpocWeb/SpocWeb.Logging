@@ -36,7 +36,7 @@ namespace org.SpocWeb.root.logging;
 [Facets(Layer = "domain", Status = "active", Complexity = 2)]
 [Tags("code/message_template_parsing", "code/value_object")]
 [System.ComponentModel.Description("Encapsulates a parsed StringInterpolation with values")]
-[DocState(Pass = 2, MTime = "2026-09-28T23:37:28Z", Digest = "11eb3dd0720f3c59206440050317d00db09a2a43ca7f287c9412d09053d209b9", Stale = false, Path = "StringInterpolationWithValues.cs", Since = "2026-08-23")]
+[DocState(Pass = 2, MTime = "2026-09-29T01:15:00Z", Digest = "11eb3dd0720f3c59206440050317d00db09a2a43ca7f287c9412d09053d209b9", Stale = false, Path = "StringInterpolationWithValues.cs", Since = "2026-08-23")]
 [Concept("parsed_template_values")]
 public record StringInterpolationWithValues(MessageTemplate template//, Exception? exception
 	, string filePath, int lineNo, params object?[] values)

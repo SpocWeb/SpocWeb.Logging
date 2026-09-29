@@ -15,7 +15,7 @@ namespace org.SpocWeb.root.logging;
 [Facets(Layer = "presentation", Status = "partial", Complexity = 1)]
 [Tags("code/entry_point")]
 [System.ComponentModel.Description("Entry point placeholder for the SpocWeb.Logging project.")]
-[DocState(Pass = 2, MTime = "2026-09-28T23:37:28Z", Digest = "8b4e2159ade04ce1383da2aa2e0f47c259eebbe4f7a5d9546c89356042e5e6f4", Stale = false, Path = "Program.cs", Since = "2026-08-23")]
+[DocState(Pass = 2, MTime = "2026-09-29T01:14:59Z", Digest = "8b4e2159ade04ce1383da2aa2e0f47c259eebbe4f7a5d9546c89356042e5e6f4", Stale = false, Path = "Program.cs", Since = "2026-08-23")]
 [Concept("library_placeholder")]
 class Program
 {
