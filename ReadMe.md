@@ -32,6 +32,75 @@ digest:
       mtime: "2026-08-18T17:17:16Z"
       digest: "11eb3dd0720f3c59206440050317d00db09a2a43ca7f287c9412d09053d209b9"
   folders: {}
+dv_has_:
+  sub_:
+    folders: 1
+    files: 26
+    units: 10
+    facet_:
+      layer_:
+        infrastructure: 7
+        domain: 2
+        presentation: 1
+      status_:
+        active: 9
+        partial: 1
+      complexity_:
+        "1": 4
+        "2": 2
+        "3": 3
+        "4": 1
+    tag_:
+      code_:
+        log_destructuring: 4
+        logging_exclusion_attribute: 2
+        message_template_parsing: 2
+        interpolated_string_handler: 2
+        logging_dispatcher: 1
+        type_safe_wrapper: 1
+        entry_point: 1
+        value_object: 1
+    concept_:
+      compile_time_string_interpolation: 1
+      destructuring_policy: 1
+      library_placeholder: 1
+      parsed_template_values: 1
+      property_suppression_marker: 1
+      semantic_logging_extensions: 1
+      serilog_destructuring_marker: 1
+      serilog_extensions: 1
+      typed_integer_wrapper: 1
+      structured_logging_bridge: 1
+has_sub_folders: 1
+has_sub_files: 26
+has_sub_units: 10
+has_sub_facet_layer_infrastructure: 7
+has_sub_facet_layer_domain: 2
+has_sub_facet_layer_presentation: 1
+has_sub_facet_status_active: 9
+has_sub_facet_status_partial: 1
+has_sub_facet_complexity_1: 4
+has_sub_facet_complexity_2: 2
+has_sub_facet_complexity_3: 3
+has_sub_facet_complexity_4: 1
+has_sub_tag_code_log_destructuring: 4
+has_sub_tag_code_logging_exclusion_attribute: 2
+has_sub_tag_code_message_template_parsing: 2
+has_sub_tag_code_interpolated_string_handler: 2
+has_sub_tag_code_logging_dispatcher: 1
+has_sub_tag_code_type_safe_wrapper: 1
+has_sub_tag_code_entry_point: 1
+has_sub_tag_code_value_object: 1
+has_sub_concept_compile_time_string_interpolation: 1
+has_sub_concept_destructuring_policy: 1
+has_sub_concept_library_placeholder: 1
+has_sub_concept_parsed_template_values: 1
+has_sub_concept_property_suppression_marker: 1
+has_sub_concept_semantic_logging_extensions: 1
+has_sub_concept_serilog_destructuring_marker: 1
+has_sub_concept_serilog_extensions: 1
+has_sub_concept_typed_integer_wrapper: 1
+has_sub_concept_structured_logging_bridge: 1
 ---
 # SpocWeb.Logging
 

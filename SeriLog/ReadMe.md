@@ -17,6 +17,37 @@ digest:
       mtime: "2026-08-18T17:17:16Z"
       digest: "5afdd2e10f6c9a25f6685ea0af707157a09e273b39f5899275e27c060c8ef73f"
   folders: {}
+dv_has_:
+  sub_:
+    folders: 0
+    files: 4
+    units: 2
+    facet_:
+      layer_:
+        infrastructure: 2
+      status_:
+        active: 2
+      complexity_:
+        "1": 1
+        "3": 1
+    tag_:
+      code_:
+        logging_exclusion_attribute: 1
+        log_destructuring: 1
+    concept_:
+      destructuring_policy: 1
+      property_suppression_marker: 1
+has_sub_folders: 0
+has_sub_files: 4
+has_sub_units: 2
+has_sub_facet_layer_infrastructure: 2
+has_sub_facet_status_active: 2
+has_sub_facet_complexity_1: 1
+has_sub_facet_complexity_3: 1
+has_sub_tag_code_logging_exclusion_attribute: 1
+has_sub_tag_code_log_destructuring: 1
+has_sub_concept_destructuring_policy: 1
+has_sub_concept_property_suppression_marker: 1
 ---
 # SeriLog
 
