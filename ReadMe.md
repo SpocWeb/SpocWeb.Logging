@@ -70,7 +70,7 @@ dv_has_:
       serilog_destructuring_marker: 1
       serilog_extensions: 1
       typed_integer_wrapper: 1
-      structured_logging_bridge: 1
+      "Technology\\IT\\Software\\Logging.md": 1
 has_sub_folders: 1
 has_sub_files: 26
 has_sub_units: 10
@@ -100,7 +100,7 @@ has_sub_concept_semantic_logging_extensions: 1
 has_sub_concept_serilog_destructuring_marker: 1
 has_sub_concept_serilog_extensions: 1
 has_sub_concept_typed_integer_wrapper: 1
-has_sub_concept_structured_logging_bridge: 1
+has_sub_concept_technology_it_software_logging_md: 1
 ---
 # SpocWeb.Logging
 
